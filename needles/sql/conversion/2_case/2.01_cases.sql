@@ -206,7 +206,7 @@ insert into [sma_TRN_Cases]
 		null		   as [cas],
 		null		   as [ngage],
 		null		   as [casnclientrecovereddt],
-		0			   as closereason,
+		null			   as closereason,
 		c.casenum	   as [saga],
 		null		   as [source_id],
 		'needles'	   as [source_db],
