@@ -109,7 +109,7 @@ Hardcode staff_1 through staff_10 with "Staff"
 --        null                        as [cssnModifyUserID],
 --        null                        as [cssdDtModified],
 --        0                           as cssnLevelNo
---    FROM JoelBieberNeedles.[dbo].[cases_Indexed] C
+--    FROM VanceLawFirm_Needles.[dbo].[cases_Indexed] C
 --    JOIN [sma_TRN_cases] CAS on CAS.cassCaseNumber = C.casenum
 --    JOIN [sma_MST_Users] U on ( U.saga = C.' + @staffColumn + ' )
 --    ';
@@ -162,7 +162,7 @@ INSERT INTO sma_TRN_caseStaff
 	   ,NULL			AS [cssnModifyUserID]
 	   ,NULL			AS [cssdDtModified]
 	   ,0				AS cssnLevelNo
-	FROM JoelBieberNeedles.[dbo].[cases_Indexed] C
+	FROM VanceLawFirm_Needles.[dbo].[cases_Indexed] C
 	INNER JOIN [sma_TRN_cases] CAS
 		ON CAS.cassCaseNumber = C.casenum
 	INNER JOIN [sma_MST_Users] U
@@ -207,7 +207,7 @@ INSERT INTO sma_TRN_caseStaff
 	   ,NULL			AS [cssnModifyUserID]
 	   ,NULL			AS [cssdDtModified]
 	   ,0				AS cssnLevelNo
-	FROM JoelBieberNeedles.[dbo].[cases_Indexed] C
+	FROM VanceLawFirm_Needles.[dbo].[cases_Indexed] C
 	JOIN [sma_TRN_cases] CAS
 		ON CAS.cassCaseNumber = C.casenum
 	JOIN [sma_MST_Users] U
@@ -252,7 +252,7 @@ INSERT INTO sma_TRN_caseStaff
 	   ,NULL			AS [cssnModifyUserID]
 	   ,NULL			AS [cssdDtModified]
 	   ,0				AS cssnLevelNo
-	FROM JoelBieberNeedles.[dbo].[cases_Indexed] C
+	FROM VanceLawFirm_Needles.[dbo].[cases_Indexed] C
 	JOIN [sma_TRN_cases] CAS
 		ON CAS.cassCaseNumber = C.casenum
 	JOIN [sma_MST_Users] U
@@ -298,7 +298,7 @@ INSERT INTO sma_TRN_caseStaff
 	   ,NULL			AS [cssnModifyUserID]
 	   ,NULL			AS [cssdDtModified]
 	   ,0				AS cssnLevelNo
-	FROM JoelBieberNeedles.[dbo].[cases_Indexed] C
+	FROM VanceLawFirm_Needles.[dbo].[cases_Indexed] C
 	INNER JOIN [sma_TRN_cases] CAS
 		ON CAS.cassCaseNumber = C.casenum
 	INNER JOIN [sma_MST_Users] U
@@ -336,7 +336,7 @@ INSERT INTO sma_TRN_caseStaff
 --	null					  as [cssnModifyUserID],
 --	null					  as [cssdDtModified],
 --	0					  as cssnLevelNo
---FROM JoelBieberNeedles.[dbo].[cases_Indexed] C
+--FROM VanceLawFirm_Needles.[dbo].[cases_Indexed] C
 --inner join [SA].[dbo].[sma_TRN_cases] CAS on CAS.cassCaseNumber = C.casenum
 --inner join [SA].[dbo].[sma_MST_Users] U on ( U.saga = C.staff_5 )
 --*/
@@ -370,7 +370,7 @@ INSERT INTO sma_TRN_caseStaff
 --	null					  as [cssnModifyUserID],
 --	null					  as [cssdDtModified],
 --	0					  as cssnLevelNo
---FROM JoelBieberNeedles.[dbo].[cases_Indexed] C
+--FROM VanceLawFirm_Needles.[dbo].[cases_Indexed] C
 --JOIN [sma_TRN_cases] CAS on CAS.cassCaseNumber = C.casenum
 --JOIN [sma_MST_Users] U on ( U.saga = C.staff_6 )
 
@@ -404,7 +404,7 @@ INSERT INTO sma_TRN_caseStaff
 --	null					  as [cssnModifyUserID],
 --	null					  as [cssdDtModified],
 --	0					  as cssnLevelNo
---FROM JoelBieberNeedles.[dbo].[cases_Indexed] C
+--FROM VanceLawFirm_Needles.[dbo].[cases_Indexed] C
 --inner join [SA].[dbo].[sma_TRN_cases] CAS on CAS.cassCaseNumber = C.casenum
 --inner join [SA].[dbo].[sma_MST_Users] U on ( U.saga = C.staff_7 )
 
@@ -438,7 +438,7 @@ INSERT INTO sma_TRN_caseStaff
 --	null					  as [cssnModifyUserID],
 --	null					  as [cssdDtModified],
 --	0					  as cssnLevelNo
---FROM JoelBieberNeedles.[dbo].[cases_Indexed] C
+--FROM VanceLawFirm_Needles.[dbo].[cases_Indexed] C
 --inner join [SA].[dbo].[sma_TRN_cases] CAS on CAS.cassCaseNumber = C.casenum
 --inner join [SA].[dbo].[sma_MST_Users] U on ( U.saga = C.staff_8 )
 --*/
@@ -472,7 +472,7 @@ INSERT INTO sma_TRN_caseStaff
 --	null					  as [cssnModifyUserID],
 --	null					  as [cssdDtModified],
 --	0					  as cssnLevelNo
---FROM JoelBieberNeedles.[dbo].[cases_Indexed] C
+--FROM VanceLawFirm_Needles.[dbo].[cases_Indexed] C
 --JOIN sma_TRN_cases CAS on CAS.cassCaseNumber = C.casenum
 --JOIN sma_MST_Users U on ( U.saga = C.staff_9 )
 
@@ -506,7 +506,7 @@ INSERT INTO sma_TRN_caseStaff
 --	null					  as [cssnModifyUserID],
 --	null					  as [cssdDtModified],
 --	0					  as cssnLevelNo
---FROM JoelBieberNeedles.[dbo].[cases_Indexed] C
+--FROM VanceLawFirm_Needles.[dbo].[cases_Indexed] C
 --inner join [SA].[dbo].[sma_TRN_cases] CAS on CAS.cassCaseNumber = C.casenum
 --inner join [SA].[dbo].[sma_MST_Users] U on ( U.saga = C.staff_10 )
 --*/

@@ -14,7 +14,7 @@ as
 	select distinct
 		ucd.Dr_Referral as contact_name,
 		'user_case_data.Dr_Referral' as source_ref
-	from JoelBieberNeedles..user_case_data ucd
+	from VanceLawFirm_Needles..user_case_data ucd
 	where ISNULL(ucd.Dr_Referral, '') <> ''
 
 	union all
@@ -23,7 +23,7 @@ as
 	select distinct
 		ucd.Referred_to as contact_name,
 		'user_case_data.Referred_to' as source_ref
-	from JoelBieberNeedles..user_case_data ucd
+	from VanceLawFirm_Needles..user_case_data ucd
 	where ISNULL(ucd.Referred_to, '') <> ''
 )
 insert into [sma_MST_IndvContacts]

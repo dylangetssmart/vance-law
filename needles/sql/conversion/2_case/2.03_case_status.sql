@@ -36,8 +36,8 @@ as
        joining with the Needles.dbo.cases table to filter the classes associated with cases. */
 	select distinct
 		[description] as [name]
-	from JoelBieberNeedles.[dbo].[class]
-	join JoelBieberNeedles.[dbo].[cases] C
+	from VanceLawFirm_Needles.[dbo].[class]
+	join VanceLawFirm_Needles.[dbo].[cases] C
 		on C.class = classcode
 
 	/* Adds a hardcoded status description 'Conversion Case No Status' to the list of distinct descriptions. */
@@ -166,9 +166,9 @@ insert into [sma_TRN_CaseStatus]
 		null,
 		null
 	from [sma_trn_cases] cas
-	join JoelBieberNeedles.[dbo].[cases_Indexed] c
+	join VanceLawFirm_Needles.[dbo].[cases_Indexed] c
 		on CONVERT(VARCHAR, c.casenum) = cas.cassCaseNumber
-	left join JoelBieberNeedles.[dbo].[class] cl
+	left join VanceLawFirm_Needles.[dbo].[class] cl
 		on c.class = cl.classcode
 go
 

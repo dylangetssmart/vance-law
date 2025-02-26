@@ -7,8 +7,8 @@ go
 /*
 select m.*
 --distinct m.field_Title, column_name, 'convert(varchar(max), ['+ column_Name + '] ) as ['+ m.field_title +'], ', '['+m.field_title+'],'
-FROM [JoelBieberNeedles].[dbo].[user_case_matter] M 
-inner join [JoelBieberNeedles].[dbo].[user_case_fields] F on F.field_title=M.field_title
+FROM [VanceLawFirm_Needles].[dbo].[user_case_matter] M 
+inner join [VanceLawFirm_Needles].[dbo].[user_case_fields] F on F.field_title=M.field_title
 where m.field_Type <> 'label'
 */
 
@@ -86,7 +86,7 @@ from (
 		CONVERT(VARCHAR(MAX), [Prior_Claims]) as [Prior Claims],
 		CONVERT(VARCHAR(MAX), [Type_of_Dog]) as [Type of Dog],
 		CONVERT(VARCHAR(MAX), [Rcvd_Form_20]) as [Rcvd Form 20]
-	from JoelBieberNeedles..user_case_data ud
+	from VanceLawFirm_Needles..user_case_data ud
 	join sma_TRN_Cases cas
 		on cas.cassCaseNumber = CONVERT(VARCHAR, ud.casenum)
 ) pv
@@ -170,7 +170,7 @@ insert into [sma_MST_UDFDefinition]
 		on mix.[SmartAdvocate Case Type] = cst.cstsType
 	join sma_MST_CaseGroup cg
 		on cgpnCaseGroupID = cst.cstnGroupID
-	join [JoelBieberNeedles].[dbo].[user_case_matter] m
+	join [VanceLawFirm_Needles].[dbo].[user_case_matter] m
 		on m.mattercode = mix.matcode
 			and m.field_type <> 'label'
 	join (
@@ -179,14 +179,14 @@ insert into [sma_MST_UDFDefinition]
 		from IncidentUDF
 	) vd
 		on vd.FieldTitle = m.field_title
-	--JOIN [JoelBieberNeedles].[dbo].[user_Case_Fields] ucf on m.ref_num = ucf.field_num
+	--JOIN [VanceLawFirm_Needles].[dbo].[user_Case_Fields] ucf on m.ref_num = ucf.field_num
 	join NeedlesUserFields ucf
 		on ucf.field_num = m.ref_num
 	--left join (
 	--	select distinct
 	--		table_name,
 	--		column_name
-	--	from [JoelBieberNeedles].[dbo].[document_merge_params]
+	--	from [VanceLawFirm_Needles].[dbo].[document_merge_params]
 	--	where table_name = 'user_Case_Data'
 	--) dmp
 	--	on dmp.column_name = ucf.field_title
@@ -200,7 +200,7 @@ insert into [sma_MST_UDFDefinition]
 	--and mix.matcode in ('CLW')
 	order by m.field_title
 
---select * From [JoelBieberNeedles]..[user_case_matter]
+--select * From [VanceLawFirm_Needles]..[user_case_matter]
 
 --------------------------------------
 --UDF VALUES

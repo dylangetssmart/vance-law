@@ -48,7 +48,7 @@ insert into [sma_MST_OtherCasesContact]
 		null		   as [othercasesmodifyuserid],
 		null		   as [othercasescontactmodifieddt]
 	--SELECT *
-	from [JoelBieberNeedles].[dbo].user_case_data ucd
+	from [VanceLawFirm_Needles].[dbo].user_case_data ucd
 	join sma_TRN_Cases cas
 		on CONVERT(VARCHAR, ucd.casenum) = cas.saga
 	join [sma_MST_IndvContacts] indv
@@ -87,7 +87,7 @@ insert into [sma_MST_OtherCasesContact]
 		null		   as [othercasesmodifyuserid],
 		null		   as [othercasescontactmodifieddt]
 	--SELECT *
-	from [JoelBieberNeedles].[dbo].user_party_data upd
+	from [VanceLawFirm_Needles].[dbo].user_party_data upd
 	join sma_TRN_Cases cas
 		on upd.case_id = cas.saga
 	join [sma_MST_IndvContacts] indv
@@ -123,7 +123,7 @@ insert into [sma_MST_OtherCasesContact]
 		null		   as [othercasesmodifyuserid],
 		null		   as [othercasescontactmodifieddt]
 	--SELECT *
-	from [JoelBieberNeedles].[dbo].user_party_data upd
+	from [VanceLawFirm_Needles].[dbo].user_party_data upd
 	join sma_TRN_Cases cas
 		on upd.case_id = cas.saga
 	join [sma_MST_IndvContacts] indv

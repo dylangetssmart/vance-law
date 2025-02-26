@@ -12,7 +12,7 @@ go
 update ind
 set ind.cinnRecUserID = u.usrnUserID
 from sma_MST_IndvContacts ind
-join JoelBieberNeedles..names n
+join VanceLawFirm_Needles..names n
 	on n.names_id = ind.saga
 join sma_MST_Users u
 	on ind.cinnContactID = u.usrnContactID;
@@ -28,13 +28,13 @@ join sma_MST_Users u
 --	select
 --		names_id as names_id,
 --		'Court' as contact_type
---	from JoelBieberNeedles..user_case_data ucd
---	join JoelBieberNeedles..user_case_fields ucf
+--	from VanceLawFirm_Needles..user_case_data ucd
+--	join VanceLawFirm_Needles..user_case_fields ucf
 --		on ucf.field_title = 'Court'
---	join JoelBieberNeedles..user_case_name ucn
+--	join VanceLawFirm_Needles..user_case_name ucn
 --		on ucn.ref_num = ucf.field_num
 --		and ucd.casenum = ucn.casenum
---	join JoelBieberNeedles..names n
+--	join VanceLawFirm_Needles..names n
 --		on n.names_id = ucn.user_name
 --	where ISNULL(ucd.COURT, '') <> ''
 

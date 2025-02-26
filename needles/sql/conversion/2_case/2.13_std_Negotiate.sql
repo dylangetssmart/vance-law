@@ -108,8 +108,8 @@ INSERT INTO [sma_TRN_Negotiations]
 				THEN NEG.amount
 			ELSE NULL
 		END			   AS [SettlementAmount]
-	FROM JoelBieberNeedles.[dbo].[negotiation] NEG
-	LEFT JOIN JoelBieberNeedles.[dbo].[insurance_Indexed] INS
+	FROM VanceLawFirm_Needles.[dbo].[negotiation] NEG
+	LEFT JOIN VanceLawFirm_Needles.[dbo].[insurance_Indexed] INS
 		ON INS.insurance_id = NEG.insurance_id
 	JOIN [sma_TRN_cases] CAS
 		ON CAS.cassCaseNumber = NEG.case_id

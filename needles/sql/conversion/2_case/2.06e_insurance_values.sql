@@ -42,7 +42,7 @@ SELECT DISTINCT
 	minimum_amount			as csvnMinSettlementValue,
 	null					as csvnExpectedResolutionDate,
 	null					as csvnMaxSettlementValue
-FROM JoelBieberNeedles..insurance_Indexed ii
+FROM VanceLawFirm_Needles..insurance_Indexed ii
 JOIN sma_trn_Cases cas
 	on cas.cassCaseNumber = convert(varchar,ii.case_num)
 WHERE isnull(minimum_amount,0) <> 0

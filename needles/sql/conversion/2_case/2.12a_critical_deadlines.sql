@@ -60,47 +60,47 @@ insert into [sma_MST_CriticalDeadlineTypes] (
 	,cdtbActive
 	) (
 	select distinct dbo.GMACaseDate(M.case_date_1)
-	,1 from JoelBieberNeedles.[dbo].[Matter] M where isnull(dbo.GMACaseDate(M.case_date_1), '') <> ''
+	,1 from VanceLawFirm_Needles.[dbo].[Matter] M where isnull(dbo.GMACaseDate(M.case_date_1), '') <> ''
 
 union
 	
 	select distinct dbo.GMACaseDate(M.case_date_2)
-	,1 from JoelBieberNeedles.[dbo].[Matter] M where isnull(dbo.GMACaseDate(M.case_date_2), '') <> ''
+	,1 from VanceLawFirm_Needles.[dbo].[Matter] M where isnull(dbo.GMACaseDate(M.case_date_2), '') <> ''
 
 union
 	
 	select distinct dbo.GMACaseDate(M.case_date_3)
-	,1 from JoelBieberNeedles.[dbo].[Matter] M where isnull(dbo.GMACaseDate(M.case_date_3), '') <> ''
+	,1 from VanceLawFirm_Needles.[dbo].[Matter] M where isnull(dbo.GMACaseDate(M.case_date_3), '') <> ''
 
 union
 	
 	select distinct dbo.GMACaseDate(M.case_date_4)
-	,1 from JoelBieberNeedles.[dbo].[Matter] M where isnull(dbo.GMACaseDate(M.case_date_4), '') <> ''
+	,1 from VanceLawFirm_Needles.[dbo].[Matter] M where isnull(dbo.GMACaseDate(M.case_date_4), '') <> ''
 
 union
 	
 	select distinct dbo.GMACaseDate(M.case_date_5)
-	,1 from JoelBieberNeedles.[dbo].[Matter] M where isnull(dbo.GMACaseDate(M.case_date_5), '') <> ''
+	,1 from VanceLawFirm_Needles.[dbo].[Matter] M where isnull(dbo.GMACaseDate(M.case_date_5), '') <> ''
 
 union
 	
 	select distinct dbo.GMACaseDate(M.case_date_6)
-	,1 from JoelBieberNeedles.[dbo].[Matter] M where isnull(dbo.GMACaseDate(M.case_date_6), '') <> ''
+	,1 from VanceLawFirm_Needles.[dbo].[Matter] M where isnull(dbo.GMACaseDate(M.case_date_6), '') <> ''
 
 union
 	
 	select distinct dbo.GMACaseDate(M.case_date_7)
-	,1 from JoelBieberNeedles.[dbo].[Matter] M where isnull(dbo.GMACaseDate(M.case_date_7), '') <> ''
+	,1 from VanceLawFirm_Needles.[dbo].[Matter] M where isnull(dbo.GMACaseDate(M.case_date_7), '') <> ''
 
 union
 	
 	select distinct dbo.GMACaseDate(M.case_date_8)
-	,1 from JoelBieberNeedles.[dbo].[Matter] M where isnull(dbo.GMACaseDate(M.case_date_8), '') <> ''
+	,1 from VanceLawFirm_Needles.[dbo].[Matter] M where isnull(dbo.GMACaseDate(M.case_date_8), '') <> ''
 
 union
 	
 	select distinct dbo.GMACaseDate(M.case_date_9)
-	,1 from JoelBieberNeedles.[dbo].[Matter] M where isnull(dbo.GMACaseDate(M.case_date_9), '') <> ''
+	,1 from VanceLawFirm_Needles.[dbo].[Matter] M where isnull(dbo.GMACaseDate(M.case_date_9), '') <> ''
 )
 
 except
@@ -187,8 +187,8 @@ BEGIN
             FROM criticalDeadline_Helper MAP
             WHERE MAP.casnCaseID = CAS.casnCaseID
         ) as [ResponderUID]
-    FROM JoelBieberNeedles.[dbo].[cases] C
-    JOIN JoelBieberNeedles.[dbo].[matter] M
+    FROM VanceLawFirm_Needles.[dbo].[cases] C
+    JOIN VanceLawFirm_Needles.[dbo].[matter] M
         ON M.matcode = C.matcode
     JOIN [sma_TRN_cases] CAS
         ON CAS.cassCaseNumber = casenum

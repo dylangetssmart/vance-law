@@ -15,7 +15,7 @@ go
 
 ---
 
-SELECT * FROM JoelBieberNeedles..party p where p.date_of_majority is not null
+SELECT * FROM VanceLawFirm_Needles..party p where p.date_of_majority is not null
 
 ----(1)----
 insert into sma_TRN_Notes
@@ -54,7 +54,7 @@ insert into sma_TRN_Notes
 		null			 as [source_id],
 		'needles'		 as [source_db],
 		'party'			 as [source_ref]
-	from JoelBieberNeedles.[dbo].[party] P
+	from VanceLawFirm_Needles.[dbo].[party] P
 	join sma_MST_IndvContacts I
 		on I.saga = P.party_id
 
@@ -93,7 +93,7 @@ insert into sma_TRN_Notes
 		null			 as [source_id],
 		'needles'		 as [source_db],
 		'party'			 as [source_ref]
-	from JoelBieberNeedles.[dbo].[party] P
+	from VanceLawFirm_Needles.[dbo].[party] P
 	join sma_MST_IndvContacts I
 		on I.saga = P.party_id
 
@@ -125,7 +125,7 @@ insert into sma_TRN_Notes
 		null			 as [source_id],
 		'needles'		 as [source_db],
 		'provider_notes' as [source_ref]
-	from JoelBieberNeedles.[dbo].[provider_notes] PN
+	from VanceLawFirm_Needles.[dbo].[provider_notes] PN
 	join IndvOrgContacts_Indexed IOC
 		on IOC.SAGA = PN.name_id
 

@@ -53,7 +53,7 @@ insert into sma_TRN_PriorInjuries
 		ISNULL('Prior_INJ: ' + NULLIF(upd.PRIOR_INJ, '') + CHAR(13), '') +
 		ISNULL('Prior Injuries: ' + NULLIF(upd.Prior_Injuries, '') + CHAR(13), '') +
 		''				  as [prlsinjury]
-	from JoelBieberNeedles..user_party_data upd
+	from VanceLawFirm_Needles..user_party_data upd
 	join sma_TRN_Cases cas
 		on cas.cassCaseNumber = convert(varchar,upd.case_id)
 	join sma_TRN_Plaintiff pln
@@ -62,7 +62,7 @@ insert into sma_TRN_PriorInjuries
 		or ISNULL(upd.PRIOR_INJ, '') <> ''
 		or ISNULL(upd.Prior_Injuries, '') <> ''
 
---FROM JoelBieberNeedles..user_case_data ud
+--FROM VanceLawFirm_Needles..user_case_data ud
 --JOIN sma_TRN_Cases cas
 --	ON cas.cassCaseNumber = ud.casenum
 --JOIN sma_TRN_Plaintiff pln
@@ -75,4 +75,4 @@ go
 --	upd.PRIOR_INJURY,
 --	upd.PRIOR_INJ,
 --	upd.Prior_Injuries
---from JoelBieberNeedles..user_party_data upd
+--from VanceLawFirm_Needles..user_party_data upd

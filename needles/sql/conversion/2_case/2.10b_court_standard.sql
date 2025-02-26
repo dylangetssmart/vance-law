@@ -61,7 +61,7 @@ insert into [sma_TRN_Courts]
 			ioc.CID,
 			ioc.AID,
 			c.judge_link
-		from [JoelBieberNeedles].[dbo].[cases] c
+		from [VanceLawFirm_Needles].[dbo].[cases] c
 		join [sma_TRN_cases] cas
 			on cas.cassCaseNumber = c.casenum
 		join IndvOrgContacts_Indexed ioc
@@ -75,7 +75,7 @@ insert into [sma_TRN_Courts]
 			ioc.CID,
 			ioc.AID,
 			c.judge_link
-		from [JoelBieberNeedles].[dbo].[cases] c
+		from [VanceLawFirm_Needles].[dbo].[cases] c
 		join [sma_TRN_cases] cas
 			on cas.cassCaseNumber = c.casenum
 		join IndvOrgContacts_Indexed ioc
@@ -122,7 +122,7 @@ insert into [sma_TRN_CourtDocket]
 	from [sma_TRN_Courts] crt
 	join [sma_TRN_cases] cas
 		on cas.casnCaseID = crt.crtnCaseID
-	join [JoelBieberNeedles].[dbo].[cases] c
+	join [VanceLawFirm_Needles].[dbo].[cases] c
 		on c.casenum = cas.cassCaseNumber
 go
 

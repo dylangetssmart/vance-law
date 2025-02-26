@@ -58,7 +58,7 @@ insert into [sma_TRN_ReferredOut]
 		0							 as rfoncocouncil,
 		0							 as rfonislawfirmupdatetosend,
 		'user_case_data.referred_to' as rfoscomments
-	from JoelBieberNeedles.dbo.user_case_data ucd
+	from VanceLawFirm_Needles.dbo.user_case_data ucd
 	join sma_TRN_Cases cas
 		on CONVERT(VARCHAR, ucd.casenum) = cas.cassCaseNumber
 	join sma_MST_IndvContacts indv

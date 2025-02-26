@@ -37,7 +37,7 @@ insert into sma_TRN_caseStaff
 		null			as [cssddtmodified],
 		0				as cssnlevelno
 	--select *
-	from JoelBieberNeedles.[dbo].case_intake n
+	from VanceLawFirm_Needles.[dbo].case_intake n
 	join [sma_TRN_Cases] c
 		on c.saga = n.ROW_ID
 	inner join [sma_MST_Users] u

@@ -32,13 +32,13 @@ Insert from [names]
 --(
 --	select distinct
 --		names_id
---	from JoelBieberNeedles..user_case_data ucd
---	join JoelBieberNeedles..user_case_fields ucf
+--	from VanceLawFirm_Needles..user_case_data ucd
+--	join VanceLawFirm_Needles..user_case_fields ucf
 --		on ucf.field_title = 'Clerk'
---	join JoelBieberNeedles..user_case_name ucn
+--	join VanceLawFirm_Needles..user_case_name ucn
 --		on ucn.ref_num = ucf.field_num
 --		and ucd.casenum = ucn.casenum
---	join JoelBieberNeedles..names n
+--	join VanceLawFirm_Needles..names n
 --		on n.names_id = ucn.user_name
 --	where ISNULL(ucd.CLERK, '') <> ''
 
@@ -55,7 +55,7 @@ insert into sma_MST_ContactRace
 	)
 	select distinct
 		race_name
-	from [JoelBieberNeedles]..race
+	from [VanceLawFirm_Needles]..race
 	except
 	select
 		RaceDesc
@@ -140,7 +140,7 @@ insert into [sma_MST_IndvContacts]
 			when exists (
 					select
 						*
-					from [JoelBieberNeedles].[dbo].[party_Indexed] p
+					from [VanceLawFirm_Needles].[dbo].[party_Indexed] p
 					where p.party_id = n.names_id
 						and p.incapacitated = 'Y'
 				)
@@ -155,7 +155,7 @@ insert into [sma_MST_IndvContacts]
 			when exists (
 					select
 						*
-					from [JoelBieberNeedles].[dbo].[party_Indexed] p
+					from [VanceLawFirm_Needles].[dbo].[party_Indexed] p
 					where p.party_id = n.names_id
 						and p.minor = 'Y'
 				)
@@ -193,8 +193,8 @@ insert into [sma_MST_IndvContacts]
 		null									 as source_id,
 		'needles'								 as source_db,
 		'names'									 as source_ref
-	from [JoelBieberNeedles].[dbo].[names] n
-	left join [JoelBieberNeedles].[dbo].[Race] r
+	from [VanceLawFirm_Needles].[dbo].[names] n
+	left join [VanceLawFirm_Needles].[dbo].[Race] r
 		--on r.race_id = TRY_CONVERT(INT, n.race)
 		on r.race_id = case
 				when ISNUMERIC(n.race) = 1

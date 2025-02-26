@@ -25,7 +25,7 @@ go
 --set source_id = (
 --		select top 1
 --			s.staff_code
---		from JoelBieberNeedles..staff s
+--		from VanceLawFirm_Needles..staff s
 --		join [VanceLawFirm_SA]..sma_MST_IndvContacts indv
 --			on s.full_name = indv.cinsFirstName + ' ' + indv.cinsLastName
 --		where indv.cinnContactID = sma_MST_Users.usrnContactID
@@ -83,6 +83,6 @@ drop table #ContactSourceMap;
 --	FROM [VanceLawFirm_SA]..sma_mst_users u
 --		JOIN [VanceLawFirm_SA]..sma_MST_IndvContacts smic
 --			ON smic.cinnContactID = u.usrnContactID
---		LEFT JOIN JoelBieberNeedles..staff s
+--		LEFT JOIN VanceLawFirm_Needles..staff s
 --			ON s.full_name = smic.cinsFirstName + ' ' + smic.cinsLastName
 

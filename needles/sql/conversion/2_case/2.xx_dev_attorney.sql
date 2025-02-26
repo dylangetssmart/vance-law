@@ -34,7 +34,7 @@ alter table [sma_TRN_LawFirmAttorneys] enable trigger all
 --INSERT ATTORNEY TYPES
 -----------------------------------------------------------------------------------
 INSERT INTO sma_MST_AttorneyTypes (atnsAtorneyDscrptn)
-SELECT Distinct Type_OF_Attorney From JoelBieberNeedles..user_counsel_data where isnull(Type_of_attorney,'')<>''
+SELECT Distinct Type_OF_Attorney From VanceLawFirm_Needles..user_counsel_data where isnull(Type_of_attorney,'')<>''
 EXCEPT
 SELECT atnsAtorneydscrptn from sma_MST_AttorneyTypes
 */
@@ -106,8 +106,8 @@ INSERT INTO [sma_TRN_PlaintiffAttorney]
 	   ,ISNULL('comments : ' + NULLIF(CONVERT(VARCHAR(MAX), C.comments), '') + CHAR(13), '') +
 		ISNULL('Attorney for party : ' + NULLIF(CONVERT(VARCHAR(MAX), IOCP.name), '') + CHAR(13), '') +
 		''				  AS [plasComments]
-	FROM JoelBieberNeedles..[counsel_Indexed] C
-	LEFT JOIN JoelBieberNeedles.[dbo].[user_counsel_data] UD
+	FROM VanceLawFirm_Needles..[counsel_Indexed] C
+	LEFT JOIN VanceLawFirm_Needles.[dbo].[user_counsel_data] UD
 		ON UD.counsel_id = C.counsel_id
 			AND C.case_num = UD.casenum
 	JOIN [sma_TRN_Cases] CAS
@@ -171,8 +171,8 @@ INSERT INTO [sma_TRN_LawFirms]
 	   ,ISNULL('comments : ' + NULLIF(CONVERT(VARCHAR(MAX), C.comments), '') + CHAR(13), '') +
 		ISNULL('Attorney for party : ' + NULLIF(CONVERT(VARCHAR(MAX), IOCD.name), '') + CHAR(13), '') +
 		''				  AS [lwfsComments]
-	FROM JoelBieberNeedles.[dbo].[counsel_Indexed] C
-	LEFT JOIN JoelBieberNeedles.[dbo].[user_counsel_data] UD
+	FROM VanceLawFirm_Needles.[dbo].[counsel_Indexed] C
+	LEFT JOIN VanceLawFirm_Needles.[dbo].[user_counsel_data] UD
 		ON UD.counsel_id = C.counsel_id
 			AND C.case_num = UD.casenum
 	JOIN [sma_TRN_Cases] CAS
@@ -259,8 +259,8 @@ SET cinnContactTypeID = (
 FROM (
 	SELECT
 		I.cinnContactID AS ID
-	FROM JoelBieberNeedles.[dbo].[counsel] C
-	JOIN JoelBieberNeedles.[dbo].[names] L
+	FROM VanceLawFirm_Needles.[dbo].[counsel] C
+	JOIN VanceLawFirm_Needles.[dbo].[names] L
 		ON C.counsel_id = L.names_id
 	JOIN [dbo].[sma_MST_IndvContacts] I
 		ON saga = L.names_id

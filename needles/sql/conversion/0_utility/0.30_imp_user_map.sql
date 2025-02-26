@@ -3,20 +3,20 @@ This script manages the population of the `implementation_users` table for the V
 It consists of two main phases, controlled by the `@Phase` variable:
 
     - Phase 1: Initial Conversion
-      - Seeds the `implementation_users` table from the `JoelBieberNeedles..staff` table.
+      - Seeds the `implementation_users` table from the `VanceLawFirm_Needles..staff` table.
       - Used in the initial data conversion phase when only `staff` data is available.
 
     - Phase 2: Implementation Database Seeding
       - Drops and repopulates `implementation_users` based on the implementation database.
       - Joins `sma_mst_users` and `sma_MST_IndvContacts` from the implementation database.
-      - Adds `staff_code` from `JoelBieberNeedles..staff` if available.
+      - Adds `staff_code` from `VanceLawFirm_Needles..staff` if available.
       - Used in later project phases when the implementation database is the primary source.
 
 Usage:
 - Set the `@Phase` variable to `1` for Phase 1 or `2` for Phase 2, then run the script.
 
 Requirements:
-- Phase 1 assumes `staff` records exist in `JoelBieberNeedles..staff`.
+- Phase 1 assumes `staff` records exist in `VanceLawFirm_Needles..staff`.
 - Phase 2 assumes that both `sma_mst_users` and `sma_MST_IndvContacts` are populated in the implementation database.
 
 */
@@ -51,7 +51,7 @@ go
 
 --IF @Phase = 1
 --BEGIN
---	-- Phase 1: Initial Conversion - Seed from JoelBieberNeedles..staff
+--	-- Phase 1: Initial Conversion - Seed from VanceLawFirm_Needles..staff
 
 --	INSERT INTO implementation_users
 --		(
@@ -77,12 +77,12 @@ go
 --		   ,''							   AS SAMiddle
 --		   ,dbo.get_lastword(s.full_name)  AS SALast
 --		   ,suffix						   AS Suffix
---		FROM [JoelBieberNeedles].[dbo].[staff] s;
+--		FROM [VanceLawFirm_Needles].[dbo].[staff] s;
 --END
 --ELSE
 --IF @Phase = 2
 --BEGIN
---	-- Phase 2: Use implementation database as starting point and add staff_code from JoelBieberNeedles..staff
+--	-- Phase 2: Use implementation database as starting point and add staff_code from VanceLawFirm_Needles..staff
 --	-- at this point, the user table contains legit users entered by the client
 --	INSERT INTO implementation_users
 --		(
@@ -118,7 +118,7 @@ go
 --		FROM [VanceLawFirm_SA]..sma_mst_users u
 --		JOIN [VanceLawFirm_SA]..sma_MST_IndvContacts smic
 --			ON smic.cinnContactID = u.usrnContactID
---		LEFT JOIN JoelBieberNeedles..staff s
+--		LEFT JOIN VanceLawFirm_Needles..staff s
 --			ON s.full_name = smic.cinsFirstName + ' ' + smic.cinsLastName
 --END;
 

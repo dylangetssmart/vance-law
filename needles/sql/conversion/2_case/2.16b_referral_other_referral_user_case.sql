@@ -33,7 +33,7 @@ insert into [sma_TRN_OtherReferral]
 		'user_case_data.dr_referral' as [otrscomments],
 		368							 as [otrnuserid],
 		GETDATE()					 as [otrddtcreated]
-	from JoelBieberNeedles.dbo.user_case_data ucd
+	from VanceLawFirm_Needles.dbo.user_case_data ucd
 	join sma_TRN_Cases cas
 		on CONVERT(VARCHAR, ucd.casenum) = cas.cassCaseNumber
 	join sma_MST_IndvContacts indv

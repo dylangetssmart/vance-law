@@ -145,7 +145,7 @@ insert into [sma_TRN_Plaintiff]
 		1				as [plnnprimarycontact],
 		p.TableIndex	as [saga_party]
 	--SELECT  * -- cas.casncaseid, p.role, p.party_ID, pr.[needles roles], pr.[sa roles], pr.[sa party], s.*
-	from JoelBieberNeedles.[dbo].[party_indexed] p
+	from VanceLawFirm_Needles.[dbo].[party_indexed] p
 	join [sma_TRN_Cases] cas
 		on cas.cassCaseNumber = p.case_id
 	join IndvOrgContacts_Indexed cio
@@ -238,7 +238,7 @@ insert into [sma_TRN_Plaintiff]
 		1				as [plnnprimarycontact],
 		null as [saga_party]
 	--SELECT  * cas.casnOrgCaseTypeID -- cas.casncaseid, p.role, p.party_ID, pr.[needles roles], pr.[sa roles], pr.[sa party], s.*
-	from JoelBieberNeedles..user_case_data ucd
+	from VanceLawFirm_Needles..user_case_data ucd
 	-- case
 	join sma_TRN_Cases cas
 		on cas.cassCaseNumber = convert(varchar,ucd.casenum)
@@ -377,7 +377,7 @@ from (
 		ROW_NUMBER() over (partition by t.plnnCaseID order by p.record_num) as rownumber,
 		t.plnnPlaintiffID as id
 	from sma_TRN_Plaintiff t
-	left join JoelBieberNeedles.[dbo].[party_indexed] p
+	left join VanceLawFirm_Needles.[dbo].[party_indexed] p
 		on p.TableIndex = t.saga_party
 ) a
 where a.rownumber = 1

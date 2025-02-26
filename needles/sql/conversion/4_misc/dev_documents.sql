@@ -70,7 +70,7 @@ insert into [sma_MST_ScannedDocCategories]
 	(
 	select distinct
 		Category as sctgscategoryname
-	from JoelBieberNeedles.[dbo].[documents]
+	from VanceLawFirm_Needles.[dbo].[documents]
 	where ISNULL(category, '') <> ''
 	union
 	select
@@ -222,7 +222,7 @@ insert into [sma_TRN_Documents]
 		GETDATE(),
 		3								  as [docnpriority],  -- normal priority
 		null							  as [saga]
-	from JoelBieberNeedles.[dbo].[documents] doc
+	from VanceLawFirm_Needles.[dbo].[documents] doc
 	join [sma_TRN_Cases] cas
 		on cas.cassCaseNumber = doc.case_id
 go
@@ -238,7 +238,7 @@ select
     DOC.[file_path],
     dbo.FileNamePart(DOC.[file_path])	as [docsDocumentName],
     dbo.PathPart(DOC.[file_path])	 as [docsDocumentPath]
-FROM JoelBieberNeedles.[dbo].[documents] DOC
+FROM VanceLawFirm_Needles.[dbo].[documents] DOC
 where case_id=200133
 
 */
@@ -252,5 +252,5 @@ select
 		  then (select sctgnCategoryID FROM sma_MST_ScannedDocCategories where sctgsCategoryName=DOC.Category)
 	   else (select sctgnCategoryID FROM sma_MST_ScannedDocCategories where sctgsCategoryName='Other')
     end						 as [ctgnCategoryID]
-FROM JoelBieberNeedles.[dbo].[documents] DOC
+FROM VanceLawFirm_Needles.[dbo].[documents] DOC
 */

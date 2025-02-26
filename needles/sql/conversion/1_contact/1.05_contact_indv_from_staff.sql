@@ -64,7 +64,7 @@ insert into [sma_MST_IndvContacts]
 		'needles'													 as [source_db],
 		'staff'														 as [source_ref]
 	--select *
-	from JoelBieberNeedles..staff s
+	from VanceLawFirm_Needles..staff s
 	left join conversion.imp_user_map m
 		on s.staff_code = m.StaffCode
 	left join [sma_MST_IndvContacts] ind
@@ -78,7 +78,7 @@ insert into [sma_MST_IndvContacts]
 	Identify staff members that are not in imp_user_map and do not have an individual contact
 
 
-	from [JoelBieberNeedles].[dbo].[staff] s
+	from [VanceLawFirm_Needles].[dbo].[staff] s
 	join [sma_MST_IndvContacts] indv
 	on indv.source_id = s.staff_code
 	where cinnContactID is null

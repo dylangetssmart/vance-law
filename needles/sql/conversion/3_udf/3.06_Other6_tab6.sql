@@ -53,13 +53,13 @@ VALUES (
 );
 GO
 
--- Dynamically get all columns from JoelBieberNeedles..user_tab6_data for unpivoting
+-- Dynamically get all columns from VanceLawFirm_Needles..user_tab6_data for unpivoting
 DECLARE @sql NVARCHAR(MAX) = N'';
 SELECT
 	@sql = STRING_AGG(CONVERT(VARCHAR(MAX),
 	N'CONVERT(VARCHAR(MAX), ' + QUOTENAME(column_name) + N') AS ' + QUOTENAME(column_name)
 	), ', ')
-FROM JoelBieberNeedles.INFORMATION_SCHEMA.COLUMNS
+FROM VanceLawFirm_Needles.INFORMATION_SCHEMA.COLUMNS
 WHERE table_name = 'user_tab6_data'
 	AND column_name NOT IN (
 		SELECT
@@ -72,7 +72,7 @@ WHERE table_name = 'user_tab6_data'
 DECLARE @unpivot_list NVARCHAR(MAX) = N'';
 SELECT
 	@unpivot_list = STRING_AGG(QUOTENAME(column_name), ', ')
-FROM JoelBieberNeedles.INFORMATION_SCHEMA.COLUMNS
+FROM VanceLawFirm_Needles.INFORMATION_SCHEMA.COLUMNS
 WHERE table_name = 'user_tab6_data'
 	AND column_name NOT IN (
 		SELECT
@@ -89,8 +89,8 @@ FROM (
     SELECT 
         cas.casnCaseID, 
         cas.casnOrgCaseTypeID, ' + @sql + N'
-    FROM JoelBieberNeedles..user_tab6_data ud
-    JOIN JoelBieberNeedles..cases_Indexed c ON c.casenum = ud.case_id
+    FROM VanceLawFirm_Needles..user_tab6_data ud
+    JOIN VanceLawFirm_Needles..cases_Indexed c ON c.casenum = ud.case_id
     JOIN sma_TRN_Cases cas ON cas.cassCaseNumber = CONVERT(VARCHAR, ud.case_id)
 ) pv
 UNPIVOT (FieldVal FOR FieldTitle IN (' + @unpivot_list + N')) AS unpvt;';
@@ -141,7 +141,7 @@ BEGIN
 		FROM [sma_MST_CaseType] CST
 		JOIN CaseTypeMixture mix
 			ON mix.[SmartAdvocate Case Type] = CST.cstsType
-		JOIN [JoelBieberNeedles].[dbo].[user_tab6_matter] M
+		JOIN [VanceLawFirm_Needles].[dbo].[user_tab6_matter] M
 			ON M.mattercode = mix.matcode
 				AND M.field_type <> 'label'
 		JOIN (
@@ -156,7 +156,7 @@ BEGIN
 			SELECT DISTINCT
 				table_Name
 			   ,column_name
-			FROM [JoelBieberNeedles].[dbo].[document_merge_params]
+			FROM [VanceLawFirm_Needles].[dbo].[document_merge_params]
 			WHERE table_Name = 'user_tab6_data'
 		) dmp
 			ON dmp.column_name = ucf.field_Title

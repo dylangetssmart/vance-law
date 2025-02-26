@@ -24,20 +24,20 @@ go
 --select top 1
 --	ucd.COURT,
 --	ucd.casenum
---from JoelBieberNeedles..user_case_data ucd
+--from VanceLawFirm_Needles..user_case_data ucd
 --where ISNULL(ucd.COURT, '') <> ''
 
 --select
 --	*
---from JoelBieberNeedles..user_case_fields ucf
+--from VanceLawFirm_Needles..user_case_fields ucf
 --where ucf.field_title = 'court'
 --select
 --	*
---from JoelBieberNeedles..user_case_name ucn
+--from VanceLawFirm_Needles..user_case_name ucn
 --where ucn.casenum = 207706
 --select
 --	*
---from JoelBieberNeedles..names
+--from VanceLawFirm_Needles..names
 --where names_id = 24740
 
 --with cte_courts
@@ -45,13 +45,13 @@ go
 --(
 --	select distinct
 --		names_id
---	from JoelBieberNeedles..user_case_data ucd
---	join JoelBieberNeedles..user_case_fields ucf
+--	from VanceLawFirm_Needles..user_case_data ucd
+--	join VanceLawFirm_Needles..user_case_fields ucf
 --		on ucf.field_title = 'Court'
---	join JoelBieberNeedles..user_case_name ucn
+--	join VanceLawFirm_Needles..user_case_name ucn
 --		on ucn.ref_num = ucf.field_num
 --		and ucd.casenum = ucn.casenum
---	join JoelBieberNeedles..names n
+--	join VanceLawFirm_Needles..names n
 --		on n.names_id = ucn.user_name
 --	where ISNULL(ucd.COURT, '') <> ''
 
@@ -125,7 +125,7 @@ insert into [sma_MST_OrgContacts]
 		null			   as [source_id],
 		'needles'		   as [source_db],
 		'names'			   as [source_ref]
-	from JoelBieberNeedles.[dbo].[names] n
+	from VanceLawFirm_Needles.[dbo].[names] n
 	--join cte_courts
 	--	on n.names_id = cte_courts.names_id
 	where n.[person] <> 'Y'

@@ -129,7 +129,7 @@ insert into [sma_MST_IndvContacts]
 		ins.insured			  as [source_id],
 		'needles'			  as [source_db],
 		'insured'			  as [source_ref]
-	from [JoelBieberNeedles].[dbo].[insurance] ins
+	from [VanceLawFirm_Needles].[dbo].[insurance] ins
 	where ISNULL(insured, '') <> ''
 go
 

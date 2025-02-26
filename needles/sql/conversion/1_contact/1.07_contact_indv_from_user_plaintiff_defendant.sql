@@ -25,7 +25,7 @@ saga: saga_char
 --		--ucd.casenum as casenum,
 --		ucd.PLAINTIFF as contact_name,
 --		'P' as plaintiff_or_defendant
---	from JoelBieberNeedles..user_case_data ucd
+--	from VanceLawFirm_Needles..user_case_data ucd
 --	where ISNULL(ucd.PLAINTIFF, '') <> ''
 
 --	union all
@@ -35,7 +35,7 @@ saga: saga_char
 --		--ucd.casenum as casenum,
 --		ucd.DEFENDANT as contact_name,
 --		'D' as plaintiff_or_defendant
---	from JoelBieberNeedles..user_case_data ucd
+--	from VanceLawFirm_Needles..user_case_data ucd
 --	where ISNULL(ucd.DEFENDANT, '') <> ''
 --)
 
@@ -63,7 +63,7 @@ insert into conversion.user_case_plaintiff_defendant
 	select distinct
 		ucd.PLAINTIFF as contact_name,
 		'P'			  as plaintiff_or_defendant
-	from JoelBieberNeedles..user_case_data ucd
+	from VanceLawFirm_Needles..user_case_data ucd
 	where ISNULL(ucd.PLAINTIFF, '') <> ''
 
 	union all
@@ -72,7 +72,7 @@ insert into conversion.user_case_plaintiff_defendant
 	select distinct
 		ucd.DEFENDANT as contact_name,
 		'D'			  as plaintiff_or_defendant
-	from JoelBieberNeedles..user_case_data ucd
+	from VanceLawFirm_Needles..user_case_data ucd
 	where ISNULL(ucd.DEFENDANT, '') <> ''
 ;
 

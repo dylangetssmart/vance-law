@@ -30,7 +30,7 @@ insert into [sma_MST_NoteTypes]
 	select distinct
 		vn.topic,
 		vn.topic
-	from JoelBieberNeedles..value_notes vn
+	from VanceLawFirm_Needles..value_notes vn
 	except
 	select
 		nttsDscrptn,
@@ -85,8 +85,8 @@ insert into [sma_TRN_Notes]
 		null		  as [source_id],
 		'needles'	  as [source_db],
 		'value_notes' as [source_ref]
-	from JoelBieberNeedles.[dbo].[value_notes] n
-	join JoelBieberNeedles.[dbo].[value_Indexed] v
+	from VanceLawFirm_Needles.[dbo].[value_notes] n
+	join VanceLawFirm_Needles.[dbo].[value_Indexed] v
 		on v.value_id = n.value_num
 	join [sma_TRN_Cases] c
 		on c.cassCaseNumber = v.case_id
@@ -109,8 +109,8 @@ insert into sma_TRN_NoteContacts
 		note.notnNoteID,
 		ioc.UNQCID
 	--select v.provider, ioc.*, n.note, note.*
-	from JoelBieberNeedles..[value_notes] n
-	join JoelBieberNeedles..value_Indexed v
+	from VanceLawFirm_Needles..[value_notes] n
+	join VanceLawFirm_Needles..value_Indexed v
 		on v.value_id = n.value_num
 	join sma_trn_Cases cas
 		on cas.cassCaseNumber = v.case_id

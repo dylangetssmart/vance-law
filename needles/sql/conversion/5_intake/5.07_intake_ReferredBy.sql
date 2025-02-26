@@ -22,7 +22,7 @@ SELECT
     368			    as [otrnUserID], 
     getdate()		as [otrdDtCreated] 
 --select referred_by, referred_by_id
-FROM JoelBieberNeedles..case_intake c
+FROM VanceLawFirm_Needles..case_intake c
 	JOIN [sma_TRN_cases] CAS
 		on CAS.saga = C.row_id
 	JOIN [IndvOrgContacts_Indexed] IOC

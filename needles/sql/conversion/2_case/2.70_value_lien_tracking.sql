@@ -22,27 +22,27 @@ VALUES (
 
 
 /*
-alter table [JoelBieberNeedles].[dbo].[sma_TRN_Lienors] disable trigger all
-delete from [JoelBieberNeedles].[dbo].[sma_TRN_Lienors] 
-DBCC CHECKIDENT ('[JoelBieberNeedles].[dbo].[sma_TRN_Lienors]', RESEED, 0);
-alter table [JoelBieberNeedles].[dbo].[sma_TRN_Lienors] enable trigger all
+alter table [VanceLawFirm_Needles].[dbo].[sma_TRN_Lienors] disable trigger all
+delete from [VanceLawFirm_Needles].[dbo].[sma_TRN_Lienors] 
+DBCC CHECKIDENT ('[VanceLawFirm_Needles].[dbo].[sma_TRN_Lienors]', RESEED, 0);
+alter table [VanceLawFirm_Needles].[dbo].[sma_TRN_Lienors] enable trigger all
 
-alter table [JoelBieberNeedles].[dbo].[sma_TRN_LienDetails] disable trigger all
-delete from [JoelBieberNeedles].[dbo].[sma_TRN_LienDetails] 
-DBCC CHECKIDENT ('[JoelBieberNeedles].[dbo].[sma_TRN_LienDetails]', RESEED, 0);
-alter table [JoelBieberNeedles].[dbo].[sma_TRN_LienDetails] enable trigger all
-
-
-alter table [JoelBieberNeedles].[dbo].[sma_TRN_Lienors] disable trigger all
-
-alter table [JoelBieberNeedles].[dbo].[sma_TRN_LienDetails] disable trigger all
+alter table [VanceLawFirm_Needles].[dbo].[sma_TRN_LienDetails] disable trigger all
+delete from [VanceLawFirm_Needles].[dbo].[sma_TRN_LienDetails] 
+DBCC CHECKIDENT ('[VanceLawFirm_Needles].[dbo].[sma_TRN_LienDetails]', RESEED, 0);
+alter table [VanceLawFirm_Needles].[dbo].[sma_TRN_LienDetails] enable trigger all
 
 
-select count(*) from [JoelBieberNeedles].[dbo].[sma_TRN_Lienors]
+alter table [VanceLawFirm_Needles].[dbo].[sma_TRN_Lienors] disable trigger all
+
+alter table [VanceLawFirm_Needles].[dbo].[sma_TRN_LienDetails] disable trigger all
+
+
+select count(*) from [VanceLawFirm_Needles].[dbo].[sma_TRN_Lienors]
 
 select * from value_tab_Liencheckbox_Helper 
 
-select * from [JoelBieberNeedles].[dbo].[value_payment] where value_id=65990
+select * from [VanceLawFirm_Needles].[dbo].[value_payment] where value_id=65990
 
 */
 
@@ -89,11 +89,11 @@ INSERT INTO value_tab_Liencheckbox_Helper
 	)
 	SELECT
 		VP1.value_id
-	FROM [JoelBieberNeedles].[dbo].[value_payment] VP1
+	FROM [VanceLawFirm_Needles].[dbo].[value_payment] VP1
 	LEFT JOIN (
 		SELECT DISTINCT
 			value_id
-		FROM [JoelBieberNeedles].[dbo].[value_payment]
+		FROM [VanceLawFirm_Needles].[dbo].[value_payment]
 		WHERE lien = 'Y'
 	) VP2
 		ON VP1.value_id = VP2.value_id
@@ -116,8 +116,8 @@ INSERT INTO [VanceLawFirm_SA].[dbo].[sma_MST_LienType]
 	SELECT DISTINCT
 		'CONVERSION'
 	   ,VC.[description]
-	FROM [JoelBieberNeedles].[dbo].[value] V
-	INNER JOIN [JoelBieberNeedles].[dbo].[value_code] VC
+	FROM [VanceLawFirm_Needles].[dbo].[value] V
+	INNER JOIN [VanceLawFirm_Needles].[dbo].[value_code] VC
 		ON VC.code = V.code
 	WHERE ISNULL(V.code, '') IN (
 			SELECT
@@ -195,7 +195,7 @@ INSERT INTO value_tab_Lien_Helper
 	   ,CAS.casnCaseID AS casnCaseID
 	   ,NULL		   AS PlaintiffID
 	   ,NULL		   AS Paid
-	FROM [JoelBieberNeedles].[dbo].[value_Indexed] V
+	FROM [VanceLawFirm_Needles].[dbo].[value_Indexed] V
 	INNER JOIN [VanceLawFirm_SA].[dbo].[sma_TRN_cases] CAS
 		ON CAS.cassCaseNumber = V.case_id
 	INNER JOIN [VanceLawFirm_SA].[dbo].[IndvOrgContacts_Indexed] IOC
@@ -237,13 +237,13 @@ SELECT
    ,CONVERT(VARCHAR, ((
 		SELECT
 			SUM(payment_amount)
-		FROM [JoelBieberNeedles].[dbo].[value_payment]
+		FROM [VanceLawFirm_Needles].[dbo].[value_payment]
 		WHERE value_id = V.value_id
 	)
 	)
 	)		   AS Paid
    ,T.plnnPlaintiffID INTO value_tab_Multi_Party_Helper_Temp
-FROM [JoelBieberNeedles].[dbo].[value_Indexed] V
+FROM [VanceLawFirm_Needles].[dbo].[value_Indexed] V
 INNER JOIN [VanceLawFirm_SA].[dbo].[sma_TRN_cases] CAS
 	ON CAS.cassCaseNumber = V.case_id
 INNER JOIN [VanceLawFirm_SA].[dbo].[IndvOrgContacts_Indexed] IOC
@@ -281,7 +281,7 @@ SELECT
    ,CONVERT(VARCHAR, ((
 		SELECT
 			SUM(payment_amount)
-		FROM [JoelBieberNeedles].[dbo].[value_payment]
+		FROM [VanceLawFirm_Needles].[dbo].[value_payment]
 		WHERE value_id = V.value_id
 	)
 	)
@@ -294,7 +294,7 @@ SELECT
 			AND plnbIsPrimary = 1
 	)		   
 	AS plnnPlaintiffID INTO value_tab_Multi_Party_Helper_Temp
-FROM [JoelBieberNeedles].[dbo].[value_Indexed] V
+FROM [VanceLawFirm_Needles].[dbo].[value_Indexed] V
 INNER JOIN [VanceLawFirm_SA].[dbo].[sma_TRN_cases] CAS
 	ON CAS.cassCaseNumber = V.case_id
 INNER JOIN [VanceLawFirm_SA].[dbo].[IndvOrgContacts_Indexed] IOC
@@ -348,7 +348,7 @@ INSERT INTO [dbo].[sma_TRN_Lienors]
 			WHERE lntsDscrptn = (
 					SELECT TOP 1
 						[description]
-					FROM [JoelBieberNeedles].[dbo].[value_code]
+					FROM [VanceLawFirm_Needles].[dbo].[value_code]
 					WHERE [code] = V.code
 				)
 		)						 
@@ -371,7 +371,7 @@ INSERT INTO [dbo].[sma_TRN_Lienors]
 	   ,GETDATE()				 AS [lnrdDtCreated]
 	   ,0						 AS [lnrnFinal]
 	   ,V.value_id				 AS [saga]
-	FROM [JoelBieberNeedles].[dbo].[value_Indexed] V
+	FROM [VanceLawFirm_Needles].[dbo].[value_Indexed] V
 	INNER JOIN [VanceLawFirm_SA].[dbo].[value_tab_Lien_Helper] MAP
 		ON MAP.case_id = V.case_id
 			AND MAP.value_id = V.value_id

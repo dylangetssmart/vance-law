@@ -121,7 +121,7 @@ insert into [sma_TRN_Defendants]
 		null,
 		null,
 		p.TableIndex  as [saga_party]
-	from JoelBieberNeedles.[dbo].[party_indexed] p
+	from VanceLawFirm_Needles.[dbo].[party_indexed] p
 	join [sma_TRN_Cases] cas
 		on cas.cassCaseNumber = p.case_id
 	join IndvOrgContacts_Indexed acio
@@ -185,7 +185,7 @@ insert into [sma_TRN_Defendants]
 		null as [saga]
 		--p.TableIndex  as [saga_party]
 	select *
-	from JoelBieberNeedles..user_case_data ucd
+	from VanceLawFirm_Needles..user_case_data ucd
 	-- case
 	join sma_TRN_Cases cas
 		on cas.cassCaseNumber = convert(varchar,ucd.casenum)
@@ -285,7 +285,7 @@ from (
 		ROW_NUMBER() over (partition by d.defnCaseID order by p.record_num) as rownumber,
 		d.defnDefendentID as id
 	from sma_TRN_Defendants d
-	left join JoelBieberNeedles.[dbo].[party_indexed] p
+	left join VanceLawFirm_Needles.[dbo].[party_indexed] p
 		on p.TableIndex = d.saga_party
 ) a
 where a.rownumber = 1

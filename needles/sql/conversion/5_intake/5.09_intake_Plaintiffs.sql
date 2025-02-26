@@ -4,7 +4,7 @@ GO
 --Plaintiffs
 /*
 select name_id, first_name, last_name, name_id_2, First_Name_Party_2, Last_Name_Party_2
-From JoelBieberNeedles..case_intake
+From VanceLawFirm_Needles..case_intake
 where isnull(name_id,0)<>0
 */
 
@@ -88,7 +88,7 @@ INSERT INTO [sma_TRN_Plaintiff]
 	   ,1			   AS [plnnPrimaryContact]
 	   ,NULL		   AS [saga_party]
 	--select *
-	FROM JoelBieberNeedles..case_intake c
+	FROM VanceLawFirm_Needles..case_intake c
 	JOIN [sma_TRN_Cases] CAS
 		ON CAS.saga = c.ROW_ID
 	JOIN IndvOrgContacts_Indexed CIO

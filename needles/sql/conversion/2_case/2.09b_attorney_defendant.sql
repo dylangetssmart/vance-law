@@ -80,8 +80,8 @@ insert into [sma_TRN_LawFirms]
 		ISNULL('comments : ' + NULLIF(CONVERT(VARCHAR(MAX), c.comments), '') + CHAR(13), '') +
 		ISNULL('Attorney for party : ' + NULLIF(CONVERT(VARCHAR(MAX), iocd.name), '') + CHAR(13), '') +
 		''				  as [lwfscomments]
-	from JoelBieberNeedles.[dbo].[counsel_Indexed] c
-	left join JoelBieberNeedles.[dbo].[user_counsel_data] ud
+	from VanceLawFirm_Needles.[dbo].[counsel_Indexed] c
+	left join VanceLawFirm_Needles.[dbo].[user_counsel_data] ud
 		on ud.counsel_id = c.counsel_id
 			and c.case_num = ud.casenum
 	join [sma_TRN_Cases] cas

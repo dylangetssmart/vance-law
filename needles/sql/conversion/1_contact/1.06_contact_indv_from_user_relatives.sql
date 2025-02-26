@@ -177,7 +177,7 @@ insert into [sma_MST_IndvContacts]
 		ucd.relative_name					 as [source_id],
 		'needles'							 as [source_db],
 		'user_case_data.relative_name'		 as [source_ref]
-	from [JoelBieberNeedles].[dbo].user_case_data ucd
+	from [VanceLawFirm_Needles].[dbo].user_case_data ucd
 	where ISNULL(ucd.Relative_Name, '') <> ''
 go
 
@@ -204,7 +204,7 @@ user_party_data
 --		upd.Relative_City as relative_city,
 --		upd.Relative_State as relative_state,
 --		upd.Relative_Zip as relative_zip
---	from JoelBieberNeedles..user_party_data upd
+--	from VanceLawFirm_Needles..user_party_data upd
 --	where ISNULL(upd.Relative_Name, '') <> ''
 
 --	union all
@@ -219,7 +219,7 @@ user_party_data
 --		upd.Relative_City as relative_city,
 --		upd.Relative_State as relative_state,
 --		upd.Relative_Zip as relative_zip
---	from JoelBieberNeedles..user_party_data upd
+--	from VanceLawFirm_Needles..user_party_data upd
 --	where ISNULL(upd.Relative, '') <> ''
 --)
 
@@ -262,7 +262,7 @@ insert into conversion.user_party_relative
 		upd.Relative_City,
 		upd.Relative_State,
 		upd.Relative_Zip
-	from JoelBieberNeedles..user_party_data upd
+	from VanceLawFirm_Needles..user_party_data upd
 	where ISNULL(upd.Relative_Name, '') <> ''
 		and ISNULL(upd.Relative, '') <> ISNULL(upd.Relative_Name, '')
 
@@ -277,16 +277,16 @@ insert into conversion.user_party_relative
 		upd.Relative_City,
 		upd.Relative_State,
 		upd.Relative_Zip
-	from JoelBieberNeedles..user_party_data upd
+	from VanceLawFirm_Needles..user_party_data upd
 	where ISNULL(upd.Relative, '') <> ''
 		and ISNULL(upd.Relative, '') <> ISNULL(upd.Relative_Name, '')
 ;
 
 -- Validate record count
---SELECT distinct upd.Relative FROM JoelBieberNeedles..user_party_data upd
+--SELECT distinct upd.Relative FROM VanceLawFirm_Needles..user_party_data upd
 --where isnull(upd.Relative,'')<>''
 
---SELECT distinct upd.Relative_name FROM JoelBieberNeedles..user_party_data upd
+--SELECT distinct upd.Relative_name FROM VanceLawFirm_Needles..user_party_data upd
 --where isnull(upd.Relative_Name,'')<>''
 
 --SELECT * FROM cte_user_party_relative

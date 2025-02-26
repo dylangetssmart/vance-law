@@ -86,8 +86,8 @@ insert into [sma_TRN_PlaintiffAttorney]
 		ISNULL('comments : ' + NULLIF(CONVERT(VARCHAR(MAX), c.comments), '') + CHAR(13), '') +
 		ISNULL('Attorney for party : ' + NULLIF(CONVERT(VARCHAR(MAX), iocp.name), '') + CHAR(13), '') +
 		''				  as [plascomments]
-	from JoelBieberNeedles..[counsel_Indexed] c
-	left join JoelBieberNeedles.[dbo].[user_counsel_data] ud
+	from VanceLawFirm_Needles..[counsel_Indexed] c
+	left join VanceLawFirm_Needles.[dbo].[user_counsel_data] ud
 		on ud.counsel_id = c.counsel_id
 			and c.case_num = ud.casenum
 	join [sma_TRN_Cases] cas
@@ -103,7 +103,7 @@ insert into [sma_TRN_PlaintiffAttorney]
 			and t.plnnContactCtg = iocp.CTG
 			and t.plnnCaseID = cas.casnCaseID
 go
---select * from JoelBieberNeedles..user_counsel_data ucd where casenum = 229701
+--select * from VanceLawFirm_Needles..user_counsel_data ucd where casenum = 229701
 -------------------------------------------------------------------------------
 -- Plaintiff Attorney list
 -------------------------------------------------------------------------------

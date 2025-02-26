@@ -42,7 +42,7 @@ insert into [sma_TRN_PlaintiffInjury]
 		null				as [plinmodifyuserid],
 		null				as [pliddtmodified]
 	--select *
-	from JoelBieberNeedles..user_party_data upd
+	from VanceLawFirm_Needles..user_party_data upd
 	join sma_trn_Cases cas
 		on cas.cassCaseNumber = CONVERT(VARCHAR, upd.case_id)
 	join [sma_TRN_Plaintiff] pln

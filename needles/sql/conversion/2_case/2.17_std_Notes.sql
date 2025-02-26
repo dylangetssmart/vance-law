@@ -43,7 +43,7 @@ insert into [sma_MST_NoteTypes]
 	select distinct
 		topic as nttsdscrptn,
 		topic as nttsnotetext
-	from JoelBieberNeedles.[dbo].[case_notes_Indexed]
+	from VanceLawFirm_Needles.[dbo].[case_notes_Indexed]
 	except
 	select
 		nttsdscrptn,
@@ -109,7 +109,7 @@ insert into [sma_TRN_Notes]
 		null							as [workplanitemid],
 		null							as [notnsubject],
 		note_key						as saga
-	from JoelBieberNeedles.[dbo].[case_notes_Indexed] n
+	from VanceLawFirm_Needles.[dbo].[case_notes_Indexed] n
 	join [sma_TRN_Cases] c
 		on c.cassCaseNumber = n.case_num
 	left join [sma_MST_Users] u

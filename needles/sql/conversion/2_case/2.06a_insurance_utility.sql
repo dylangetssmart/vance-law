@@ -153,7 +153,7 @@ insert into conversion.insurance_contacts_helper
 		cas.casnCaseID		 as caseid,
 		null				 as plaintiffdefendantid
 	--select *
-	from JoelBieberNeedles.[dbo].[insurance_Indexed] ins
+	from VanceLawFirm_Needles.[dbo].[insurance_Indexed] ins
 	join [sma_TRN_Cases] cas
 		on cas.cassCaseNumber = ins.case_num
 	join IndvOrgContacts_Indexed ioc1
@@ -190,7 +190,7 @@ select
 	t.plnnPlaintiffID
 into conversion.multi_party_helper
 --select *
-from JoelBieberNeedles.[dbo].[insurance_Indexed] ins
+from VanceLawFirm_Needles.[dbo].[insurance_Indexed] ins
 join [sma_TRN_cases] cas
 	on cas.cassCaseNumber = ins.case_num
 join [IndvOrgContacts_Indexed] ioc
@@ -221,7 +221,7 @@ select
 	ins.insurance_id as ins_id,
 	d.defnDefendentID
 into conversion.multi_party_helper
-from JoelBieberNeedles.[dbo].[insurance_Indexed] ins
+from VanceLawFirm_Needles.[dbo].[insurance_Indexed] ins
 join [sma_TRN_cases] cas
 	on cas.cassCaseNumber = ins.case_num
 join [IndvOrgContacts_Indexed] ioc
@@ -252,7 +252,7 @@ insert into [sma_MST_InsuranceType]
 	union
 	select distinct
 		policy_type
-	from JoelBieberNeedles.[dbo].[insurance] ins
+	from VanceLawFirm_Needles.[dbo].[insurance] ins
 	where ISNULL(policy_type, '') <> ''
 	except
 	select
@@ -261,4 +261,4 @@ insert into [sma_MST_InsuranceType]
 go
 
 --select * from [sma_MST_InsuranceType]
---select distinct i.policy_type from JoelBieberNeedles..insurance i
+--select distinct i.policy_type from VanceLawFirm_Needles..insurance i

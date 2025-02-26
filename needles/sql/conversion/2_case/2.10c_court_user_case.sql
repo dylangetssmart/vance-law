@@ -54,19 +54,19 @@ insert into [sma_TRN_Courts]
 		null				   as source_db,
 		'user_case_data.COURT' as source_ref
 	--select *
-	from JoelBieberNeedles..user_case_data ucd
+	from VanceLawFirm_Needles..user_case_data ucd
 	join sma_TRN_Cases cas
 		on CONVERT(VARCHAR, casenum) = cas.cassCaseNumber
-	join JoelBieberNeedles..user_case_name ucn
+	join VanceLawFirm_Needles..user_case_name ucn
 		on ucn.casenum = ucd.casenum
 			and ucn.ref_num = (
 				select top 1
 					m.ref_num
-				from JoelBieberNeedles.[dbo].[user_case_matter] m
+				from VanceLawFirm_Needles.[dbo].[user_case_matter] m
 				where m.field_title = 'Court'
 			)
 			and ucn.user_name <> 0
-	join JoelBieberNeedles..names n
+	join VanceLawFirm_Needles..names n
 		on n.names_id = ucn.user_name
 	join IndvOrgContacts_Indexed ioci
 		on ioci.SAGA = n.names_id
@@ -93,7 +93,7 @@ Insert Clerks from user_case_data.CLERK
 */
 
 --SELECT casenum, clerk, court
---FROM JoelBieberNeedles..user_case_data ucd 
+--FROM VanceLawFirm_Needles..user_case_data ucd 
 --where ISNULL(ucd.CLERK, '') <> ''
 --	and ISNULL(ucd.COURT,'') = ''
 
@@ -121,7 +121,7 @@ insert into [sma_TRN_Courts]
 		null				 as source_db,
 		'Unidentified Court' as source_ref
 	--select *
-	from JoelBieberNeedles..user_case_data ucd
+	from VanceLawFirm_Needles..user_case_data ucd
 	join sma_TRN_Cases cas
 		on CONVERT(VARCHAR, casenum) = cas.cassCaseNumber
 	join IndvOrgContacts_Indexed ioci
@@ -164,7 +164,7 @@ insert into [sma_TRN_CourtDocket]
 		null		   as source_id,
 		null		   as source_db,
 		'blank'		   as source_ref
-	from joelbieberNeedles..user_case_data ucd
+	from VanceLawFirm_Needles..user_case_data ucd
 	join sma_TRN_Cases cas
 		on CONVERT(VARCHAR, ucd.casenum) = cas.cassCaseNumber
 	join [sma_TRN_Courts] court
@@ -205,7 +205,7 @@ insert into [sma_TRN_CourtDocket]
 		null				 as source_id,
 		null				 as source_db,
 		'blank'				 as source_ref
-	from joelbieberNeedles..user_case_data ucd
+	from VanceLawFirm_Needles..user_case_data ucd
 	join sma_TRN_Cases cas
 		on CONVERT(VARCHAR, ucd.casenum) = cas.cassCaseNumber
 	join [sma_TRN_Courts] court
@@ -256,18 +256,18 @@ insert into [sma_trn_caseJudgeorClerk]
 		on court.crtnPKCourtsID = docket.crdnCourtsID
 	join sma_TRN_Cases cas
 		on cas.casnCaseID = court.crtnCaseId
-	join JoelBieberNeedles..user_case_data ucd
+	join VanceLawFirm_Needles..user_case_data ucd
 		on CONVERT(VARCHAR, ucd.casenum) = cas.cassCaseNumber
-	join JoelBieberNeedles..user_case_name ucn
+	join VanceLawFirm_Needles..user_case_name ucn
 		on ucn.casenum = ucd.casenum
 			and ucn.ref_num = (
 				select top 1
 					m.ref_num
-				from JoelBieberNeedles.[dbo].[user_case_matter] m
+				from VanceLawFirm_Needles.[dbo].[user_case_matter] m
 				where m.field_title = 'Clerk'
 			)
 			and ucn.user_name <> 0
-	join JoelBieberNeedles..names n
+	join VanceLawFirm_Needles..names n
 		on n.names_id = ucn.user_name
 	join IndvOrgContacts_Indexed ioc
 		on ioc.SAGA = n.names_id
