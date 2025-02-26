@@ -6,7 +6,7 @@ update user created by and modified by now that users exist
 --select * from sma_MST_IndvContacts
 --select * from sma_MST_Users smu
 
-use JoelBieberSA_Needles
+use VanceLawFirm_SA
 go
 
 update ind

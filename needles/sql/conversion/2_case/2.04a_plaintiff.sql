@@ -11,7 +11,7 @@ notes:
 	-
 */
 
-use [JoelBieberSA_Needles]
+use [VanceLawFirm_SA]
 go
 
 if not exists (
@@ -262,7 +262,7 @@ insert into [sma_TRN_Plaintiff]
 	subrole records added by implementation
 		select * from sma_MST_SubRole where sbrnCaseTypeID in (1780,1685) order by sbrsDscrptn
 		SELECT * FROM sma_MST_Users smu
-		select * from JoelBieberSA_Needles.conversion.user_case_plaintiff_defendant ucpd
+		select * from VanceLawFirm_SA.conversion.user_case_plaintiff_defendant ucpd
 	--	select * from sma_MST_IndvContacts smic where smic.source_ref = 'cte_user_case_plaintiff_defendant:plaintiff'
 	*/
 go

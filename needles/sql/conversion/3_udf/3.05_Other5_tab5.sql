@@ -2,7 +2,7 @@
 This script populates UDF Other5 with all columns from user_tab5_data
 */
 
-USE JoelBieberSA_Needles
+USE VanceLawFirm_SA
 GO
 
 IF EXISTS (

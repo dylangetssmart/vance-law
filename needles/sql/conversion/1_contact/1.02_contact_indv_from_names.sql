@@ -17,7 +17,7 @@ target:
 ######################################################################################
 */
 
-use JoelBieberSA_Needles
+use VanceLawFirm_SA
 go
 
 alter table [sma_MST_IndvContacts] disable trigger all

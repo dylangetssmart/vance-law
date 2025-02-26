@@ -19,7 +19,7 @@ notes:
 #########################################################################################
 */
 
-use [JoelBieberSA_Needles]
+use [VanceLawFirm_SA]
 go
 
 -- Create note types that don't yet exist

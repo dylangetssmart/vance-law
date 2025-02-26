@@ -1,5 +1,5 @@
 /*
-This script manages the population of the `implementation_users` table for the JoelBieberSA_Needles project.
+This script manages the population of the `implementation_users` table for the VanceLawFirm_SA project.
 It consists of two main phases, controlled by the `@Phase` variable:
 
     - Phase 1: Initial Conversion
@@ -21,7 +21,7 @@ Requirements:
 
 */
 
-use JoelBieberSA_Needles;
+use VanceLawFirm_SA;
 go
 
 --IF OBJECT_ID('implementation_users', 'U') IS NOT NULL
@@ -115,8 +115,8 @@ go
 --		--select * 
 --		--FROM [JoelBieber_Imp_2024-10-28]..sma_mst_users u
 --		--JOIN [JoelBieber_Imp_2024-10-28]..sma_MST_IndvContacts smic
---		FROM [JoelBieberSA_Needles]..sma_mst_users u
---		JOIN [JoelBieberSA_Needles]..sma_MST_IndvContacts smic
+--		FROM [VanceLawFirm_SA]..sma_mst_users u
+--		JOIN [VanceLawFirm_SA]..sma_MST_IndvContacts smic
 --			ON smic.cinnContactID = u.usrnContactID
 --		LEFT JOIN JoelBieberNeedles..staff s
 --			ON s.full_name = smic.cinsFirstName + ' ' + smic.cinsLastName

@@ -10,7 +10,7 @@ replace:
 ##########################################################################################################################
 */
 
-USE [JoelBieberSA_Needles]
+USE [VanceLawFirm_SA]
 GO
 /*
 alter table [sma_TRN_PlaintiffAttorney] disable trigger all

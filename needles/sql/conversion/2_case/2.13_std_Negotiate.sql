@@ -10,7 +10,7 @@ replace:
 ##########################################################################################################################
 */
 
-USE [JoelBieberSA_Needles]
+USE [VanceLawFirm_SA]
 GO
 /*
 
@@ -113,7 +113,7 @@ INSERT INTO [sma_TRN_Negotiations]
 		ON INS.insurance_id = NEG.insurance_id
 	JOIN [sma_TRN_cases] CAS
 		ON CAS.cassCaseNumber = NEG.case_id
-	LEFT JOIN [JoelBieberSA_Needles].[conversion].[Insurance_Contacts_Helper] MAP
+	LEFT JOIN [VanceLawFirm_SA].[conversion].[Insurance_Contacts_Helper] MAP
 		ON INS.insurance_id = MAP.insurance_id
 
 -----------------

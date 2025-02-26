@@ -3,7 +3,7 @@
 */
 
 
-use JoelBieberSA_Needles
+use VanceLawFirm_SA
 go
 
 alter table [sma_MST_Address]

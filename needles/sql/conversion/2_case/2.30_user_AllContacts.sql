@@ -15,7 +15,7 @@ todo
 */
 
 
-use JoelBieberSA_Needles
+use VanceLawFirm_SA
 go
 
 alter table [sma_MST_OtherCasesContact] disable trigger all

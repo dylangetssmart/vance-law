@@ -10,7 +10,7 @@ replace:
 ##########################################################################################################################
 */
 
-use [JoelBieberSA_Needles]
+use [VanceLawFirm_SA]
 go
 
 set quoted_identifier on;
@@ -344,9 +344,9 @@ insert into [sma_trn_AppointmentStaff]
 
 /*
 ----(3)-----
-insert into [JoelBieberSA_Needles].[dbo].[sma_trn_AppointmentStaff] ( [AppointmentId] ,[StaffContactId] ) 
+insert into [VanceLawFirm_SA].[dbo].[sma_trn_AppointmentStaff] ( [AppointmentId] ,[StaffContactId] ) 
 select APP.AppointmentID, MAP.Party_Contact
-from [JoelBieberSA_Needles].[dbo].[sma_TRN_CalendarAppointments] APP
+from [VanceLawFirm_SA].[dbo].[sma_TRN_CalendarAppointments] APP
 inner join JoelBieberNeedles.[dbo].[calendar] CAL on APP.saga='Case-related:'+convert(varchar,CAL.calendar_id)
 inner join CalendarJudgeStaffCourt MAP on MAP.CalendarId=CAL.calendar_id
 */

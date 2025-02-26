@@ -7,7 +7,7 @@ Description: Create employment records and corresponding lost wage records
 */
 
 
-use JoelBieberSA_Needles
+use VanceLawFirm_SA
 go
 
 /* ##############################################

@@ -16,7 +16,7 @@ we need to update both the user and indvContact records with a reference to the 
 --on u.usrnContactID = indv.cinnContactID
 
 
-use JoelBieberSA_Needles
+use VanceLawFirm_SA
 go
 
 
@@ -26,7 +26,7 @@ go
 --		select top 1
 --			s.staff_code
 --		from JoelBieberNeedles..staff s
---		join [JoelBieberSA_Needles]..sma_MST_IndvContacts indv
+--		join [VanceLawFirm_SA]..sma_MST_IndvContacts indv
 --			on s.full_name = indv.cinsFirstName + ' ' + indv.cinsLastName
 --		where indv.cinnContactID = sma_MST_Users.usrnContactID
 --	),
@@ -77,11 +77,11 @@ join #ContactSourceMap map
 -- Step 4: Clean up the temporary table
 drop table #ContactSourceMap;
 
---SELECT smu.usrsLoginID, smu.source_id FROM JoelBieberSA_Needles..sma_MST_Users smu order by smu.usrsLoginID
+--SELECT smu.usrsLoginID, smu.source_id FROM VanceLawFirm_SA..sma_MST_Users smu order by smu.usrsLoginID
 
 --select s.staff_code, u.*
---	FROM [JoelBieberSA_Needles]..sma_mst_users u
---		JOIN [JoelBieberSA_Needles]..sma_MST_IndvContacts smic
+--	FROM [VanceLawFirm_SA]..sma_mst_users u
+--		JOIN [VanceLawFirm_SA]..sma_MST_IndvContacts smic
 --			ON smic.cinnContactID = u.usrnContactID
 --		LEFT JOIN JoelBieberNeedles..staff s
 --			ON s.full_name = smic.cinsFirstName + ' ' + smic.cinsLastName

@@ -1,4 +1,4 @@
-USE JoelBieberSA_Needles
+USE VanceLawFirm_SA
 GO
 
 INSERT INTO [sma_TRN_OtherReferral]

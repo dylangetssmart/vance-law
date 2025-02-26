@@ -16,7 +16,7 @@
  *	dbo.Dworkin_LastName_FromText
  **************************************************/
 
-USE JoelBieberSA_Needles
+USE VanceLawFirm_SA
 GO
 
 -----

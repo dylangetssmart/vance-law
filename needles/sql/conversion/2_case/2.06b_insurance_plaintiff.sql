@@ -11,7 +11,7 @@ notes:
 	-
 */
 
-use [JoelBieberSA_Needles]
+use [VanceLawFirm_SA]
 go
 
 alter table [sma_TRN_InsuranceCoverage] disable trigger all

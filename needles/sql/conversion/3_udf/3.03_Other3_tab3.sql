@@ -2,7 +2,7 @@
 This script populates UDF Other3 with all columns from user_tab3_data
 */
 
-USE JoelBieberSA_Needles
+USE VanceLawFirm_SA
 GO
 
 IF EXISTS (

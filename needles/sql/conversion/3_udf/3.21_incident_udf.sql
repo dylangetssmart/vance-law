@@ -1,4 +1,4 @@
-use JoelBieberSA_Needles
+use VanceLawFirm_SA
 go
 
 ----------------------------
@@ -191,7 +191,7 @@ insert into [sma_MST_UDFDefinition]
 	--) dmp
 	--	on dmp.column_name = ucf.field_title
 	left join [sma_MST_UDFDefinition] def
-		on def.[udfnRelatedPK] = cg.IncidentTypeID		-- for Incidents, the [sma_mst_UDFDefinition].[udfnRelatedPK] references the [sma_mst_casegroup].[IncidentTypeID]
+		on def.[udfnRelatedPK] = cg.IncidentTypeID		-- for Incidents, theï¿½[sma_mst_UDFDefinition].[udfnRelatedPK]ï¿½references theï¿½[sma_mst_casegroup].[IncidentTypeID]
 			and def.[udfsudfname] = m.field_title
 			and def.[udfsscreenname] = 'Incident Wizard'
 			and udfstype = ucf.UDFType

@@ -10,7 +10,7 @@ replace:
 ##########################################################################################################################
 */
 
-use [JoelBieberSA_Needles]
+use [VanceLawFirm_SA]
 GO
 /*
 alter table [sma_TRN_Hospitals] disable trigger all
@@ -153,7 +153,7 @@ GO
 select 
     V.case_id		    as cid,	
     V.value_id		    as vid,
-    ( select plnnPlaintiffID from [JoelBieberSA_Needles].[dbo].[sma_TRN_Plaintiff] where plnnCaseID=CAS.casnCaseID and plnbIsPrimary=1) as plnnPlaintiffID 
+    ( select plnnPlaintiffID from [VanceLawFirm_SA].[dbo].[sma_TRN_Plaintiff] where plnnCaseID=CAS.casnCaseID and plnbIsPrimary=1) as plnnPlaintiffID 
     into value_tab_Multi_Party_Helper_Temp   
 from [JoelBieberNeedles].[dbo].[value_Indexed] V
 JOIN [sma_TRN_cases] CAS on CAS.cassCaseNumber = V.case_id

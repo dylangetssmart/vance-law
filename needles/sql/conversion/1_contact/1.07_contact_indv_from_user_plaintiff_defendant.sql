@@ -39,7 +39,7 @@ saga: saga_char
 --	where ISNULL(ucd.DEFENDANT, '') <> ''
 --)
 
-use JoelBieberSA_Needles
+use VanceLawFirm_SA
 go
 
 --drop table conversion.user_case_plaintiff_defendant

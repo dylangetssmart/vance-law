@@ -2,7 +2,7 @@
 This script populates UDF Other9 with all columns from user_tab9_data
 */
 
-USE JoelBieberSA_Needles
+USE VanceLawFirm_SA
 GO
 
 IF EXISTS (

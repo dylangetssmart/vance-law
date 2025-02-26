@@ -2,7 +2,7 @@
 This script populates UDF Other4 with all columns from user_tab4_data
 */
 
-use JoelBieberSA_Needles
+use VanceLawFirm_SA
 go
 
 if exists (
