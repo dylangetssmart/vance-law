@@ -1,0 +1,55 @@
+/* ######################################################################################
+description: Create CaseTypeMixture, used to cross reference case types
+steps:
+	-
+usage_instructions:
+dependencies:
+notes:
+requires_mapping:
+	- Case Types
+#########################################################################################
+*/
+
+use [SA]
+GO
+
+IF EXISTS (select * from sys.objects where name='CaseTypeMixture')
+BEGIN
+    DROP TABLE [dbo].[CaseTypeMixture]
+END
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[CaseTypeMixture]
+(
+	[matcode] [nvarchar](255) NULL
+	,[header] [nvarchar](255) NULL
+	,[description] [nvarchar](255) NULL
+	,[SmartAdvocate Case Type] [nvarchar](255) NULL
+	,[SmartAdvocate Case Sub Type] [nvarchar](255) NULL
+) ON [PRIMARY]
+
+
+-- Seed CaseTypeMixture with values directly from matter for vanilla converison
+INSERT INTO [dbo].[CaseTypeMixture]
+(
+	[matcode]
+	,[header]
+	,[description]
+	,[SmartAdvocate Case Type]
+	,[SmartAdvocate Case Sub Type]
+)
+	SELECT 
+		matcode, 
+		header, 
+		description, 
+		description AS [SmartAdvocate Case Type], 
+		'' AS [SmartAdvocate Case Sub Type]
+	FROM [Needles]..matter;
+GO
+
+select * from casetypemixture
