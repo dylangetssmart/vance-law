@@ -24,7 +24,30 @@ go
 */
 insert into [sma_MST_IndvContacts]
 	(
-	[cinsPrefix], [cinsSuffix], [cinsFirstName], [cinsMiddleName], [cinsLastName], [cinsHomePhone], [cinsWorkPhone], [cinsSSNNo], [cindBirthDate], [cindDateOfDeath], [cinnGender], [cinsMobile], [cinsComments], [cinnContactCtg], [cinnContactTypeID], [cinnRecUserID], [cindDtCreated], [cinbStatus], [cinbPreventMailing], [cinsNickName], [saga], [source_id], [source_db], [source_ref]
+		[cinsPrefix],
+		[cinsSuffix],
+		[cinsFirstName],
+		[cinsMiddleName],
+		[cinsLastName],
+		[cinsHomePhone],
+		[cinsWorkPhone],
+		[cinsSSNNo],
+		[cindBirthDate],
+		[cindDateOfDeath],
+		[cinnGender],
+		[cinsMobile],
+		[cinsComments],
+		[cinnContactCtg],
+		[cinnContactTypeID],
+		[cinnRecUserID],
+		[cindDtCreated],
+		[cinbStatus],
+		[cinbPreventMailing],
+		[cinsNickName],
+		[saga],
+		[source_id],
+		[source_db],
+		[source_ref]
 	)
 	select
 		LEFT(s.prefix, 20)											 as [cinsprefix],
@@ -69,20 +92,20 @@ insert into [sma_MST_IndvContacts]
 		on s.staff_code = m.StaffCode
 	left join [sma_MST_IndvContacts] ind
 		on m.SAContactID = ind.cinnContactID
-	where m.StaffCode is null  -- Staff does not exist in imp_user_map
-		and (ind.cinnContactID is null
-		or m.SAContactID is null)  -- No contact in sma_MST_IndvContacts
+	where
+		m.StaffCode is null  -- Staff does not exist in imp_user_map
+		and (ind.cinnContactID is null or m.SAContactID is null)  -- No contact in sma_MST_IndvContacts
 		and s.staff_code not in ('aadmin');  -- Exclude 'aadmin'
-	
-	/* ds 2025-02-07
-	Identify staff members that are not in imp_user_map and do not have an individual contact
+
+/* ds 2025-02-07
+Identify staff members that are not in imp_user_map and do not have an individual contact
 
 
-	from [VanceLawFirm_Needles].[dbo].[staff] s
-	join [sma_MST_IndvContacts] indv
-	on indv.source_id = s.staff_code
-	where cinnContactID is null
-	*/
+from [VanceLawFirm_Needles].[dbo].[staff] s
+left join [sma_MST_IndvContacts] indv
+on indv.source_id = s.staff_code
+where cinnContactID is null
+*/
 go
 
 alter table [sma_MST_IndvContacts] enable trigger all

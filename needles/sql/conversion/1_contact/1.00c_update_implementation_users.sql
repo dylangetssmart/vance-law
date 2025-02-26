@@ -1,4 +1,5 @@
 /*
+SELECT * FROM VanceLawFirm_Needles..s
 - update source_id on both sma_mst_users and sma_mst_indvcontacts
 
 because users were created manually in the implementation system,
@@ -19,6 +20,9 @@ we need to update both the user and indvContact records with a reference to the 
 use VanceLawFirm_SA
 go
 
+
+--SELECT smu.usrnUserID, smu.usrnContactID, smu.usrsLoginID, saga, source_id FROM sma_MST_Users smu
+--SELECT * FROM Conversion.imp_user_map
 
 -- Attempt to match via name
 --update sma_mst_users

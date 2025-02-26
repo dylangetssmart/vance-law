@@ -15,7 +15,7 @@ notes:
 #########################################################################################
 */
 
-USE [Needles]
+USE VanceLawFirm_Needles
 GO
 
 SELECT DISTINCT
@@ -29,4 +29,4 @@ SELECT DISTINCT
    ,c.staff_8
    ,c.staff_9
    ,c.staff_10
-FROM NeedlesSLF..cases c
+FROM cases c

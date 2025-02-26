@@ -13,6 +13,9 @@ notes:
 	-
 */
 
+use VanceLawFirm_SA
+go
+
 alter table [sma_TRN_Cases] disable trigger all
 go
 
@@ -84,13 +87,14 @@ insert into [sma_TRN_Cases]
 		c.casenum	   as casscasenumber,
 		''			   as casbappname,
 		case_title	   as casscasename,
-		(
-			select
-				cstnCaseSubTypeID
-			from [sma_MST_CaseSubType] st
-			where st.cstnGroupID = cst.cstnCaseTypeID
-				and st.cstsDscrptn = mix.[SmartAdvocate Case Sub Type]
-		)			   as casncasetypeid,
+		null as casncasetypeid,
+		--(
+		--	select
+		--		cstnCaseSubTypeID
+		--	from [sma_MST_CaseSubType] st
+		--	where st.cstnGroupID = cst.cstnCaseTypeID
+		--		and st.cstsDscrptn = mix.[SmartAdvocate Case Sub Type]
+		--)			   as casncasetypeid,
 		(
 			select
 				[sttnStateID]
@@ -209,8 +213,6 @@ insert into [sma_TRN_Cases]
 		null		   as [source_ref]
 	--select *
 	from [VanceLawFirm_Needles].[dbo].[cases_Indexed] c
-	left join [VanceLawFirm_Needles].[dbo].[user_case_data] u
-		on u.casenum = c.casenum
 	join caseTypeMixture mix
 		on mix.matcode = c.matcode
 	left join sma_MST_CaseType cst

@@ -24,6 +24,27 @@ Requirements:
 use VanceLawFirm_SA;
 go
 
+if OBJECT_ID('conversion.imp_user_map', 'U') is not null
+begin
+	drop table conversion.imp_user_map;
+end;
+
+create table conversion.imp_user_map (
+	SAUserID	INT,
+	SAContactID INT,
+	StaffCode   VARCHAR(100),
+	full_name NVARCHAR(100),
+	SALoginID   VARCHAR(100),
+	Prefix		VARCHAR(25),
+	SAFirst		VARCHAR(100),
+	SAMiddle	VARCHAR(50),
+	SALast		VARCHAR(100),
+	Suffix		VARCHAR(100),
+	active		BIT,
+	Visible		BIT
+
+);
+
 --IF OBJECT_ID('implementation_users', 'U') IS NOT NULL
 --BEGIN
 --	DROP TABLE implementation_users;
@@ -84,43 +105,58 @@ go
 --BEGIN
 --	-- Phase 2: Use implementation database as starting point and add staff_code from VanceLawFirm_Needles..staff
 --	-- at this point, the user table contains legit users entered by the client
---	INSERT INTO implementation_users
---		(
---		SAContactID
---	   ,SAUserID
---	   ,StaffCode
---	   ,full_name
---	   ,SALoginID
---	   ,Prefix
---	   ,SAFirst
---	   ,SAMiddle
---	   ,SALast
---	   ,Suffix
---	   ,Active
---	   ,Visible
---		)
---		SELECT
---			smic.cinnContactID
---		   ,u.usrnUserID
---		   ,COALESCE(s.staff_code, '') AS StaffCode
---		   ,s.full_name
---		   ,u.usrsLoginID			   AS SALoginID
---		   ,smic.cinsPrefix			   AS Prefix
---		   ,smic.cinsFirstName		   AS SAFirst
---		   ,smic.cinsMiddleName		   AS SAMddle
---		   ,smic.cinsLastName		   AS SALast
---		   ,smic.cinsSuffix			   AS Suffix
---		   ,u.usrbActiveState		   AS Active
---		   ,u.usrbIsShowInSystem	   AS Visible
---		--select * 
---		--FROM [JoelBieber_Imp_2024-10-28]..sma_mst_users u
---		--JOIN [JoelBieber_Imp_2024-10-28]..sma_MST_IndvContacts smic
---		FROM [VanceLawFirm_SA]..sma_mst_users u
---		JOIN [VanceLawFirm_SA]..sma_MST_IndvContacts smic
---			ON smic.cinnContactID = u.usrnContactID
---		LEFT JOIN VanceLawFirm_Needles..staff s
---			ON s.full_name = smic.cinsFirstName + ' ' + smic.cinsLastName
---END;
+insert into conversion.imp_user_map
+	(
+		SAContactID,
+		SAUserID,
+		StaffCode,
+		full_name,
+		SALoginID,
+		Prefix,
+		SAFirst,
+		SAMiddle,
+		SALast,
+		Suffix,
+		Active,
+		Visible
+	)
+	select
+		smic.cinnContactID		   as SAContactID,
+		u.usrnUserID			   as SAUserID,
+		COALESCE(s.staff_code, '') as StaffCode,
+		s.full_name				   as full_name,
+		u.usrsLoginID			   as SALoginID,
+		smic.cinsPrefix			   as Prefix,
+		smic.cinsFirstName		   as SAFirst,
+		smic.cinsMiddleName		   as SAMddle,
+		smic.cinsLastName		   as SALast,
+		smic.cinsSuffix			   as Suffix,
+		u.usrbActiveState		   as Active,
+		u.usrbIsShowInSystem	   as Visible
+	--select * 
+	from [VanceLawFirm_SA]..sma_mst_users u
+	join [VanceLawFirm_SA]..sma_MST_IndvContacts smic
+		on smic.cinnContactID = u.usrnContactID
+	left join VanceLawFirm_Needles..staff s
+		on s.full_name = smic.cinsFirstName + ' ' + smic.cinsLastName
+
+SELECT * FROM conversion.imp_user_map map where map.StaffCode = ''
+
+UPDATE conversion.imp_user_map
+set staffcode = 'LAURA'
+where saloginid = 'leubank'
+
+UPDATE conversion.imp_user_map
+set staffcode = 'JAKE'
+where saloginid = 'jwatkins'
+
+UPDATE conversion.imp_user_map
+set staffcode = 'DARLA'
+where saloginid = 'dlopez'
+
+UPDATE conversion.imp_user_map
+set staffcode = 'KYLE'
+where saloginid = 'kweidman'
 
 /*
 file is cleaned in python first
@@ -133,33 +169,33 @@ file is cleaned in python first
 ...             outfile.write(cleaned_line)
 */
 
-if OBJECT_ID('conversion.imp_user_map', 'U') is not null
-begin
-	drop table conversion.imp_user_map;
-end;
+--if OBJECT_ID('conversion.imp_user_map', 'U') is not null
+--begin
+--	drop table conversion.imp_user_map;
+--end;
 
-create table conversion.imp_user_map (
-	Name		VARCHAR(255),
-	Person		VARCHAR(100),
-	status		VARCHAR(100),
-	SAUserID	INT,
-	SAContactID INT,
-	StaffCode   VARCHAR(100),
-	SALoginID   VARCHAR(100),
-	Prefix		VARCHAR(25),
-	SAFirst		VARCHAR(100),
-	SAMiddle	VARCHAR(50),
-	SALast		VARCHAR(100),
-	Suffix		VARCHAR(100),
-	active		BIT,
-	Visible		BIT
+--create table conversion.imp_user_map (
+--	Name		VARCHAR(255),
+--	Person		VARCHAR(100),
+--	status		VARCHAR(100),
+--	SAUserID	INT,
+--	SAContactID INT,
+--	StaffCode   VARCHAR(100),
+--	SALoginID   VARCHAR(100),
+--	Prefix		VARCHAR(25),
+--	SAFirst		VARCHAR(100),
+--	SAMiddle	VARCHAR(50),
+--	SALast		VARCHAR(100),
+--	Suffix		VARCHAR(100),
+--	active		BIT,
+--	Visible		BIT
 
-);
+--);
 
-bulk insert conversion.imp_user_map
-from 'D:\Needles-JoelBieber\needles\mapping\imp_user_map_cleaned.csv'
-with (
-fieldterminator = ',',
-rowterminator = '\n',
-firstrow = 2
-);
+--bulk insert conversion.imp_user_map
+--from 'D:\Needles-JoelBieber\needles\mapping\imp_user_map_cleaned.csv'
+--with (
+--fieldterminator = ',',
+--rowterminator = '\n',
+--firstrow = 2
+--);

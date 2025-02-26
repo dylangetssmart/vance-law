@@ -37,8 +37,8 @@ go
 ----(0)----
 insert into [sma_MST_NoteTypes]
 	(
-	nttsDscrptn,
-	nttsNoteText
+		nttsDscrptn,
+		nttsNoteText
 	)
 	select distinct
 		topic as nttsdscrptn,
@@ -60,23 +60,26 @@ go
 ----(1)----
 insert into [sma_TRN_Notes]
 	(
-	[notnCaseID],
-	[notnNoteTypeID],
-	[notmDescription],
-	[notmPlainText],
-	[notnContactCtgID],
-	[notnContactId],
-	[notsPriority],
-	[notnFormID],
-	[notnRecUserID],
-	[notdDtCreated],
-	[notnModifyUserID],
-	[notdDtModified],
-	[notnLevelNo],
-	[notdDtInserted],
-	[WorkPlanItemId],
-	[notnSubject],
-	SAGA
+		[notnCaseID],
+		[notnNoteTypeID],
+		[notmDescription],
+		[notmPlainText],
+		[notnContactCtgID],
+		[notnContactId],
+		[notsPriority],
+		[notnFormID],
+		[notnRecUserID],
+		[notdDtCreated],
+		[notnModifyUserID],
+		[notdDtModified],
+		[notnLevelNo],
+		[notdDtInserted],
+		[WorkPlanItemId],
+		[notnSubject],
+		SAGA,
+		[source_id],
+		[source_db],
+		[source_ref]
 	)
 	select
 		casnCaseID						as [notncaseid],
@@ -108,7 +111,10 @@ insert into [sma_TRN_Notes]
 		null							as [notddtinserted],
 		null							as [workplanitemid],
 		null							as [notnsubject],
-		note_key						as saga
+		note_key						as saga,
+		null							as [source_id],
+		'needles'						as [source_db],
+		'case_notes_Indexed'			as [source_ref]
 	from VanceLawFirm_Needles.[dbo].[case_notes_Indexed] n
 	join [sma_TRN_Cases] c
 		on c.cassCaseNumber = n.case_num
@@ -116,7 +122,8 @@ insert into [sma_TRN_Notes]
 		on u.source_id = n.staff_id
 	left join [sma_TRN_Notes] ns
 		on ns.saga = note_key
-	where ns.notnNoteID is null
+	where
+		ns.notnNoteID is null
 go
 
 
