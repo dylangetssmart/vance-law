@@ -1,3 +1,5 @@
+use VanceLawFirm_SA
+go
 
 declare @caseGroupID int
 

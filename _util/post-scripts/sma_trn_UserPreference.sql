@@ -1,4 +1,5 @@
-
+use VanceLawFirm_SA
+go
 
 insert into sma_trn_UserPreference ([prefTopSearch]
            ,[prefUserID]

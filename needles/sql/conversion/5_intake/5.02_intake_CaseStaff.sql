@@ -1,3 +1,6 @@
+use VanceLawFirm_SA
+go
+
 alter table [sma_TRN_caseStaff] disable trigger all
 go
 

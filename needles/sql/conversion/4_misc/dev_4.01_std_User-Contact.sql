@@ -10,7 +10,7 @@ requires_mapping:
 #########################################################################################
 */
 
-USE [SA]
+use VanceLawFirm_SA
 GO
 /*
 update sma_MST_IndvContacts set cinsComments = NULL
@@ -33,7 +33,7 @@ GO
 --    when P.Marital_Status='Significant Other' then (select mtsnMaritalStatusID FROM [SA].[dbo].[sma_MST_MaritalStatus] where mtssDscrptn = 'Other')
 --    else (select mtsnMaritalStatusID FROM [SA].[dbo].[sma_MST_MaritalStatus] where mtssDscrptn = P.Marital_Status)
 --end	   as StatusID
---FROM TestNeedles.[dbo].[user_party_data] P
+--FROM [VanceLawFirm_Needles].[dbo].[user_party_data] P
 --where isnull(P.Marital_Status,'')<>''
 --) A
 --where A.PartyID  = saga
@@ -41,20 +41,20 @@ GO
 
 ----(2)-----
 
-UPDATE sma_MST_IndvContacts 
-SET cinsSpouse = A.Spouse_Name
-FROM
-(	SELECT
-		P.party_id as PartyID,    
-		P.Spouse as Spouse_Name
-	FROM [Needles].[dbo].[user_party_data] P
-	WHERE isnull(P.Spouse,'')<>''
-) A
-WHERE A.PartyID  = saga
+--UPDATE sma_MST_IndvContacts 
+--SET cinsSpouse = A.Spouse_Name
+--FROM
+--(	SELECT
+--		P.party_id as PartyID,    
+--		P.Spouse as Spouse_Name
+--	FROM [VanceLawFirm_Needles].[dbo].[user_party_data] P
+--	WHERE isnull(P.Spouse,'')<>''
+--) A
+--WHERE A.PartyID  = saga
 
----
-ALTER TABLE sma_MST_IndvContacts ENABLE TRIGGER ALL
-GO
+-----
+--ALTER TABLE sma_MST_IndvContacts ENABLE TRIGGER ALL
+--GO
 ---
 
 
@@ -69,12 +69,12 @@ from
 select  
     P.party_id as PartyID,    
     P.Employment_Status as Employment_Status
-FROM TestNeedles.[dbo].[user_party_data] P
+FROM [VanceLawFirm_Needles].[dbo].[user_party_data] P
 where isnull(P.Employment_Status,'')<>''
 ) A
 where A.PartyID=saga 
 
-select * FROM TestNeedles.[dbo].[user_party_data] P
+select * FROM [VanceLawFirm_Needles].[dbo].[user_party_data] P
 */
 
 /*
@@ -86,7 +86,7 @@ select
     P.party_id as PartyID,    
     P.Length_of_Employment as Length_of_Employment
 select *
-FROM TestNeedles.[dbo].[user_party_data] P
+FROM [VanceLawFirm_Needles].[dbo].[user_party_data] P
 where isnull(P.Length_of_Employment,'')<>''
 ) A
 where A.PartyID=saga 
@@ -100,7 +100,7 @@ from
 select  
     P.party_id as PartyID,    
     P.Payroll_Contact as Payroll_Contact
-FROM TestNeedles.[dbo].[user_party_data] P
+FROM [VanceLawFirm_Needles].[dbo].[user_party_data] P
 where isnull(P.Payroll_Contact,'')<>''
 ) A
 where A.PartyID=saga 
@@ -114,7 +114,7 @@ from
 select  
     P.party_id as PartyID,    
     P.Job_Duties as Job_Duties
-FROM TestNeedles.[dbo].[user_party_data] P
+FROM [VanceLawFirm_Needles].[dbo].[user_party_data] P
 where isnull(P.Job_Duties,'')<>''
 ) A
 where A.PartyID=saga 
@@ -129,7 +129,7 @@ from
 select  
     P.party_id as PartyID,    
     P.Treatment_Since_Injury as Treatment_Since_Injury
-FROM TestNeedles.[dbo].[user_party_data] P
+FROM [VanceLawFirm_Needles].[dbo].[user_party_data] P
 where isnull(P.Treatment_Since_Injury,'')<>''
 ) A
 where A.PartyID=saga 

@@ -33,7 +33,7 @@ create table conversion.imp_user_map (
 	SAUserID	INT,
 	SAContactID INT,
 	StaffCode   VARCHAR(100),
-	full_name NVARCHAR(100),
+	full_name   NVARCHAR(100),
 	SALoginID   VARCHAR(100),
 	Prefix		VARCHAR(25),
 	SAFirst		VARCHAR(100),
@@ -117,22 +117,23 @@ insert into conversion.imp_user_map
 		SAMiddle,
 		SALast,
 		Suffix,
-		Active,
+		active,
 		Visible
 	)
 	select
-		smic.cinnContactID		   as SAContactID,
-		u.usrnUserID			   as SAUserID,
-		COALESCE(s.staff_code, '') as StaffCode,
-		s.full_name				   as full_name,
-		u.usrsLoginID			   as SALoginID,
-		smic.cinsPrefix			   as Prefix,
-		smic.cinsFirstName		   as SAFirst,
-		smic.cinsMiddleName		   as SAMddle,
-		smic.cinsLastName		   as SALast,
-		smic.cinsSuffix			   as Suffix,
-		u.usrbActiveState		   as Active,
-		u.usrbIsShowInSystem	   as Visible
+		smic.cinnContactID	 as SAContactID,
+		u.usrnUserID		 as SAUserID,
+		--		COALESCE(s.staff_code, '') as StaffCode,
+		s.staff_code		 as StaffCode,
+		s.full_name			 as full_name,
+		u.usrsLoginID		 as SALoginID,
+		smic.cinsPrefix		 as Prefix,
+		smic.cinsFirstName	 as SAFirst,
+		smic.cinsMiddleName	 as SAMddle,
+		smic.cinsLastName	 as SALast,
+		smic.cinsSuffix		 as Suffix,
+		u.usrbActiveState	 as Active,
+		u.usrbIsShowInSystem as Visible
 	--select * 
 	from [VanceLawFirm_SA]..sma_mst_users u
 	join [VanceLawFirm_SA]..sma_MST_IndvContacts smic
@@ -140,23 +141,27 @@ insert into conversion.imp_user_map
 	left join VanceLawFirm_Needles..staff s
 		on s.full_name = smic.cinsFirstName + ' ' + smic.cinsLastName
 
-SELECT * FROM conversion.imp_user_map map where map.StaffCode = ''
+select
+	*
+from conversion.imp_user_map map
+where
+	map.StaffCode = ''
 
-UPDATE conversion.imp_user_map
-set staffcode = 'LAURA'
-where saloginid = 'leubank'
+update conversion.imp_user_map
+set StaffCode = 'LAURA'
+where SALoginID = 'leubank'
 
-UPDATE conversion.imp_user_map
-set staffcode = 'JAKE'
-where saloginid = 'jwatkins'
+update conversion.imp_user_map
+set StaffCode = 'JAKE'
+where SALoginID = 'jwatkins'
 
-UPDATE conversion.imp_user_map
-set staffcode = 'DARLA'
-where saloginid = 'dlopez'
+update conversion.imp_user_map
+set StaffCode = 'DARLA'
+where SALoginID = 'dlopez'
 
-UPDATE conversion.imp_user_map
-set staffcode = 'KYLE'
-where saloginid = 'kweidman'
+update conversion.imp_user_map
+set StaffCode = 'KYLE'
+where SALoginID = 'kweidman'
 
 /*
 file is cleaned in python first
