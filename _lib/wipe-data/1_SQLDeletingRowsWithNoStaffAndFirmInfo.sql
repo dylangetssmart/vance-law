@@ -1,4 +1,4 @@
-use JoelBieberSA_Needles
+use VanceLawFirm_SA
 go
 truncate table  CP_UserNotesStatus
 Go
