@@ -13,53 +13,48 @@ notes:
 
 
 
-USE [VanceLawFirm_SA]
-GO
+use [VanceLawFirm_SA]
+go
 
 
 ----(0) staff roles ----
 -- Add the following roles into sma_MST_SubRoleCode if they do not exist
-INSERT INTO [sma_MST_SubRoleCode]
+insert into [sma_MST_SubRoleCode]
 	(
-	srcsDscrptn
-   ,srcnRoleID
+		srcsDscrptn,
+		srcnRoleID
 	)
 	(
-	--In Needles, box 1 = paralegal, box 2 = attorney, box 3 = negotiator, box 4 = clerical.  Also, box 6 = prior paralegal, box 7 = prior attorney.  Can the roles be imported?
-	SELECT
-		'Attorney'
-	   ,10
-	UNION ALL
-	SELECT
-		'Intake Paralegal'
-	   ,10
-	UNION ALL
-	SELECT
-		'Primary Paralegal'
-	   ,10
-	UNION ALL
-	SELECT
-		'Primary Attorney'
-	   ,10
-	UNION ALL
-	SELECT
-		'Negotiator'
-	   ,10
-	UNION ALL
-	SELECT
-		'Overseeing Attorney/Paralegal'
-	   ,10
+	select
+		'Assigned Attorney',
+		10
+	union all
+	select
+		'Case Manager',
+		10
+	union all
+	select
+		'Secondary Case Manager',
+		10
+	union all
+	select
+		'Litigation Staff',
+		10
+	union all
+	select
+		'Managing Attorney',
+		10
 	)
-	EXCEPT
-	SELECT
-		srcsDscrptn
-	   ,srcnRoleID
-	FROM [sma_MST_SubRoleCode]
+	except
+	select
+		srcsDscrptn,
+		srcnRoleID
+	from [sma_MST_SubRoleCode]
 
 
 
-ALTER TABLE [sma_TRN_caseStaff] DISABLE TRIGGER ALL
-GO
+alter table [sma_TRN_caseStaff] disable trigger all
+go
 
 
 /*
@@ -125,191 +120,180 @@ Hardcode staff_1 through staff_10 with "Staff"
 
 -- ds 2024-11-07 only staff_1 through staff_4 are used
 
-------------------------------------------------------------------------------
--- Convert staff_1 ###########################################################
-------------------------------------------------------------------------------
-INSERT INTO sma_TRN_caseStaff
+
+
+/* ------------------------------------------------------------------------------
+staff_1 = Assigned Attorney
+*/
+insert into sma_TRN_caseStaff
 	(
-	[cssnCaseID]
-   ,[cssnStaffID]
-   ,[cssnRoleID]
-   ,[csssComments]
-   ,[cssdFromDate]
-   ,[cssdToDate]
-   ,[cssnRecUserID]
-   ,[cssdDtCreated]
-   ,[cssnModifyUserID]
-   ,[cssdDtModified]
-   ,[cssnLevelNo]
+		[cssnCaseID],
+		[cssnStaffID],
+		[cssnRoleID],
+		[csssComments],
+		[cssdFromDate],
+		[cssdToDate],
+		[cssnRecUserID],
+		[cssdDtCreated],
+		[cssnModifyUserID],
+		[cssdDtModified],
+		[cssnLevelNo]
 	)
-	SELECT
-		CAS.casnCaseID  AS [cssnCaseID]
-	   ,U.usrnContactID AS [cssnStaffID]
-	   --,iu.SAContactID AS [cssnStaffID]
-	   ,(
-			SELECT
+	select
+		CAS.casnCaseID  as [cssnCaseID],
+		U.usrnContactID as [cssnStaffID]
+		,
+		(
+			select
 				sbrnSubRoleId
-			FROM sma_MST_SubRole
-			WHERE sbrsDscrptn = 'Primary Attorney'
-				AND sbrnRoleID = 10
-		)				
-		AS [cssnRoleID]
-	   ,NULL			AS [csssComments]
-	   ,NULL			AS cssdFromDate
-	   ,NULL			AS cssdToDate
-	   ,368				AS cssnRecUserID
-	   ,GETDATE()		AS [cssdDtCreated]
-	   ,NULL			AS [cssnModifyUserID]
-	   ,NULL			AS [cssdDtModified]
-	   ,0				AS cssnLevelNo
-	FROM VanceLawFirm_Needles.[dbo].[cases_Indexed] C
-	INNER JOIN [sma_TRN_cases] CAS
-		ON CAS.cassCaseNumber = C.casenum
-	INNER JOIN [sma_MST_Users] U
-		ON (U.source_id = C.staff_1)
-	--INNER JOIN implementation_users iu
-	--	ON iu.StaffCode = c.staff_1
+			from sma_MST_SubRole
+			where sbrsDscrptn = 'Assigned Attorney'
+				and sbrnRoleID = 10
+		)				as [cssnRoleID],
+		null			as [csssComments],
+		null			as cssdFromDate,
+		null			as cssdToDate,
+		368				as cssnRecUserID,
+		GETDATE()		as [cssdDtCreated],
+		null			as [cssnModifyUserID],
+		null			as [cssdDtModified],
+		0				as cssnLevelNo
+	from VanceLawFirm_Needles.[dbo].[cases_Indexed] C
+	inner join [sma_TRN_cases] CAS
+		on CAS.cassCaseNumber = C.casenum
+	inner join [sma_MST_Users] U
+		on (U.source_id = C.staff_1)
 
---------------------
-----STAFF 2
---------------------
-INSERT INTO sma_TRN_caseStaff
+/* ------------------------------------------------------------------------------
+staff_2 = Case Manager
+*/
+insert into sma_TRN_caseStaff
 	(
-	[cssnCaseID]
-   ,[cssnStaffID]
-   ,[cssnRoleID]
-   ,[csssComments]
-   ,[cssdFromDate]
-   ,[cssdToDate]
-   ,[cssnRecUserID]
-   ,[cssdDtCreated]
-   ,[cssnModifyUserID]
-   ,[cssdDtModified]
-   ,[cssnLevelNo]
+		[cssnCaseID],
+		[cssnStaffID],
+		[cssnRoleID],
+		[csssComments],
+		[cssdFromDate],
+		[cssdToDate],
+		[cssnRecUserID],
+		[cssdDtCreated],
+		[cssnModifyUserID],
+		[cssdDtModified],
+		[cssnLevelNo]
 	)
-	SELECT
-		CAS.casnCaseID  AS [cssnCaseID]
-	   ,U.usrnContactID AS [cssnStaffID]
-	   --,iu.SAContactID AS [cssnStaffID]
-	   ,(
-			SELECT
+	select
+		CAS.casnCaseID  as [cssnCaseID],
+		U.usrnContactID as [cssnStaffID]
+		,
+		(
+			select
 				sbrnSubRoleId
-			FROM sma_MST_SubRole
-			WHERE sbrsDscrptn = 'Primary Paralegal'
-				AND sbrnRoleID = 10
-		)				
-		AS [cssnRoleID]
-	   ,NULL			AS [csssComments]
-	   ,NULL			AS cssdFromDate
-	   ,NULL			AS cssdToDate
-	   ,368				AS cssnRecUserID
-	   ,GETDATE()		AS [cssdDtCreated]
-	   ,NULL			AS [cssnModifyUserID]
-	   ,NULL			AS [cssdDtModified]
-	   ,0				AS cssnLevelNo
-	FROM VanceLawFirm_Needles.[dbo].[cases_Indexed] C
-	JOIN [sma_TRN_cases] CAS
-		ON CAS.cassCaseNumber = C.casenum
-	JOIN [sma_MST_Users] U
-		ON (U.source_id = C.staff_2)
-	--INNER JOIN implementation_users iu
-	--	ON iu.StaffCode = c.staff_2
+			from sma_MST_SubRole
+			where sbrsDscrptn = 'Case Manager'
+				and sbrnRoleID = 10
+		)				as [cssnRoleID],
+		null			as [csssComments],
+		null			as cssdFromDate,
+		null			as cssdToDate,
+		368				as cssnRecUserID,
+		GETDATE()		as [cssdDtCreated],
+		null			as [cssnModifyUserID],
+		null			as [cssdDtModified],
+		0				as cssnLevelNo
+	from VanceLawFirm_Needles.[dbo].[cases_Indexed] C
+	join [sma_TRN_cases] CAS
+		on CAS.cassCaseNumber = C.casenum
+	join [sma_MST_Users] U
+		on (U.source_id = C.staff_2)
 
---------------------
-----STAFF 3
---------------------
-INSERT INTO sma_TRN_caseStaff
+/* ------------------------------------------------------------------------------
+staff_3 = Secondary Case Manager
+*/
+insert into sma_TRN_caseStaff
 	(
-	[cssnCaseID]
-   ,[cssnStaffID]
-   ,[cssnRoleID]
-   ,[csssComments]
-   ,[cssdFromDate]
-   ,[cssdToDate]
-   ,[cssnRecUserID]
-   ,[cssdDtCreated]
-   ,[cssnModifyUserID]
-   ,[cssdDtModified]
-   ,[cssnLevelNo]
+		[cssnCaseID],
+		[cssnStaffID],
+		[cssnRoleID],
+		[csssComments],
+		[cssdFromDate],
+		[cssdToDate],
+		[cssnRecUserID],
+		[cssdDtCreated],
+		[cssnModifyUserID],
+		[cssdDtModified],
+		[cssnLevelNo]
 	)
-	SELECT
-		CAS.casnCaseID  AS [cssnCaseID]
-	   ,U.usrnContactID AS [cssnStaffID]
-	   --,iu.SAContactID AS [cssnStaffID]
-	   ,(
-			SELECT
+	select
+		CAS.casnCaseID  as [cssnCaseID],
+		U.usrnContactID as [cssnStaffID]
+		,
+		(
+			select
 				sbrnSubRoleId
-			FROM sma_MST_SubRole
-			WHERE sbrsDscrptn = 'Negotiator'
-				AND sbrnRoleID = 10
-		)				
-		AS [cssnRoleID]
-	   ,NULL			AS [csssComments]
-	   ,NULL			AS cssdFromDate
-	   ,NULL			AS cssdToDate
-	   ,368				AS cssnRecUserID
-	   ,GETDATE()		AS [cssdDtCreated]
-	   ,NULL			AS [cssnModifyUserID]
-	   ,NULL			AS [cssdDtModified]
-	   ,0				AS cssnLevelNo
-	FROM VanceLawFirm_Needles.[dbo].[cases_Indexed] C
-	JOIN [sma_TRN_cases] CAS
-		ON CAS.cassCaseNumber = C.casenum
-	JOIN [sma_MST_Users] U
-		ON (U.source_id = C.staff_3)
-	--INNER JOIN implementation_users iu
-	--	ON iu.StaffCode = c.staff_3
+			from sma_MST_SubRole
+			where sbrsDscrptn = 'Secondary Case Manager'
+				and sbrnRoleID = 10
+		)				as [cssnRoleID],
+		null			as [csssComments],
+		null			as cssdFromDate,
+		null			as cssdToDate,
+		368				as cssnRecUserID,
+		GETDATE()		as [cssdDtCreated],
+		null			as [cssnModifyUserID],
+		null			as [cssdDtModified],
+		0				as cssnLevelNo
+	from VanceLawFirm_Needles.[dbo].[cases_Indexed] C
+	join [sma_TRN_cases] CAS
+		on CAS.cassCaseNumber = C.casenum
+	join [sma_MST_Users] U
+		on (U.source_id = C.staff_3)
 
 
---------------------
-----STAFF 4
---------------------
-INSERT INTO sma_TRN_caseStaff
+/* ------------------------------------------------------------------------------
+staff_4 = Litigation Staff
+*/
+insert into sma_TRN_caseStaff
 	(
-	[cssnCaseID]
-   ,[cssnStaffID]
-   ,[cssnRoleID]
-   ,[csssComments]
-   ,[cssdFromDate]
-   ,[cssdToDate]
-   ,[cssnRecUserID]
-   ,[cssdDtCreated]
-   ,[cssnModifyUserID]
-   ,[cssdDtModified]
-   ,[cssnLevelNo]
+		[cssnCaseID],
+		[cssnStaffID],
+		[cssnRoleID],
+		[csssComments],
+		[cssdFromDate],
+		[cssdToDate],
+		[cssnRecUserID],
+		[cssdDtCreated],
+		[cssnModifyUserID],
+		[cssdDtModified],
+		[cssnLevelNo]
 	)
-	SELECT
-		CAS.casnCaseID  AS [cssnCaseID]
-	   ,U.usrnContactID AS [cssnStaffID]
-	   --,iu.SAContactID AS [cssnStaffID]
-	   ,(
-			SELECT
+	select
+		CAS.casnCaseID  as [cssnCaseID],
+		U.usrnContactID as [cssnStaffID],
+		(
+			select
 				sbrnSubRoleId
-			FROM sma_MST_SubRole
-			WHERE sbrsDscrptn = 'Overseeing Attorney/Paralegal'
-				AND sbrnRoleID = 10
-		)				
-		AS [cssnRoleID]
-	   ,NULL			AS [csssComments]
-	   ,NULL			AS cssdFromDate
-	   ,NULL			AS cssdToDate
-	   ,368				AS cssnRecUserID
-	   ,GETDATE()		AS [cssdDtCreated]
-	   ,NULL			AS [cssnModifyUserID]
-	   ,NULL			AS [cssdDtModified]
-	   ,0				AS cssnLevelNo
-	FROM VanceLawFirm_Needles.[dbo].[cases_Indexed] C
-	INNER JOIN [sma_TRN_cases] CAS
-		ON CAS.cassCaseNumber = C.casenum
-	INNER JOIN [sma_MST_Users] U
-		ON (U.source_id = C.staff_4)
-	--INNER JOIN implementation_users iu
-	--	ON iu.StaffCode = c.staff_4
+			from sma_MST_SubRole
+			where sbrsDscrptn = 'Litigation Staff'
+				and sbrnRoleID = 10
+		)				as [cssnRoleID],
+		null			as [csssComments],
+		null			as cssdFromDate,
+		null			as cssdToDate,
+		368				as cssnRecUserID,
+		GETDATE()		as [cssdDtCreated],
+		null			as [cssnModifyUserID],
+		null			as [cssdDtModified],
+		0				as cssnLevelNo
+	from VanceLawFirm_Needles.[dbo].[cases_Indexed] C
+	inner join [sma_TRN_cases] CAS
+		on CAS.cassCaseNumber = C.casenum
+	inner join [sma_MST_Users] U
+		on (U.source_id = C.staff_4)
 
 
---------------------
-----STAFF 5
---------------------
+/* ------------------------------------------------------------------------------
+staff_5 =
+*/
 --insert into sma_TRN_caseStaff 
 --(
 --       [cssnCaseID]
@@ -341,43 +325,52 @@ INSERT INTO sma_TRN_caseStaff
 --inner join [SA].[dbo].[sma_MST_Users] U on ( U.saga = C.staff_5 )
 --*/
 
---------------------
-----STAFF 6
---------------------
---INSERT INTO sma_TRN_caseStaff 
---(
---       [cssnCaseID]
---      ,[cssnStaffID]
---      ,[cssnRoleID]
---      ,[csssComments]
---      ,[cssdFromDate]
---      ,[cssdToDate]
---      ,[cssnRecUserID]
---      ,[cssdDtCreated]
---      ,[cssnModifyUserID]
---      ,[cssdDtModified]
---      ,[cssnLevelNo]
---)
---SELECT 
---	CAS.casnCaseID			  as [cssnCaseID],
---	U.usrnContactID		  as [cssnStaffID],
---	(select sbrnSubRoleId from sma_MST_SubRole where sbrsDscrptn='Attorney' and sbrnRoleID=10 )	 as [cssnRoleID],
---	null					  as [csssComments],
---	null					  as cssdFromDate,
---	null					  as cssdToDate,
---	368					  as cssnRecUserID,
---	getdate()				  as [cssdDtCreated],
---	null					  as [cssnModifyUserID],
---	null					  as [cssdDtModified],
---	0					  as cssnLevelNo
---FROM VanceLawFirm_Needles.[dbo].[cases_Indexed] C
---JOIN [sma_TRN_cases] CAS on CAS.cassCaseNumber = C.casenum
---JOIN [sma_MST_Users] U on ( U.saga = C.staff_6 )
+/* ------------------------------------------------------------------------------
+staff_6 = Managing Attorney
+*/
+insert into sma_TRN_caseStaff
+	(
+		[cssnCaseID],
+		[cssnStaffID],
+		[cssnRoleID],
+		[csssComments],
+		[cssdFromDate],
+		[cssdToDate],
+		[cssnRecUserID],
+		[cssdDtCreated],
+		[cssnModifyUserID],
+		[cssdDtModified],
+		[cssnLevelNo]
+	)
+	select
+		CAS.casnCaseID  as [cssnCaseID],
+		U.usrnContactID as [cssnStaffID],
+		(
+			select
+				sbrnSubRoleId
+			from sma_MST_SubRole
+			where sbrsDscrptn = 'Managing Attorney'
+				and sbrnRoleID = 10
+		)				as [cssnRoleID],
+		null			as [csssComments],
+		null			as cssdFromDate,
+		null			as cssdToDate,
+		368				as cssnRecUserID,
+		GETDATE()		as [cssdDtCreated],
+		null			as [cssnModifyUserID],
+		null			as [cssdDtModified],
+		0				as cssnLevelNo
+	from VanceLawFirm_Needles.[dbo].[cases_Indexed] C
+	join [sma_TRN_cases] CAS
+		on CAS.cassCaseNumber = C.casenum
+	join [sma_MST_Users] U
+		on (U.source_id = C.staff_6)
 
---/*
---------------------
-----STAFF 7
---------------------
+
+/* ------------------------------------------------------------------------------
+staff_7 =
+*/
+
 --insert into sma_TRN_caseStaff 
 --(
 --       [cssnCaseID]
@@ -409,9 +402,9 @@ INSERT INTO sma_TRN_caseStaff
 --inner join [SA].[dbo].[sma_MST_Users] U on ( U.saga = C.staff_7 )
 
 
---------------------
-----STAFF 8
---------------------
+/* ------------------------------------------------------------------------------
+staff_8 =
+*/
 --insert into sma_TRN_caseStaff 
 --(
 --       [cssnCaseID]
@@ -443,9 +436,9 @@ INSERT INTO sma_TRN_caseStaff
 --inner join [SA].[dbo].[sma_MST_Users] U on ( U.saga = C.staff_8 )
 --*/
 
---------------------
-----STAFF 9
---------------------
+/* ------------------------------------------------------------------------------
+staff_9 =
+*/
 --INSERT INTO sma_TRN_caseStaff 
 --(
 --       [cssnCaseID]
@@ -476,10 +469,9 @@ INSERT INTO sma_TRN_caseStaff
 --JOIN sma_TRN_cases CAS on CAS.cassCaseNumber = C.casenum
 --JOIN sma_MST_Users U on ( U.saga = C.staff_9 )
 
---/*
---------------------
-----STAFF 10
---------------------
+/* ------------------------------------------------------------------------------
+staff_10 =
+*/
 --insert into sma_TRN_caseStaff 
 --(
 --       [cssnCaseID]
@@ -509,12 +501,6 @@ INSERT INTO sma_TRN_caseStaff
 --FROM VanceLawFirm_Needles.[dbo].[cases_Indexed] C
 --inner join [SA].[dbo].[sma_TRN_cases] CAS on CAS.cassCaseNumber = C.casenum
 --inner join [SA].[dbo].[sma_MST_Users] U on ( U.saga = C.staff_10 )
---*/
 
-
----
-ALTER TABLE [sma_TRN_caseStaff] ENABLE TRIGGER ALL
-GO
----
-
-
+alter table [sma_TRN_caseStaff] enable trigger all
+go
