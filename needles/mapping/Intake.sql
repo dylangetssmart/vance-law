@@ -1,5 +1,5 @@
 /* ######################################################################################
-description: Outputs party roles and the number of times each is used.
+description: Outputs fields from [user_case_intake_matter]
 
 steps:
 	- 
@@ -15,12 +15,10 @@ notes:
 #########################################################################################
 */
 
-USE [Needles]
-GO
+USE [VanceLawFirm_Needles]
 
 SELECT
-	[role]
-   ,COUNT(*) AS Count
-FROM party_Indexed
-WHERE ISNULL([role], '') <> ''
-GROUP BY [role]
+	*
+FROM CustomFieldUsage_intake
+ORDER BY tablename, field_num
+

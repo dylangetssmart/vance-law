@@ -1,0 +1,1762 @@
+2025-04-28 15:32:15,532 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'GO'. (102) (SQLExecDirectW)")
+[SQL: /* ######################################################################################
+description: Outputs distinct case staff
+
+steps:
+	- 
+
+usage_instructions:
+	- update database reference
+
+dependencies:
+	- 
+
+notes:
+	- 
+#########################################################################################
+*/
+
+USE VanceLawFirm_Needles
+GO
+
+SELECT * FROM matter m
+
+SELECT DISTINCT
+	c.staff_1
+   ,c.staff_2
+   ,c.staff_3
+   ,c.staff_4
+   ,c.staff_5
+   ,c.staff_6
+   ,c.staff_7
+   ,c.staff_8
+   ,c.staff_9
+   ,c.staff_10
+FROM cases c]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:32:15,543 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: Case Staff.sql
+2025-04-28 15:32:15,545 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'GO'. (102) (SQLExecDirectW)")
+[SQL: USE VanceLawFirm_Needles
+GO
+
+--SELECT
+--	m.*
+--   ,[count]
+--FROM matter m
+--JOIN (
+--	SELECT
+--		m.matcode
+--	   ,m.header
+--	   ,m.[description]
+--	   ,COUNT(*) AS [Count]
+--	FROM matter m
+--	JOIN cases_Indexed ci
+--		ON m.matcode = ci.matcode
+--	GROUP BY m.matcode
+--			,m.header
+--			,m.[description]
+--) c
+--	ON m.matcode = c.matcode
+
+--SELECT * FROM VanceLawFirm_Needles..matter m
+
+SELECT
+      m.matcode AS case_type,
+    m.header,
+    m.description,
+    m.active,
+    c.[count] as case_count,
+    CASE WHEN show_value_tab = 'Y' THEN m.value_tab_title ELSE 'N/A' END AS Value_Tab,
+    CASE WHEN show_insurance_tab = 'Y' THEN m.insurance_tab_title ELSE 'N/A' END AS Insurance_Tab,
+    CASE WHEN show_negotiation_tab = 'Y' THEN m.negotiation_tab_title ELSE 'N/A' END AS Negotiation_Tab,
+    CASE WHEN show_counsel_tab = 'Y' THEN m.counsel_tab_title ELSE 'N/A' END AS Counsel_Tab,
+    CASE WHEN show_police_tab = 'Y' THEN m.police_tab_title ELSE 'N/A' END AS Police_Tab,
+    CASE WHEN show_document_tab = 'Y' THEN m.documents_tab_title ELSE 'N/A' END AS Documents_Tab,
+    CASE WHEN show_status_tab = 'Y' THEN m.status_title ELSE 'N/A' END AS Status_Tab,
+    CASE WHEN show_crm_tab = 'Y' THEN m.crm_title ELSE 'N/A' END AS CRM_Tab,
+    CASE WHEN show_time_tab = 'Y' then m.time_tab_title ELSE 'N/A' END AS Time_Tab,
+	CASE WHEN show_user_tab = 'Y' THEN tab_title ELSE 'N/A' END AS user_tab_1,
+    CASE WHEN show_user_tab2 = 'Y' THEN tab2_title ELSE 'N/A' END AS user_tab_2,
+    CASE WHEN show_user_tab3 = 'Y' THEN tab3_title  ELSE 'N/A' END AS user_tab_3,
+    CASE WHEN show_user_tab4 = 'Y' THEN tab4_title  ELSE 'N/A' END AS user_tab_4,
+    CASE WHEN show_user_tab5 = 'Y' THEN tab5_title  ELSE 'N/A' END AS user_tab_5,
+    CASE WHEN show_user_tab6 = 'Y' THEN tab6_title  ELSE 'N/A' END AS user_tab_6,
+    CASE WHEN show_user_tab7 = 'Y' THEN tab7_title  ELSE 'N/A' END AS user_tab_7,
+    CASE WHEN show_user_tab8 = 'Y' THEN tab8_title  ELSE 'N/A' END AS user_tab_8,
+    CASE WHEN show_user_tab9 = 'Y' THEN tab9_title  ELSE 'N/A' END AS user_tab_9,
+    CASE WHEN show_user_tab10 = 'Y' THEN tab10_title else 'N/A' END AS user_tab_10
+FROM matter m
+INNER JOIN (
+    SELECT
+        ci.matcode,
+        COUNT(*) AS [count]
+    FROM cases_indexed ci
+    GROUP BY ci.matcode
+) c
+    ON m.matcode = c.matcode
+ORDER BY m.matcode;]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:32:15,545 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: Case Types.sql
+2025-04-28 15:32:15,547 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.OperationalError) ('08004', "[08004] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Database 'Needles' does not exist. Make sure that the name is entered correctly. (911) (SQLExecDirectW)")
+[SQL: /* ######################################################################################
+description: Outputs fields from [user_case_intake_matter]
+
+steps:
+	- 
+
+usage_instructions:
+	- update database reference
+
+dependencies:
+	- 
+
+notes:
+	- 
+#########################################################################################
+*/
+
+USE [Needles]
+GO
+
+SELECT
+	*
+FROM CustomFieldUsage_intake
+ORDER BY tablename, field_num]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-28 15:32:15,547 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: Intake.sql
+2025-04-28 15:32:15,551 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.OperationalError) ('08004', "[08004] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Database 'Needles' does not exist. Make sure that the name is entered correctly. (911) (SQLExecDirectW)")
+[SQL: /* ######################################################################################
+description: Outputs party roles and the number of times each is used.
+
+steps:
+	- 
+
+usage_instructions:
+	- update database reference
+
+dependencies:
+	- 
+
+notes:
+	- 
+#########################################################################################
+*/
+
+USE [Needles]
+GO
+
+SELECT
+	[role]
+   ,COUNT(*) AS Count
+FROM party_Indexed
+WHERE ISNULL([role], '') <> ''
+GROUP BY [role]]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-28 15:32:15,552 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: Party Roles.sql
+2025-04-28 15:32:15,556 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_case_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:32:15,556 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_case_data.sql
+2025-04-28 15:32:15,558 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_counsel_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:32:15,558 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_counsel_data.sql
+2025-04-28 15:32:15,560 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_insurance_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:32:15,560 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_insurance_data.sql
+2025-04-28 15:32:15,562 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_party_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:32:15,562 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_party_data.sql
+2025-04-28 15:32:15,565 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab10_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:32:15,565 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab10_data.sql
+2025-04-28 15:32:15,567 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab2_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:32:15,568 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab2_data.sql
+2025-04-28 15:32:15,569 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab3_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:32:15,569 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab3_data.sql
+2025-04-28 15:32:15,570 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab4_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:32:15,571 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab4_data.sql
+2025-04-28 15:32:15,572 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab5_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:32:15,573 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab5_data.sql
+2025-04-28 15:32:15,574 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab6_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:32:15,575 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab6_data.sql
+2025-04-28 15:32:15,576 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab7_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:32:15,577 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab7_data.sql
+2025-04-28 15:32:15,578 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab8_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:32:15,578 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab8_data.sql
+2025-04-28 15:32:15,579 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab9_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:32:15,579 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab9_data.sql
+2025-04-28 15:32:15,583 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:32:15,583 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab_data.sql
+2025-04-28 15:32:15,585 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_value_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:32:15,585 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_value_data.sql
+2025-04-28 15:32:15,586 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'GO'. (102) (SQLExecDirectW)")
+[SQL: /* ######################################################################################
+description: Outputs entire value_code table
+
+steps:
+	- 
+
+usage_instructions:
+	- update database reference
+
+dependencies:
+	- 
+
+notes:
+	- 
+#########################################################################################
+*/
+
+USE VanceLawFirm_Needles
+GO
+
+SELECT
+	code,
+	description,
+	c_d,
+	dtf
+FROM value_code]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:32:15,587 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: Value Codes.sql
+2025-04-28 15:32:15,587 - WARNING - mapping.py - save_to_excel - 57 - No data to save.
+2025-04-28 15:32:15,588 - INFO - mapping.py - main - 132 - Saved results to D:\vance-law\vance-law Data Mapping.xlsx
+2025-04-28 15:38:46,811 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'GO'. (102) (SQLExecDirectW)")
+[SQL: /* ######################################################################################
+description: Outputs distinct case staff
+
+steps:
+	- 
+
+usage_instructions:
+	- update database reference
+
+dependencies:
+	- 
+
+notes:
+	- 
+#########################################################################################
+*/
+
+USE VanceLawFirm_Needles
+GO
+
+SELECT * FROM matter m
+
+SELECT DISTINCT
+	c.staff_1
+   ,c.staff_2
+   ,c.staff_3
+   ,c.staff_4
+   ,c.staff_5
+   ,c.staff_6
+   ,c.staff_7
+   ,c.staff_8
+   ,c.staff_9
+   ,c.staff_10
+FROM cases c]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:38:46,811 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: Case Staff.sql
+2025-04-28 15:38:46,820 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'GO'. (102) (SQLExecDirectW)")
+[SQL: USE VanceLawFirm_Needles
+GO
+
+--SELECT
+--	m.*
+--   ,[count]
+--FROM matter m
+--JOIN (
+--	SELECT
+--		m.matcode
+--	   ,m.header
+--	   ,m.[description]
+--	   ,COUNT(*) AS [Count]
+--	FROM matter m
+--	JOIN cases_Indexed ci
+--		ON m.matcode = ci.matcode
+--	GROUP BY m.matcode
+--			,m.header
+--			,m.[description]
+--) c
+--	ON m.matcode = c.matcode
+
+--SELECT * FROM VanceLawFirm_Needles..matter m
+
+SELECT
+      m.matcode AS case_type,
+    m.header,
+    m.description,
+    m.active,
+    c.[count] as case_count,
+    CASE WHEN show_value_tab = 'Y' THEN m.value_tab_title ELSE 'N/A' END AS Value_Tab,
+    CASE WHEN show_insurance_tab = 'Y' THEN m.insurance_tab_title ELSE 'N/A' END AS Insurance_Tab,
+    CASE WHEN show_negotiation_tab = 'Y' THEN m.negotiation_tab_title ELSE 'N/A' END AS Negotiation_Tab,
+    CASE WHEN show_counsel_tab = 'Y' THEN m.counsel_tab_title ELSE 'N/A' END AS Counsel_Tab,
+    CASE WHEN show_police_tab = 'Y' THEN m.police_tab_title ELSE 'N/A' END AS Police_Tab,
+    CASE WHEN show_document_tab = 'Y' THEN m.documents_tab_title ELSE 'N/A' END AS Documents_Tab,
+    CASE WHEN show_status_tab = 'Y' THEN m.status_title ELSE 'N/A' END AS Status_Tab,
+    CASE WHEN show_crm_tab = 'Y' THEN m.crm_title ELSE 'N/A' END AS CRM_Tab,
+    CASE WHEN show_time_tab = 'Y' then m.time_tab_title ELSE 'N/A' END AS Time_Tab,
+	CASE WHEN show_user_tab = 'Y' THEN tab_title ELSE 'N/A' END AS user_tab_1,
+    CASE WHEN show_user_tab2 = 'Y' THEN tab2_title ELSE 'N/A' END AS user_tab_2,
+    CASE WHEN show_user_tab3 = 'Y' THEN tab3_title  ELSE 'N/A' END AS user_tab_3,
+    CASE WHEN show_user_tab4 = 'Y' THEN tab4_title  ELSE 'N/A' END AS user_tab_4,
+    CASE WHEN show_user_tab5 = 'Y' THEN tab5_title  ELSE 'N/A' END AS user_tab_5,
+    CASE WHEN show_user_tab6 = 'Y' THEN tab6_title  ELSE 'N/A' END AS user_tab_6,
+    CASE WHEN show_user_tab7 = 'Y' THEN tab7_title  ELSE 'N/A' END AS user_tab_7,
+    CASE WHEN show_user_tab8 = 'Y' THEN tab8_title  ELSE 'N/A' END AS user_tab_8,
+    CASE WHEN show_user_tab9 = 'Y' THEN tab9_title  ELSE 'N/A' END AS user_tab_9,
+    CASE WHEN show_user_tab10 = 'Y' THEN tab10_title else 'N/A' END AS user_tab_10
+FROM matter m
+INNER JOIN (
+    SELECT
+        ci.matcode,
+        COUNT(*) AS [count]
+    FROM cases_indexed ci
+    GROUP BY ci.matcode
+) c
+    ON m.matcode = c.matcode
+ORDER BY m.matcode;]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:38:46,820 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: Case Types.sql
+2025-04-28 15:38:46,823 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.OperationalError) ('08004', "[08004] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Database 'Needles' does not exist. Make sure that the name is entered correctly. (911) (SQLExecDirectW)")
+[SQL: /* ######################################################################################
+description: Outputs fields from [user_case_intake_matter]
+
+steps:
+	- 
+
+usage_instructions:
+	- update database reference
+
+dependencies:
+	- 
+
+notes:
+	- 
+#########################################################################################
+*/
+
+USE [Needles]
+GO
+
+SELECT
+	*
+FROM CustomFieldUsage_intake
+ORDER BY tablename, field_num]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-28 15:38:46,823 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: Intake.sql
+2025-04-28 15:38:46,825 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'GO'. (102) (SQLExecDirectW)")
+[SQL: /* ######################################################################################
+description: Outputs party roles and the number of times each is used.
+
+steps:
+	- 
+
+usage_instructions:
+	- update database reference
+
+dependencies:
+	- 
+
+notes:
+	- 
+#########################################################################################
+*/
+
+USE VanceLawFirm_SA
+GO
+
+SELECT
+	[role]
+   ,COUNT(*) AS Count
+FROM party_Indexed
+WHERE ISNULL([role], '') <> ''
+GROUP BY [role]]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:38:46,826 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: Party Roles.sql
+2025-04-28 15:38:46,827 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_case_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:38:46,827 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_case_data.sql
+2025-04-28 15:38:46,829 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_counsel_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:38:46,829 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_counsel_data.sql
+2025-04-28 15:38:46,832 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_insurance_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:38:46,833 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_insurance_data.sql
+2025-04-28 15:38:46,836 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_party_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:38:46,836 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_party_data.sql
+2025-04-28 15:38:46,838 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab10_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:38:46,838 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab10_data.sql
+2025-04-28 15:38:46,840 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab2_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:38:46,840 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab2_data.sql
+2025-04-28 15:38:46,842 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab3_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:38:46,842 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab3_data.sql
+2025-04-28 15:38:46,843 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab4_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:38:46,844 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab4_data.sql
+2025-04-28 15:38:46,845 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab5_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:38:46,845 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab5_data.sql
+2025-04-28 15:38:46,849 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab6_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:38:46,849 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab6_data.sql
+2025-04-28 15:38:46,849 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab7_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:38:46,849 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab7_data.sql
+2025-04-28 15:38:46,849 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab8_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:38:46,849 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab8_data.sql
+2025-04-28 15:38:46,854 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab9_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:38:46,855 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab9_data.sql
+2025-04-28 15:38:46,856 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:38:46,857 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab_data.sql
+2025-04-28 15:38:46,859 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_value_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:38:46,860 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_value_data.sql
+2025-04-28 15:38:46,860 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'GO'. (102) (SQLExecDirectW)")
+[SQL: /* ######################################################################################
+description: Outputs entire value_code table
+
+steps:
+	- 
+
+usage_instructions:
+	- update database reference
+
+dependencies:
+	- 
+
+notes:
+	- 
+#########################################################################################
+*/
+
+USE VanceLawFirm_Needles
+GO
+
+SELECT
+	code,
+	description,
+	c_d,
+	dtf
+FROM value_code]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:38:46,860 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: Value Codes.sql
+2025-04-28 15:38:46,860 - WARNING - mapping.py - save_to_excel - 57 - No data to save.
+2025-04-28 15:38:46,863 - INFO - mapping.py - main - 132 - Saved results to D:\vance-law\vance-law Data Mapping.xlsx
+2025-04-28 15:40:49,292 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:40:49,292 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: Case Staff.sql
+2025-04-28 15:40:49,349 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:40:49,349 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: Case Types.sql
+2025-04-28 15:40:49,353 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.OperationalError) ('08004', "[08004] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Database 'Needles' does not exist. Make sure that the name is entered correctly. (911) (SQLExecDirectW)")
+[SQL: /* ######################################################################################
+description: Outputs fields from [user_case_intake_matter]
+
+steps:
+	- 
+
+usage_instructions:
+	- update database reference
+
+dependencies:
+	- 
+
+notes:
+	- 
+#########################################################################################
+*/
+
+USE [Needles]
+GO
+
+SELECT
+	*
+FROM CustomFieldUsage_intake
+ORDER BY tablename, field_num]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-04-28 15:40:49,354 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: Intake.sql
+2025-04-28 15:40:49,357 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:40:49,357 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: Party Roles.sql
+2025-04-28 15:40:49,360 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_case_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:40:49,361 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_case_data.sql
+2025-04-28 15:40:49,363 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_counsel_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:40:49,364 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_counsel_data.sql
+2025-04-28 15:40:49,365 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_insurance_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:40:49,366 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_insurance_data.sql
+2025-04-28 15:40:49,368 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_party_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:40:49,369 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_party_data.sql
+2025-04-28 15:40:49,372 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab10_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:40:49,372 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab10_data.sql
+2025-04-28 15:40:49,374 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab2_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:40:49,375 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab2_data.sql
+2025-04-28 15:40:49,376 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab3_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:40:49,376 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab3_data.sql
+2025-04-28 15:40:49,378 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab4_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:40:49,378 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab4_data.sql
+2025-04-28 15:40:49,379 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab5_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:40:49,380 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab5_data.sql
+2025-04-28 15:40:49,381 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab6_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:40:49,381 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab6_data.sql
+2025-04-28 15:40:49,384 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab7_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:40:49,385 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab7_data.sql
+2025-04-28 15:40:49,386 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab8_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:40:49,387 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab8_data.sql
+2025-04-28 15:40:49,389 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab9_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:40:49,389 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab9_data.sql
+2025-04-28 15:40:49,390 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_tab_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:40:49,390 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab_data.sql
+2025-04-28 15:40:49,392 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'go'. (102) (SQLExecDirectW)")
+[SQL: use VanceLawFirm_Needles;
+go
+
+select
+	[field_num],
+	[field_num_location],
+	[field_title],
+	[field_type],
+	[field_len],
+	[mini_dir_id],
+	[mini_dir_title],
+	cfu.[column_name],
+	[mini_dir_id_location],
+	cfu.[tablename],
+	[caseid],
+	[ValueCount],
+	CFSD.field_value as [Sample Data]
+from CustomFieldUsage CFU
+left join CustomFieldSampleData CFSD
+	on CFU.column_name = CFSD.column_name
+		and CFU.tablename = CFSD.tablename
+where
+	CFU.tablename = 'user_value_data'
+order by CFU.tablename, CFU.field_num]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:40:49,392 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_value_data.sql
+2025-04-28 15:40:49,394 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'GO'. (102) (SQLExecDirectW)")
+[SQL: /* ######################################################################################
+description: Outputs entire value_code table
+
+steps:
+	- 
+
+usage_instructions:
+	- update database reference
+
+dependencies:
+	- 
+
+notes:
+	- 
+#########################################################################################
+*/
+
+USE VanceLawFirm_Needles
+GO
+
+SELECT
+	code,
+	description,
+	c_d,
+	dtf
+FROM value_code]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:40:49,394 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: Value Codes.sql
+2025-04-28 15:40:49,394 - WARNING - mapping.py - save_to_excel - 57 - No data to save.
+2025-04-28 15:40:49,396 - INFO - mapping.py - main - 132 - Saved results to D:\vance-law\vance-law Data Mapping.xlsx
+2025-04-28 15:43:10,766 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:10,767 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: Case Staff.sql
+2025-04-28 15:43:10,824 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:10,825 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: Case Types.sql
+2025-04-28 15:43:10,831 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:10,831 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: Intake.sql
+2025-04-28 15:43:10,860 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:10,860 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: Party Roles.sql
+2025-04-28 15:43:10,881 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:10,881 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_case_data.sql
+2025-04-28 15:43:10,889 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:10,889 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_counsel_data.sql
+2025-04-28 15:43:10,894 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:10,894 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_insurance_data.sql
+2025-04-28 15:43:10,902 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:10,903 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_party_data.sql
+2025-04-28 15:43:10,907 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:10,908 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab10_data.sql
+2025-04-28 15:43:10,914 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:10,914 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab2_data.sql
+2025-04-28 15:43:10,919 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:10,919 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab3_data.sql
+2025-04-28 15:43:10,928 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:10,929 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab4_data.sql
+2025-04-28 15:43:10,930 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:10,930 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab5_data.sql
+2025-04-28 15:43:10,943 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:10,943 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab6_data.sql
+2025-04-28 15:43:10,949 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:10,950 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab7_data.sql
+2025-04-28 15:43:10,956 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:10,956 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab8_data.sql
+2025-04-28 15:43:10,959 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:10,959 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab9_data.sql
+2025-04-28 15:43:10,969 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:10,970 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab_data.sql
+2025-04-28 15:43:10,973 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:10,973 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_value_data.sql
+2025-04-28 15:43:10,977 - ERROR - mapping.py - execute_query - 51 - Error executing query: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'GO'. (102) (SQLExecDirectW)")
+[SQL: /* ######################################################################################
+description: Outputs entire value_code table
+
+steps:
+	- 
+
+usage_instructions:
+	- update database reference
+
+dependencies:
+	- 
+
+notes:
+	- 
+#########################################################################################
+*/
+
+USE VanceLawFirm_Needles
+GO
+
+SELECT
+	code,
+	description,
+	c_d,
+	dtf
+FROM value_code]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-04-28 15:43:10,978 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: Value Codes.sql
+2025-04-28 15:43:10,978 - WARNING - mapping.py - save_to_excel - 57 - No data to save.
+2025-04-28 15:43:10,979 - INFO - mapping.py - main - 132 - Saved results to D:\vance-law\vance-law Data Mapping.xlsx
+2025-04-28 15:43:39,889 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:39,894 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: Case Staff.sql
+2025-04-28 15:43:39,900 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:39,900 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: Case Types.sql
+2025-04-28 15:43:39,910 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:39,910 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: Intake.sql
+2025-04-28 15:43:39,925 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:39,927 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: Party Roles.sql
+2025-04-28 15:43:39,929 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:39,929 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_case_data.sql
+2025-04-28 15:43:39,933 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:39,933 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_counsel_data.sql
+2025-04-28 15:43:39,935 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:39,935 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_insurance_data.sql
+2025-04-28 15:43:39,939 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:39,939 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_party_data.sql
+2025-04-28 15:43:39,940 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:39,940 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab10_data.sql
+2025-04-28 15:43:39,943 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:39,943 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab2_data.sql
+2025-04-28 15:43:39,945 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:39,945 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab3_data.sql
+2025-04-28 15:43:39,948 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:39,949 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab4_data.sql
+2025-04-28 15:43:39,950 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:39,950 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab5_data.sql
+2025-04-28 15:43:39,957 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:39,958 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab6_data.sql
+2025-04-28 15:43:39,963 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:39,963 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab7_data.sql
+2025-04-28 15:43:39,967 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:39,967 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab8_data.sql
+2025-04-28 15:43:39,969 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:39,969 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab9_data.sql
+2025-04-28 15:43:39,974 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:39,975 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_tab_data.sql
+2025-04-28 15:43:39,980 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:39,980 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: user_value_data.sql
+2025-04-28 15:43:39,987 - ERROR - mapping.py - execute_query - 51 - Error executing query: This result object does not return rows. It has been closed automatically.
+2025-04-28 15:43:39,988 - WARNING - mapping.py - process_sql_files - 89 - Empty DataFrame for SQL file: Value Codes.sql
+2025-04-28 15:43:39,988 - WARNING - mapping.py - save_to_excel - 57 - No data to save.
+2025-04-28 15:43:39,990 - INFO - mapping.py - main - 132 - Saved results to D:\vance-law\vance-law Data Mapping.xlsx
