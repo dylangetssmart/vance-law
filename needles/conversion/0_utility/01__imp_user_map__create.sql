@@ -21,7 +21,7 @@ Requirements:
 
 */
 
-use [SA]
+use VanceLawFirm_SA;
 go
 
 if OBJECT_ID('conversion.imp_user_map', 'U') is not null
@@ -135,10 +135,10 @@ insert into conversion.imp_user_map
 		u.usrbActiveState	 as Active,
 		u.usrbIsShowInSystem as Visible
 	--select * 
-	from sma_mst_users u
-	join sma_MST_IndvContacts smic
+	from [VanceLawFirm_SA]..sma_mst_users u
+	join [VanceLawFirm_SA]..sma_MST_IndvContacts smic
 		on smic.cinnContactID = u.usrnContactID
-	left join Needles..staff s
+	left join VanceLawFirm_Needles..staff s
 		on s.full_name = smic.cinsFirstName + ' ' + smic.cinsLastName
 
 select
@@ -147,21 +147,21 @@ from conversion.imp_user_map map
 where
 	map.StaffCode = ''
 
--- update conversion.imp_user_map
--- set StaffCode = 'RICK'
--- where SALoginID = 'rpopp'
+update conversion.imp_user_map
+set StaffCode = 'LAURA'
+where SALoginID = 'leubank'
 
--- update conversion.imp_user_map
--- set StaffCode = 'MARK'
--- where SALoginID = 'mskolrood'
+update conversion.imp_user_map
+set StaffCode = 'JAKE'
+where SALoginID = 'jwatkins'
 
---update conversion.imp_user_map
---set StaffCode = 'SUSIE'
---where SALoginID = 'susie'
+update conversion.imp_user_map
+set StaffCode = 'DARLA'
+where SALoginID = 'dlopez'
 
---update conversion.imp_user_map
---set StaffCode = 'KYLE'
---where SALoginID = 'kweidman'
+update conversion.imp_user_map
+set StaffCode = 'KYLE'
+where SALoginID = 'kweidman'
 
 /*
 file is cleaned in python first
