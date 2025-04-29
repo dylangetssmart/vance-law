@@ -16,7 +16,7 @@ notes:
 ######################################################################################
 */
 
-use Skolrood_SA
+use VanceLawFirm_SA
 go
 
 
@@ -59,7 +59,7 @@ insert into [sma_MST_ContactNumbers]
 		null						as [source_id],
 		'needles'					as [source_db],
 		'names.home_phone'			as [source_ref]
-	from [Needles].[dbo].[names] n
+	from [VanceLawFirm_Needles].[dbo].[names] n
 	join [sma_MST_OrgContacts] c
 		on c.saga = n.names_id
 	join [sma_MST_Address] a
@@ -98,7 +98,7 @@ insert into [sma_MST_ContactNumbers]
 		null						as [source_id],
 		'needles'					as [source_db],
 		'names.work_phone'			as [source_ref]
-	from [Needles]..[names] n
+	from [VanceLawFirm_Needles]..[names] n
 	join [sma_MST_OrgContacts] c
 		on c.saga = n.names_id
 	join [sma_MST_Address] a
@@ -137,7 +137,7 @@ insert into [sma_MST_ContactNumbers]
 		null					   as [source_id],
 		'needles'				   as [source_db],
 		'names.car_phone'		   as [source_ref]
-	from [Needles].[dbo].[names] n
+	from [VanceLawFirm_Needles].[dbo].[names] n
 	join [sma_MST_OrgContacts] c
 		on c.saga = n.names_id
 	join [sma_MST_Address] a
@@ -176,7 +176,7 @@ insert into [sma_MST_ContactNumbers]
 		null						as [source_id],
 		'needles'					as [source_db],
 		'names.fax_number'			as [source_ref]
-	from [Needles].[dbo].[names] n
+	from [VanceLawFirm_Needles].[dbo].[names] n
 	join [sma_MST_OrgContacts] c
 		on c.saga = n.names_id
 	join [sma_MST_Address] a
@@ -215,7 +215,7 @@ insert into [sma_MST_ContactNumbers]
 		null						   as [source_id],
 		'needles'					   as [source_db],
 		'names.beeper_number'		   as [source_ref]
-	from [Needles].[dbo].[names] n
+	from [VanceLawFirm_Needles].[dbo].[names] n
 	join [sma_MST_OrgContacts] c
 		on c.saga = n.names_id
 	join [sma_MST_Address] a
@@ -257,7 +257,7 @@ insert into [dbo].[sma_MST_ContactNumbers]
 		null						  as [source_id],
 		'needles'					  as [source_db],
 		'names.other_phone1'		  as [source_ref]
-	from [Needles].[dbo].[names] n
+	from [VanceLawFirm_Needles].[dbo].[names] n
 	join [sma_MST_OrgContacts] c
 		on c.saga = n.names_id
 	join [sma_MST_Address] a
@@ -296,7 +296,7 @@ insert into [dbo].[sma_MST_ContactNumbers]
 		null						  as [source_id],
 		'needles'					  as [source_db],
 		'names.other_phone2'		  as [source_ref]
-	from [Needles].[dbo].[names] n
+	from [VanceLawFirm_Needles].[dbo].[names] n
 	join [sma_MST_OrgContacts] c
 		on c.saga = n.names_id
 	join [sma_MST_Address] a
@@ -335,7 +335,7 @@ insert into [dbo].[sma_MST_ContactNumbers]
 		null						  as [source_id],
 		'needles'					  as [source_db],
 		'names.other_phone3'		  as [source_ref]
-	from [Needles].[dbo].[names] n
+	from [VanceLawFirm_Needles].[dbo].[names] n
 	join [sma_MST_OrgContacts] c
 		on c.saga = n.names_id
 	join [sma_MST_Address] a
@@ -374,7 +374,7 @@ insert into [dbo].[sma_MST_ContactNumbers]
 		null						  as [source_id],
 		'needles'					  as [source_db],
 		'names.other_phone4'		  as [source_ref]
-	from [Needles].[dbo].[names] n
+	from [VanceLawFirm_Needles].[dbo].[names] n
 	join [sma_MST_OrgContacts] c
 		on c.saga = n.names_id
 	join [sma_MST_Address] a
@@ -414,7 +414,7 @@ insert into [dbo].[sma_MST_ContactNumbers]
 		null						  as [source_id],
 		'needles'					  as [source_db],
 		'names.other_phone5'		  as [source_ref]
-	from [Needles].[dbo].[names] n
+	from [VanceLawFirm_Needles].[dbo].[names] n
 	join [sma_MST_OrgContacts] c
 		on c.saga = n.names_id
 	join [sma_MST_Address] a

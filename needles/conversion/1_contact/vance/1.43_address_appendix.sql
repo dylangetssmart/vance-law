@@ -162,14 +162,14 @@ go
 
 ------------- Check Uniqueness------------
 -- select I.cinnContactID
--- 	 from [SA].[dbo].[sma_MST_Indvcontacts] I 
---	 inner join [SA].[dbo].[sma_MST_Address] A on A.addnContactID=I.cinnContactID and A.addnContactCtgID=I.cinnContactCtg and A.addbPrimary=1 
+-- 	 from VanceLawFirm_SA.[dbo].[sma_MST_Indvcontacts] I 
+--	 inner join VanceLawFirm_SA.[dbo].[sma_MST_Address] A on A.addnContactID=I.cinnContactID and A.addnContactCtgID=I.cinnContactCtg and A.addbPrimary=1 
 --	 group by cinnContactID
 --	 having count(cinnContactID)>1
 
 -- select O.connContactID
--- 	 from [SA].[dbo].[sma_MST_OrgContacts] O 
---	 inner join [SA].[dbo].[sma_MST_Address] A on A.addnContactID=O.connContactID and A.addnContactCtgID=O.connContactCtg and A.addbPrimary=1 
+-- 	 from VanceLawFirm_SA.[dbo].[sma_MST_OrgContacts] O 
+--	 inner join VanceLawFirm_SA.[dbo].[sma_MST_Address] A on A.addnContactID=O.connContactID and A.addnContactCtgID=O.connContactCtg and A.addbPrimary=1 
 --	 group by connContactID
 --	 having count(connContactID)>1
 

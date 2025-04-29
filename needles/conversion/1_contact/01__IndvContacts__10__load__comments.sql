@@ -1,4 +1,4 @@
-use [SA]
+use VanceLawFirm_SA
 go
 
 /*
@@ -20,8 +20,8 @@ from (
 		p.party_id as partyid,
 		DATEPART(yyyy, GETDATE()) - DATEPART(yyyy, n.date_of_birth) - 1 as age
 
-	from Needles.[dbo].[party_Indexed] p
-	join Needles.[dbo].[names] n
+	from [VanceLawFirm_Needles].[dbo].[party_Indexed] p
+	join [VanceLawFirm_Needles].[dbo].[names] n
 		on n.names_id = p.party_id
 	where n.date_of_birth is not null
 ) a
@@ -36,10 +36,10 @@ from (
 		p.case_id as caseid,
 		p.party_id as partyid,
 		DATEPART(yyyy, c.date_of_incident) - DATEPART(yyyy, n.date_of_birth) - 1 as doi
-	from Needles.[dbo].[party_Indexed] p
-	join Needles.[dbo].[names] n
+	from [VanceLawFirm_Needles].[dbo].[party_Indexed] p
+	join [VanceLawFirm_Needles].[dbo].[names] n
 		on n.names_id = p.party_id
-	join Needles.[dbo].[cases] c
+	join [VanceLawFirm_Needles].[dbo].[cases] c
 		on c.casenum = p.case_id
 	where c.date_of_incident is not null
 		and n.date_of_birth is not null
@@ -55,8 +55,8 @@ from (
 		p.case_id as caseid,
 		p.party_id as partyid,
 		n.deceased as deceased
-	from Needles.[dbo].[party_Indexed] p
-	join Needles.[dbo].[names] n
+	from [VanceLawFirm_Needles].[dbo].[party_Indexed] p
+	join [VanceLawFirm_Needles].[dbo].[names] n
 		on n.names_id = p.party_id
 	where n.deceased is not null
 ) a
@@ -71,8 +71,8 @@ from (
 		p.case_id as caseid,
 		p.party_id as partyid,
 		DATEPART(yyyy, n.date_of_death) as dod
-	from Needles.[dbo].[party_Indexed] p
-	join Needles.[dbo].[names] n
+	from [VanceLawFirm_Needles].[dbo].[party_Indexed] p
+	join [VanceLawFirm_Needles].[dbo].[names] n
 		on n.names_id = p.party_id
 	where n.date_of_death is not null
 ) a
@@ -88,8 +88,8 @@ from (
 		p.case_id as caseid,
 		p.party_id as partyid,
 		p.incapacitated as incapacitated
-	from Needles.[dbo].[party_Indexed] p
-	join Needles.[dbo].[names] n
+	from [VanceLawFirm_Needles].[dbo].[party_Indexed] p
+	join [VanceLawFirm_Needles].[dbo].[names] n
 		on n.names_id = p.party_id
 	where ISNULL(incapacitated, '') <> ''
 ) a
@@ -104,8 +104,8 @@ from (
 		p.case_id as caseid,
 		p.party_id as partyid,
 		p.incapacity as incapacity
-	from Needles.[dbo].[party_Indexed] p
-	join Needles.[dbo].[names] n
+	from [VanceLawFirm_Needles].[dbo].[party_Indexed] p
+	join [VanceLawFirm_Needles].[dbo].[names] n
 		on n.names_id = p.party_id
 	where ISNULL(incapacity, '') <> ''
 ) a
@@ -121,8 +121,8 @@ from (
 		p.case_id as caseid,
 		p.party_id as partyid,
 		p.responsibility as responsibility
-	from Needles.[dbo].[party_Indexed] p
-	join Needles.[dbo].[names] n
+	from [VanceLawFirm_Needles].[dbo].[party_Indexed] p
+	join [VanceLawFirm_Needles].[dbo].[names] n
 		on n.names_id = p.party_id
 	where ISNULL(p.responsibility, '') <> ''
 ) a

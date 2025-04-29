@@ -1,23 +1,9 @@
-use KurtYoung_SA
+use VanceLawFirm_SA
 go
 
-/*
-alter table [sma_TRN_Notes] disable trigger all
-delete from [sma_TRN_Notes] 
-DBCC CHECKIDENT ('[sma_TRN_Notes]', RESEED, 0);
-alter table [sma_TRN_Notes] enable trigger all
-*/
-
-
----
 alter table [sma_TRN_Notes] disable trigger all
 go
 
----
-
-SELECT * FROM KurtYoung_Needles..party p where p.date_of_majority is not null
-
-----(1)----
 insert into sma_TRN_Notes
 	(
 	notnCaseID, notnNoteTypeID, notmDescription, notmPlainText, notnContactCtgID, notnContactId, notsPriority, notnFormID, notnRecUserID, notdDtCreated, notnModifyUserID, notdDtModified, saga, [source_id], [source_db], [source_ref]
@@ -54,7 +40,7 @@ insert into sma_TRN_Notes
 		null			 as [source_id],
 		'needles'		 as [source_db],
 		'party'			 as [source_ref]
-	from KurtYoung_Needles.[dbo].[party] P
+	from VanceLawFirm_Needles.[dbo].[party] P
 	join sma_MST_IndvContacts I
 		on I.saga = P.party_id
 
@@ -93,7 +79,7 @@ insert into sma_TRN_Notes
 		null			 as [source_id],
 		'needles'		 as [source_db],
 		'party'			 as [source_ref]
-	from KurtYoung_Needles.[dbo].[party] P
+	from VanceLawFirm_Needles.[dbo].[party] P
 	join sma_MST_IndvContacts I
 		on I.saga = P.party_id
 
@@ -125,7 +111,7 @@ insert into sma_TRN_Notes
 		null			 as [source_id],
 		'needles'		 as [source_db],
 		'provider_notes' as [source_ref]
-	from KurtYoung_Needles.[dbo].[provider_notes] PN
+	from VanceLawFirm_Needles.[dbo].[provider_notes] PN
 	join IndvOrgContacts_Indexed IOC
 		on IOC.SAGA = PN.name_id
 

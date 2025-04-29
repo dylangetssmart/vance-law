@@ -1,4 +1,4 @@
-use Skolrood_SA
+use VanceLawFirm_SA
 go
 
 /*
@@ -7,8 +7,8 @@ delete from [sma_MST_Address]
 DBCC CHECKIDENT ('[sma_MST_Address]', RESEED, 0);
 alter table [sma_MST_Address] enable trigger all
 */
--- select distinct addr_Type from  [Needles].[dbo].[multi_addresses]
--- select * from  [Needles].[dbo].[multi_addresses] where addr_type not in ('Home','business', 'other')
+-- select distinct addr_Type from  [VanceLawFirm_Needles].[dbo].[multi_addresses]
+-- select * from  [VanceLawFirm_Needles].[dbo].[multi_addresses] where addr_type not in ('Home','business', 'other')
 
 alter table [sma_MST_Address] disable trigger all
 go
@@ -162,14 +162,14 @@ go
 
 ------------- Check Uniqueness------------
 -- select I.cinnContactID
--- 	 from [SA].[dbo].[sma_MST_Indvcontacts] I 
---	 inner join [SA].[dbo].[sma_MST_Address] A on A.addnContactID=I.cinnContactID and A.addnContactCtgID=I.cinnContactCtg and A.addbPrimary=1 
+-- 	 from VanceLawFirm_SA.[dbo].[sma_MST_Indvcontacts] I 
+--	 inner join VanceLawFirm_SA.[dbo].[sma_MST_Address] A on A.addnContactID=I.cinnContactID and A.addnContactCtgID=I.cinnContactCtg and A.addbPrimary=1 
 --	 group by cinnContactID
 --	 having count(cinnContactID)>1
 
 -- select O.connContactID
--- 	 from [SA].[dbo].[sma_MST_OrgContacts] O 
---	 inner join [SA].[dbo].[sma_MST_Address] A on A.addnContactID=O.connContactID and A.addnContactCtgID=O.connContactCtg and A.addbPrimary=1 
+-- 	 from VanceLawFirm_SA.[dbo].[sma_MST_OrgContacts] O 
+--	 inner join VanceLawFirm_SA.[dbo].[sma_MST_Address] A on A.addnContactID=O.connContactID and A.addnContactCtgID=O.connContactCtg and A.addbPrimary=1 
 --	 group by connContactID
 --	 having count(connContactID)>1
 

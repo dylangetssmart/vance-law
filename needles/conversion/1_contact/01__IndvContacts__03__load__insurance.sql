@@ -1,4 +1,4 @@
-use [SA]
+use VanceLawFirm_SA
 go
 
 alter table [sma_MST_IndvContacts] disable trigger all
@@ -115,7 +115,7 @@ insert into [sma_MST_IndvContacts]
 		ins.insured			  as [source_id],
 		'needles'			  as [source_db],
 		'insurance'			  as [source_ref]
-	from [Needles].[dbo].[insurance] ins
+	from [VanceLawFirm_Needles].[dbo].[insurance] ins
 	where ISNULL(insured, '') <> ''
 go
 

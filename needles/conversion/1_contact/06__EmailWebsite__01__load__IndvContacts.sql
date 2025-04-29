@@ -11,7 +11,7 @@ notes:
 ######################################################################################
 */
 
-use Skolrood_SA
+use VanceLawFirm_SA
 go
 
 /*
@@ -49,7 +49,7 @@ insert into [sma_MST_EmailWebsite]
 		null			 as [source_id],
 		'needles'		 as [source_db],
 		'names.email'	 as [source_ref]
-	from [Needles].[dbo].[names] n
+	from [VanceLawFirm_Needles].[dbo].[names] n
 	join [sma_MST_IndvContacts] c
 		on c.saga = n.names_id
 	where ISNULL(email, '') <> ''
@@ -75,7 +75,7 @@ insert into [sma_MST_EmailWebsite]
 		null			   as [source_id],
 		'needles'		   as [source_db],
 		'names.email_work' as [source_ref]
-	from [Needles].[dbo].[names] n
+	from [VanceLawFirm_Needles].[dbo].[names] n
 	join [sma_MST_IndvContacts] c
 		on c.saga = n.names_id
 	where ISNULL(email_work, '') <> ''
@@ -101,7 +101,7 @@ insert into [sma_MST_EmailWebsite]
 		null				as [source_id],
 		'needles'			as [source_db],
 		'names.other_email' as [source_ref]
-	from [Needles].[dbo].[names] n
+	from [VanceLawFirm_Needles].[dbo].[names] n
 	join [sma_MST_IndvContacts] c
 		on c.saga = n.names_id
 	where ISNULL(other_email, '') <> ''
@@ -127,7 +127,7 @@ insert into [sma_MST_EmailWebsite]
 		null			 as [source_id],
 		'needles'		 as [source_db],
 		'names.website'	 as [source_ref]
-	from [Needles].[dbo].[names] n
+	from [VanceLawFirm_Needles].[dbo].[names] n
 	join [sma_MST_IndvContacts] c
 		on c.saga = n.names_id
 	where ISNULL(website, '') <> ''
@@ -154,7 +154,7 @@ insert into [sma_MST_EmailWebsite]
 		null			  as [source_id],
 		'needles'		  as [source_db],
 		'staff.email'	  as [source_ref]
-	from [Needles].[dbo].[staff] s
+	from [VanceLawFirm_Needles].[dbo].[staff] s
 	join [sma_MST_IndvContacts] ic
 		on ic.source_id = s.staff_code
 			and ic.source_ref = 'staff'
