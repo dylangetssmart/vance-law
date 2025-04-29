@@ -1,24 +1,3 @@
-/* ######################################################################################
-description: Outputs distinct case staff
-
-steps:
-	- 
-
-usage_instructions:
-	- update database reference
-
-dependencies:
-	- 
-
-notes:
-	- 
-#########################################################################################
-*/
-
-USE VanceLawFirm_Needles
-
---SELECT * FROM matter m
-
 SELECT DISTINCT
 	c.staff_1
    ,c.staff_2

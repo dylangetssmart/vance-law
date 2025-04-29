@@ -1,4 +1,4 @@
-use VanceLawFirm_SA
+use Skolrood_SA
 go
 
 IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = N'conversion')

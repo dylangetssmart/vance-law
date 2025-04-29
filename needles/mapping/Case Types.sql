@@ -1,26 +1,3 @@
-USE VanceLawFirm_Needles
-
---SELECT
---	m.*
---   ,[count]
---FROM matter m
---JOIN (
---	SELECT
---		m.matcode
---	   ,m.header
---	   ,m.[description]
---	   ,COUNT(*) AS [Count]
---	FROM matter m
---	JOIN cases_Indexed ci
---		ON m.matcode = ci.matcode
---	GROUP BY m.matcode
---			,m.header
---			,m.[description]
---) c
---	ON m.matcode = c.matcode
-
---SELECT * FROM VanceLawFirm_Needles..matter m
-
 SELECT
       m.matcode AS case_type,
     m.header,

@@ -1,5 +1,3 @@
-use VanceLawFirm_Needles
-
 select
 	[field_num],
 	[field_num_location],

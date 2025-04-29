@@ -1,22 +1,3 @@
-/* ######################################################################################
-description: Outputs party roles and the number of times each is used.
-
-steps:
-	- 
-
-usage_instructions:
-	- update database reference
-
-dependencies:
-	- 
-
-notes:
-	- 
-#########################################################################################
-*/
-
-USE VanceLawFirm_Needles
-
 SELECT
 	[role]
    ,COUNT(*) AS Count
