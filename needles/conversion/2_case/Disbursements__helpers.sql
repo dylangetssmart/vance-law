@@ -1,45 +1,57 @@
-use [VanceLawFirm_SA]
+/*---
+sequence: 9
+description:
+data-source:
+---*/
+
+use VanceLawFirm_SA
 go
 
-------------------------------------------------------------------------------------------------------
--- utility table to store the applicable value codes
-------------------------------------------------------------------------------------------------------
+/* --------------------------------------------------------------------------------------------------------------
+Create utility table to store the applicable value codes
+*/
 begin
 
-	if OBJECT_ID('conversion.value_settlements', 'U') is not null
+	if OBJECT_ID('conversion.value_disbursements', 'U') is not null
 	begin
-		drop table conversion.value_settlements
+		drop table conversion.value_disbursements
 	end
 
-	create table conversion.value_settlements (
+	create table conversion.value_disbursements (
 		code VARCHAR(25)
 	);
-	insert into conversion.value_settlements
+	insert into conversion.value_disbursements
 		(
 			code
 		)
 		values
-		('MP'),
-		('PTC'),
-		('SET');
+		('CASE CLOSE'),
+		('CASE OPEN'),
+		('COPIES'),
+		('DTF'),
+		('MISC'),
+		('POSTAGE');
+
 end
 
----(0)---
+/* --------------------------------------------------------------------------------------------------------------
+Create Disbursement helper table
+*/
+
 if exists (
 		select
 			*
 		from sys.objects
-		where name = 'value_tab_Settlement_Helper'
+		where name = 'value_tab_Disbursement_Helper'
 			and type = 'U'
 	)
 begin
-	drop table value_tab_Settlement_Helper
+	drop table value_tab_Disbursement_Helper
 end
 
 go
 
----(0)---
-create table value_tab_Settlement_Helper (
+create table value_tab_Disbursement_Helper (
 	TableIndex	   [INT] identity (1, 1) not null,
 	case_id		   INT,
 	value_id	   INT,
@@ -48,20 +60,20 @@ create table value_tab_Settlement_Helper (
 	ProviderCID	   INT,
 	ProviderCTG	   INT,
 	ProviderAID	   INT,
+	ProviderUID	   BIGINT,
 	casnCaseID	   INT,
 	PlaintiffID	   INT,
-	constraint IOC_Clustered_Index_value_tab_Settlement_Helper primary key clustered (TableIndex)
+	constraint IOC_Clustered_Index_value_tab_Disbursement_Helper primary key clustered (TableIndex)
 ) on [PRIMARY]
 go
 
-create nonclustered index IX_NonClustered_Index_value_tab_Settlement_Helper_case_id on [value_tab_Settlement_Helper] (case_id);
-create nonclustered index IX_NonClustered_Index_value_tab_Settlement_Helper_value_id on [value_tab_Settlement_Helper] (value_id);
-create nonclustered index IX_NonClustered_Index_value_tab_Settlement_Helper_ProviderNameId on [value_tab_Settlement_Helper] (ProviderNameId);
-create nonclustered index IX_NonClustered_Index_value_tab_Settlement_Helper_PlaintiffID on [value_tab_Settlement_Helper] (PlaintiffID);
+create nonclustered index IX_NonClustered_Index_value_tab_Disbursement_Helper_case_id on [value_tab_Disbursement_Helper] (case_id);
+create nonclustered index IX_NonClustered_Index_value_tab_Disbursement_Helper_value_id on [value_tab_Disbursement_Helper] (value_id);
+create nonclustered index IX_NonClustered_Index_value_tab_Disbursement_Helper_ProviderNameId on [value_tab_Disbursement_Helper] (ProviderNameId);
 go
 
 ---(0)---
-insert into value_tab_Settlement_Helper
+insert into value_tab_Disbursement_Helper
 	(
 		case_id,
 		value_id,
@@ -70,17 +82,19 @@ insert into value_tab_Settlement_Helper
 		ProviderCID,
 		ProviderCTG,
 		ProviderAID,
+		ProviderUID,
 		casnCaseID,
 		PlaintiffID
 	)
 	select
-		v.case_id	   as case_id,	-- needles case
-		v.value_id	   as tab_id,		-- needles records TAB item
+		v.case_id	   as case_id,	        -- needles case
+		v.value_id	   as tab_id,		    -- needles records TAB item
 		v.provider	   as providernameid,
 		ioc.Name	   as providername,
 		ioc.CID		   as providercid,
 		ioc.CTG		   as providerctg,
 		ioc.AID		   as provideraid,
+		ioc.UNQCID	   as provideruid,
 		cas.casncaseid as casncaseid,
 		null		   as plaintiffid
 	from [VanceLawFirm_Needles].[dbo].[value_Indexed] v
@@ -93,16 +107,16 @@ insert into value_tab_Settlement_Helper
 		code in (
 			select
 				code
-			from conversion.value_settlements
+			from conversion.value_disbursements
 		);
 go
 
 ---(0)---
-dbcc dbreindex ('value_tab_Settlement_Helper', ' ', 90) with no_infomsgs
+dbcc dbreindex ('value_tab_Disbursement_Helper', ' ', 90) with no_infomsgs
 go
 
 
----(0)--- (prepare for multiple party)
+---(0)--- value_id may associate with secondary plaintiff
 if exists (
 		select
 			*
@@ -123,21 +137,19 @@ into value_tab_Multi_Party_Helper_Temp
 from [VanceLawFirm_Needles].[dbo].[value_Indexed] v
 join [sma_TRN_cases] cas
 	on cas.cassCaseNumber = CONVERT(VARCHAR, v.case_id)
-join [IndvOrgContacts_Indexed] ioc
+join IndvOrgContacts_Indexed ioc
 	on ioc.SAGA = v.party_id
 join [sma_TRN_Plaintiff] t
 	on t.plnnContactID = ioc.cid
 		and t.plnnContactCtg = ioc.CTG
 		and t.plnnCaseID = cas.casnCaseID
-go
 
-update value_tab_Settlement_Helper
+update value_tab_Disbursement_Helper
 set PlaintiffID = a.plnnPlaintiffID
 from value_tab_Multi_Party_Helper_Temp a
-where case_id = a.cid
+where case_id = a.CID
 and value_id = a.vid
 go
-
 
 if exists (
 		select
@@ -157,7 +169,7 @@ select
 	(
 		select
 			plnnplaintiffid
-		from [sma_TRN_Plaintiff]
+		from sma_TRN_Plaintiff
 		where plnnCaseID = cas.casnCaseID
 			and plnbIsPrimary = 1
 	)		   as plnnplaintiffid
@@ -173,9 +185,9 @@ join [sma_TRN_Defendants] d
 		and d.defnCaseID = cas.casnCaseID
 go
 
-update value_tab_Settlement_Helper
+update value_tab_Disbursement_Helper
 set PlaintiffID = a.plnnPlaintiffID
 from value_tab_Multi_Party_Helper_Temp a
-where case_id = a.cid
+where case_id = a.CID
 and value_id = a.vid
 go

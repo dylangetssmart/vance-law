@@ -1,12 +1,12 @@
-use Skolrood_SA
+use [VanceLawFirm_SA]
 go
 
 /* ------------------------------------------------------------------------------
 Create missing Settlement Types from value_code.description
 */
 
---SELECT * FROM Skolrood_SA..sma_MST_SettlementType smst
---SELECT * FROM Skolrood_Needles..value_code vc
+--SELECT * FROM [VanceLawFirm_SA]..sma_MST_SettlementType smst
+--SELECT * FROM [VanceLawFirm_Needles]..value_code vc
 
 insert into [sma_MST_SettlementType]
 	(
@@ -14,7 +14,7 @@ insert into [sma_MST_SettlementType]
 	)
 	select
 		vc.description
-	from Skolrood_Needles..value_code vc
+	from [VanceLawFirm_Needles]..value_code vc
 	--select
 	--	'Settlement Recovery'
 	--union
@@ -93,7 +93,7 @@ insert into [sma_TRN_Settlements]
 			where SettlTypeName = (
 					select
 						vc.description
-					from Skolrood_Needles..value_code vc
+					from [VanceLawFirm_Needles]..value_code vc
 					where vc.code = v.code
 				)
 		)				as stlTypeID,
@@ -112,7 +112,7 @@ insert into [sma_TRN_Settlements]
 		null			as [source_id],
 		'needles'		as [source_db],
 		'value_Indexed' as [source_ref]
-	from Skolrood_Needles.[dbo].[value_Indexed] v
+	from [VanceLawFirm_Needles].[dbo].[value_Indexed] v
 	join value_tab_Settlement_Helper map
 		on map.case_id = v.case_id
 			and map.value_id = v.value_id
