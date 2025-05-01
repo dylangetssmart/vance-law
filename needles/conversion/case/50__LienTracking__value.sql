@@ -3,14 +3,12 @@ go
 
 
 /* ------------------------------------------------------------------------------
-helper table
+helper tables
 */ ------------------------------------------------------------------------------
 
 
-------------------------------------------------------------------------------------------------------
--- utility table to store the applicable value codes
-------------------------------------------------------------------------------------------------------
-
+--- [conversion].[value_lienTracking]
+begin
 if OBJECT_ID('conversion.value_lienTracking', 'U') is not null
 begin
 	drop table conversion.value_lienTracking
@@ -25,12 +23,9 @@ insert into conversion.value_lienTracking
 	)
 	values
 	('SUBRO')
+end
 
-
--------------------------------------------------------------------------------
--- [value_tab_Liencheckbox_Helper]
--------------------------------------------------------------------------------
-
+--- [value_tab_Liencheckbox_Helper]
 if exists (
 		select
 			*
@@ -44,17 +39,17 @@ end
 
 go
 
--- Create table
+---
 create table value_tab_Liencheckbox_Helper (
 	TableIndex INT identity (1, 1) not null,
 	value_id   INT,
 	constraint IOC_Clustered_Index_value_tab_Liencheckbox_Helper primary key clustered (TableIndex)
 ) on [PRIMARY]
 
-
 create nonclustered index IX_NonClustered_Index_value_tab_Liencheckbox_Helper_value_id on [value_tab_Liencheckbox_Helper] (value_id);
 go
 
+---
 insert into value_tab_Liencheckbox_Helper
 	(
 		value_id
@@ -77,9 +72,7 @@ go
 dbcc dbreindex ('value_tab_Liencheckbox_Helper', ' ', 90) with no_infomsgs
 go
 
--------------------------------------------------------------------------------
--- [value_tab_Lien_Helper]
--------------------------------------------------------------------------------
+--- [value_tab_Lien_Helper]
 if exists (
 		select
 			*
@@ -93,6 +86,7 @@ end
 
 go
 
+---
 create table value_tab_Lien_Helper (
 	TableIndex	   [INT] identity (1, 1) not null,
 	case_id		   INT,
@@ -114,6 +108,7 @@ create nonclustered index IX_NonClustered_Index_value_tab_Lien_Helper_value_id o
 create nonclustered index IX_NonClustered_Index_value_tab_Lien_Helper_ProviderNameId on [value_tab_Lien_Helper] (ProviderNameId);
 go
 
+---
 insert into value_tab_Lien_Helper
 	(
 		case_id,
@@ -265,6 +260,7 @@ go
 /* ------------------------------------------------------------------------------
 Create Lien Types
 */
+
 insert into sma_MST_LienType
 	(
 		[lntsCode],

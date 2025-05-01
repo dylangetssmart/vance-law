@@ -1,7 +1,7 @@
 /*---
-group: misc
-order: 
-description: Update contact types for attorneys
+group: load
+order: 50
+description: Create Settlement records from [value]
 ---*/
 
 use [VanceLawFirm_SA]
