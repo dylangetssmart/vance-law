@@ -46,8 +46,7 @@ def generate_readmes_for_sql_files(sql_dir):
 if __name__ == "__main__":
     # Define the root directories for SQL files
     sql_dirs = [
-        r'litify\conversion',  # Path to the Litify conversion directory
-        r'needles\conversion'  # Path to the Needles conversion directory
+        r'D:\vance-law\needles\conversion'
     ]
 
     # Iterate over each directory and generate README.md files

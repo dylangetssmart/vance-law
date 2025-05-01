@@ -1,4 +1,4 @@
-name: Generate README and _runlist
+name: Generate readme and runlist
 
 on:
   push:
