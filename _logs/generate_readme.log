@@ -1,0 +1,2 @@
+2025-05-01 15:20:48,045 - DEBUG - generate_readmes.py - <module> - 56 - Processing directory: /home/runner/work/vance-law/vance-law/D:\vance-law\needles\conversion
+2025-05-01 15:20:48,045 - ERROR - generate_readmes.py - <module> - 60 - Directory does not exist: /home/runner/work/vance-law/vance-law/D:\vance-law\needles\conversion
