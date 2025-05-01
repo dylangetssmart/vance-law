@@ -3,7 +3,7 @@ name: Generate readme and runlist
 on:
   push:
     paths:
-      - 'sql/**'
+      - 'needles/**'
   workflow_dispatch:
 
 jobs:

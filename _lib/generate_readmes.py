@@ -2,7 +2,7 @@ import os
 from read_yaml_metadata import read_yaml_metadata
 from setup_logger import setup_logger
 
-logger = setup_logger(__name__, log_file="actions.log")
+logger = setup_logger(__name__, log_file="generate_readme.log")
 
 def generate_readmes_for_sql_files(sql_dir):
     """
@@ -51,8 +51,18 @@ if __name__ == "__main__":
 
     # Iterate over each directory and generate README.md files
     for sql_dir in sql_dirs:
-        if os.path.exists(sql_dir):
-            print(f"Processing directory: {sql_dir}")
+        try:
+            sql_dir = os.path.abspath(sql_dir)  # Convert to absolute path
+            logger.debug(f"Processing directory: {sql_dir}")
+
+            # Check if the directory exists
+            if not os.path.exists(sql_dir):
+                logger.error(f"Directory does not exist: {sql_dir}")
+                continue
+
             generate_readmes_for_sql_files(sql_dir)
-        else:
-            print(f"Directory does not exist: {sql_dir}")
+            logger.info(f"Generated readme in {sql_dir}")
+
+        except Exception as e:
+            logger.error(f"Error processing directory {sql_dir}: {e}")
+            continue
