@@ -4479,3 +4479,743 @@ The statement has been terminated.
 - AllContactInfo.sql
 - IndvOrgContacts_Indexed.sql
 2025-04-30 16:48:26,118 - INFO - run.py - run - 75 - Execution skipped for D:\vance-law\needles\conversion\contact.
+2025-05-01 11:35:15,120 - DEBUG - run.py - run - 58 - Run started with options: {'server': 'DylanS\\MSSQLSERVER2022', 'database': 'VanceLawFirm_SA', 'username': None, 'password': None, 'dev': False, 'debug': False, 'input': 'D:\\vance-law\\needles\\conversion\\utility', 'use_metadata': False}
+2025-05-01 11:35:15,120 - DEBUG - run.py - collect_scripts - 16 - Not using metadata to process scripts.
+2025-05-01 11:35:15,120 - DEBUG - run.py - run - 66 - Collected scripts: ['00__schema__Address.sql', '00__schema__Cases.sql', '00__schema__ContactNumbers.sql', '00__schema__Courts.sql', '00__schema__Defendants.sql', '00__schema__Disbursements.sql', '00__schema__EmailWebsite.sql', '00__schema__Employment.sql', '00__schema__IndvContacts.sql', '00__schema__InsuranceCoverage.sql', '00__schema__LawFirms.sql', '00__schema__LienTracking.sql', '00__schema__LostWages.sql', '00__schema__MedicalProviders.sql', '00__schema__Notes.sql', '00__schema__OrgContacts.sql', '00__schema__PlaintiffAttorney.sql', '00__schema__Plaintiffs.sql', '00__schema__Settlements.sql', '00__schema__SpDamages.sql', '00__schema__Users.sql', '00__schema__create_conversion_schema.sql', '01__imp_user_map__create.sql', '02__update_implementation_users.sql', 'CaseTypeMixture__create.sql', 'CaseValueMapping__create.sql', 'NeedlesUserFields__create.sql', 'PartyRoles__create.sql', 'create_functions.sql']
+2025-05-01 11:35:15,120 - INFO - run.py - run - 72 - Order of scripts to execute: 
+- 00__schema__Address.sql
+- 00__schema__Cases.sql
+- 00__schema__ContactNumbers.sql
+- 00__schema__Courts.sql
+- 00__schema__Defendants.sql
+- 00__schema__Disbursements.sql
+- 00__schema__EmailWebsite.sql
+- 00__schema__Employment.sql
+- 00__schema__IndvContacts.sql
+- 00__schema__InsuranceCoverage.sql
+- 00__schema__LawFirms.sql
+- 00__schema__LienTracking.sql
+- 00__schema__LostWages.sql
+- 00__schema__MedicalProviders.sql
+- 00__schema__Notes.sql
+- 00__schema__OrgContacts.sql
+- 00__schema__PlaintiffAttorney.sql
+- 00__schema__Plaintiffs.sql
+- 00__schema__Settlements.sql
+- 00__schema__SpDamages.sql
+- 00__schema__Users.sql
+- 00__schema__create_conversion_schema.sql
+- 01__imp_user_map__create.sql
+- 02__update_implementation_users.sql
+- CaseTypeMixture__create.sql
+- CaseValueMapping__create.sql
+- NeedlesUserFields__create.sql
+- PartyRoles__create.sql
+- create_functions.sql
+2025-05-01 11:35:20,041 - DEBUG - run.py - execute_scripts - 27 - Starting execution of 29 scripts in D:\vance-law\needles\conversion\utility
+2025-05-01 11:35:20,041 - DEBUG - run.py - execute_scripts - 35 - Running 00__schema__Address.sql (1/29)
+2025-05-01 11:35:20,291 - INFO - run.py - execute_scripts - 44 - PASS: 00__schema__Address.sql
+2025-05-01 11:35:20,291 - DEBUG - run.py - execute_scripts - 35 - Running 00__schema__Cases.sql (2/29)
+2025-05-01 11:35:20,574 - INFO - run.py - execute_scripts - 44 - PASS: 00__schema__Cases.sql
+2025-05-01 11:35:20,574 - DEBUG - run.py - execute_scripts - 35 - Running 00__schema__ContactNumbers.sql (3/29)
+2025-05-01 11:35:20,767 - INFO - run.py - execute_scripts - 44 - PASS: 00__schema__ContactNumbers.sql
+2025-05-01 11:35:20,767 - DEBUG - run.py - execute_scripts - 35 - Running 00__schema__Courts.sql (4/29)
+2025-05-01 11:35:21,014 - INFO - run.py - execute_scripts - 44 - PASS: 00__schema__Courts.sql
+2025-05-01 11:35:21,014 - DEBUG - run.py - execute_scripts - 35 - Running 00__schema__Defendants.sql (5/29)
+2025-05-01 11:35:21,185 - INFO - run.py - execute_scripts - 44 - PASS: 00__schema__Defendants.sql
+2025-05-01 11:35:21,185 - DEBUG - run.py - execute_scripts - 35 - Running 00__schema__Disbursements.sql (6/29)
+2025-05-01 11:35:21,340 - INFO - run.py - execute_scripts - 44 - PASS: 00__schema__Disbursements.sql
+2025-05-01 11:35:21,340 - DEBUG - run.py - execute_scripts - 35 - Running 00__schema__EmailWebsite.sql (7/29)
+2025-05-01 11:35:21,516 - INFO - run.py - execute_scripts - 44 - PASS: 00__schema__EmailWebsite.sql
+2025-05-01 11:35:21,516 - DEBUG - run.py - execute_scripts - 35 - Running 00__schema__Employment.sql (8/29)
+2025-05-01 11:35:21,672 - INFO - run.py - execute_scripts - 44 - PASS: 00__schema__Employment.sql
+2025-05-01 11:35:21,673 - DEBUG - run.py - execute_scripts - 35 - Running 00__schema__IndvContacts.sql (9/29)
+2025-05-01 11:35:21,855 - INFO - run.py - execute_scripts - 44 - PASS: 00__schema__IndvContacts.sql
+2025-05-01 11:35:21,855 - DEBUG - run.py - execute_scripts - 35 - Running 00__schema__InsuranceCoverage.sql (10/29)
+2025-05-01 11:35:22,001 - INFO - run.py - execute_scripts - 44 - PASS: 00__schema__InsuranceCoverage.sql
+2025-05-01 11:35:22,002 - DEBUG - run.py - execute_scripts - 35 - Running 00__schema__LawFirms.sql (11/29)
+2025-05-01 11:35:22,164 - INFO - run.py - execute_scripts - 44 - PASS: 00__schema__LawFirms.sql
+2025-05-01 11:35:22,164 - DEBUG - run.py - execute_scripts - 35 - Running 00__schema__LienTracking.sql (12/29)
+2025-05-01 11:35:22,355 - INFO - run.py - execute_scripts - 44 - PASS: 00__schema__LienTracking.sql
+2025-05-01 11:35:22,355 - DEBUG - run.py - execute_scripts - 35 - Running 00__schema__LostWages.sql (13/29)
+2025-05-01 11:35:22,513 - INFO - run.py - execute_scripts - 44 - PASS: 00__schema__LostWages.sql
+2025-05-01 11:35:22,514 - DEBUG - run.py - execute_scripts - 35 - Running 00__schema__MedicalProviders.sql (14/29)
+2025-05-01 11:35:22,721 - INFO - run.py - execute_scripts - 44 - PASS: 00__schema__MedicalProviders.sql
+2025-05-01 11:35:22,721 - DEBUG - run.py - execute_scripts - 35 - Running 00__schema__Notes.sql (15/29)
+2025-05-01 11:35:22,879 - INFO - run.py - execute_scripts - 44 - PASS: 00__schema__Notes.sql
+2025-05-01 11:35:22,880 - DEBUG - run.py - execute_scripts - 35 - Running 00__schema__OrgContacts.sql (16/29)
+2025-05-01 11:35:23,014 - INFO - run.py - execute_scripts - 44 - PASS: 00__schema__OrgContacts.sql
+2025-05-01 11:35:23,014 - DEBUG - run.py - execute_scripts - 35 - Running 00__schema__PlaintiffAttorney.sql (17/29)
+2025-05-01 11:35:23,175 - INFO - run.py - execute_scripts - 44 - PASS: 00__schema__PlaintiffAttorney.sql
+2025-05-01 11:35:23,175 - DEBUG - run.py - execute_scripts - 35 - Running 00__schema__Plaintiffs.sql (18/29)
+2025-05-01 11:35:23,318 - INFO - run.py - execute_scripts - 44 - PASS: 00__schema__Plaintiffs.sql
+2025-05-01 11:35:23,318 - DEBUG - run.py - execute_scripts - 35 - Running 00__schema__Settlements.sql (19/29)
+2025-05-01 11:35:23,459 - INFO - run.py - execute_scripts - 44 - PASS: 00__schema__Settlements.sql
+2025-05-01 11:35:23,459 - DEBUG - run.py - execute_scripts - 35 - Running 00__schema__SpDamages.sql (20/29)
+2025-05-01 11:35:23,557 - INFO - run.py - execute_scripts - 44 - PASS: 00__schema__SpDamages.sql
+2025-05-01 11:35:23,573 - DEBUG - run.py - execute_scripts - 35 - Running 00__schema__Users.sql (21/29)
+2025-05-01 11:35:23,712 - INFO - run.py - execute_scripts - 44 - PASS: 00__schema__Users.sql
+2025-05-01 11:35:23,712 - DEBUG - run.py - execute_scripts - 35 - Running 00__schema__create_conversion_schema.sql (22/29)
+2025-05-01 11:35:23,822 - INFO - run.py - execute_scripts - 44 - PASS: 00__schema__create_conversion_schema.sql
+2025-05-01 11:35:23,823 - DEBUG - run.py - execute_scripts - 35 - Running 01__imp_user_map__create.sql (23/29)
+2025-05-01 11:35:23,987 - INFO - run.py - execute_scripts - 44 - PASS: 01__imp_user_map__create.sql
+2025-05-01 11:35:23,987 - DEBUG - run.py - execute_scripts - 35 - Running 02__update_implementation_users.sql (24/29)
+2025-05-01 11:35:24,215 - INFO - run.py - execute_scripts - 44 - PASS: 02__update_implementation_users.sql
+2025-05-01 11:35:24,215 - DEBUG - run.py - execute_scripts - 35 - Running CaseTypeMixture__create.sql (25/29)
+2025-05-01 11:35:24,340 - INFO - run.py - execute_scripts - 44 - PASS: CaseTypeMixture__create.sql
+2025-05-01 11:35:24,340 - DEBUG - run.py - execute_scripts - 35 - Running CaseValueMapping__create.sql (26/29)
+2025-05-01 11:35:24,488 - INFO - run.py - execute_scripts - 44 - PASS: CaseValueMapping__create.sql
+2025-05-01 11:35:24,488 - DEBUG - run.py - execute_scripts - 35 - Running NeedlesUserFields__create.sql (27/29)
+2025-05-01 11:35:25,041 - INFO - run.py - execute_scripts - 44 - PASS: NeedlesUserFields__create.sql
+2025-05-01 11:35:25,041 - DEBUG - run.py - execute_scripts - 35 - Running PartyRoles__create.sql (28/29)
+2025-05-01 11:35:25,189 - INFO - run.py - execute_scripts - 44 - PASS: PartyRoles__create.sql
+2025-05-01 11:35:25,190 - DEBUG - run.py - execute_scripts - 35 - Running create_functions.sql (29/29)
+2025-05-01 11:35:25,338 - INFO - run.py - execute_scripts - 44 - PASS: create_functions.sql
+2025-05-01 11:35:25,338 - INFO - run.py - execute_scripts - 48 - Completed all scripts in D:\vance-law\needles\conversion\utility.
+2025-05-01 11:37:32,966 - DEBUG - run.py - run - 58 - Run started with options: {'server': 'DylanS\\MSSQLSERVER2022', 'database': 'VanceLawFirm_SA', 'username': None, 'password': None, 'dev': False, 'debug': False, 'input': 'D:\\vance-law\\needles\\conversion\\contact', 'use_metadata': False}
+2025-05-01 11:37:32,966 - DEBUG - run.py - collect_scripts - 16 - Not using metadata to process scripts.
+2025-05-01 11:37:32,966 - DEBUG - run.py - run - 66 - Collected scripts: ['00__IndvContacts__fallback.sql', '00__OrgContacts__fallback.sql', '01__IndvContacts__names.sql', '02__IndvContacts__police.sql', '03__IndvContacts__staff.sql', '04__IndvContacts__insurance.sql', '05__IndvContacts__comments.sql', '10__OrgContacts__names.sql', '15__Users.sql', '20__Address__IndvContacts.sql', '21__Address__OrgContacts.sql', '22__Address__appendix.sql', '30__ContactNumbers__utility.sql', '31__ContactNumbers__IndvContacts.sql', '32__ContactNumbers__OrgContacts.sql', '40__EmailWebsite__IndvContacts.sql', '40__EmailWebsite__OrgContacts.sql', '70__Notes__contacts.sql', '90__Uniqueness.sql', '91__AllContactInfo.sql', '92__IndvOrgContacts_Indexed.sql']
+2025-05-01 11:37:32,966 - INFO - run.py - run - 72 - Order of scripts to execute: 
+- 00__IndvContacts__fallback.sql
+- 00__OrgContacts__fallback.sql
+- 01__IndvContacts__names.sql
+- 02__IndvContacts__police.sql
+- 03__IndvContacts__staff.sql
+- 04__IndvContacts__insurance.sql
+- 05__IndvContacts__comments.sql
+- 10__OrgContacts__names.sql
+- 15__Users.sql
+- 20__Address__IndvContacts.sql
+- 21__Address__OrgContacts.sql
+- 22__Address__appendix.sql
+- 30__ContactNumbers__utility.sql
+- 31__ContactNumbers__IndvContacts.sql
+- 32__ContactNumbers__OrgContacts.sql
+- 40__EmailWebsite__IndvContacts.sql
+- 40__EmailWebsite__OrgContacts.sql
+- 70__Notes__contacts.sql
+- 90__Uniqueness.sql
+- 91__AllContactInfo.sql
+- 92__IndvOrgContacts_Indexed.sql
+2025-05-01 11:37:36,032 - DEBUG - run.py - execute_scripts - 27 - Starting execution of 21 scripts in D:\vance-law\needles\conversion\contact
+2025-05-01 11:37:36,032 - DEBUG - run.py - execute_scripts - 35 - Running 00__IndvContacts__fallback.sql (1/21)
+2025-05-01 11:37:36,714 - INFO - run.py - execute_scripts - 44 - PASS: 00__IndvContacts__fallback.sql
+2025-05-01 11:37:36,714 - DEBUG - run.py - execute_scripts - 35 - Running 00__OrgContacts__fallback.sql (2/21)
+2025-05-01 11:37:36,907 - INFO - run.py - execute_scripts - 44 - PASS: 00__OrgContacts__fallback.sql
+2025-05-01 11:37:36,908 - DEBUG - run.py - execute_scripts - 35 - Running 01__IndvContacts__names.sql (3/21)
+2025-05-01 11:37:39,418 - INFO - run.py - execute_scripts - 44 - PASS: 01__IndvContacts__names.sql
+2025-05-01 11:37:39,418 - DEBUG - run.py - execute_scripts - 35 - Running 02__IndvContacts__police.sql (4/21)
+2025-05-01 11:37:39,581 - INFO - run.py - execute_scripts - 44 - PASS: 02__IndvContacts__police.sql
+2025-05-01 11:37:39,582 - DEBUG - run.py - execute_scripts - 35 - Running 03__IndvContacts__staff.sql (5/21)
+2025-05-01 11:37:39,731 - INFO - run.py - execute_scripts - 44 - PASS: 03__IndvContacts__staff.sql
+2025-05-01 11:37:39,732 - DEBUG - run.py - execute_scripts - 35 - Running 04__IndvContacts__insurance.sql (6/21)
+2025-05-01 11:37:40,334 - INFO - run.py - execute_scripts - 44 - PASS: 04__IndvContacts__insurance.sql
+2025-05-01 11:37:40,334 - DEBUG - run.py - execute_scripts - 35 - Running 05__IndvContacts__comments.sql (7/21)
+2025-05-01 11:37:43,652 - INFO - run.py - execute_scripts - 44 - PASS: 05__IndvContacts__comments.sql
+2025-05-01 11:37:43,652 - DEBUG - run.py - execute_scripts - 35 - Running 10__OrgContacts__names.sql (8/21)
+2025-05-01 11:37:44,778 - INFO - run.py - execute_scripts - 44 - PASS: 10__OrgContacts__names.sql
+2025-05-01 11:37:44,778 - DEBUG - run.py - execute_scripts - 35 - Running 15__Users.sql (9/21)
+2025-05-01 11:37:45,122 - INFO - run.py - execute_scripts - 44 - PASS: 15__Users.sql
+2025-05-01 11:37:45,122 - DEBUG - run.py - execute_scripts - 35 - Running 20__Address__IndvContacts.sql (10/21)
+2025-05-01 11:37:46,121 - INFO - run.py - execute_scripts - 44 - PASS: 20__Address__IndvContacts.sql
+2025-05-01 11:37:46,121 - DEBUG - run.py - execute_scripts - 35 - Running 21__Address__OrgContacts.sql (11/21)
+2025-05-01 11:37:46,608 - INFO - run.py - execute_scripts - 44 - PASS: 21__Address__OrgContacts.sql
+2025-05-01 11:37:46,608 - DEBUG - run.py - execute_scripts - 35 - Running 22__Address__appendix.sql (12/21)
+2025-05-01 11:37:47,190 - INFO - run.py - execute_scripts - 44 - PASS: 22__Address__appendix.sql
+2025-05-01 11:37:47,190 - DEBUG - run.py - execute_scripts - 35 - Running 30__ContactNumbers__utility.sql (13/21)
+2025-05-01 11:37:47,334 - INFO - run.py - execute_scripts - 44 - PASS: 30__ContactNumbers__utility.sql
+2025-05-01 11:37:47,334 - DEBUG - run.py - execute_scripts - 35 - Running 31__ContactNumbers__IndvContacts.sql (14/21)
+2025-05-01 11:37:51,185 - INFO - run.py - execute_scripts - 44 - PASS: 31__ContactNumbers__IndvContacts.sql
+2025-05-01 11:37:51,185 - DEBUG - run.py - execute_scripts - 35 - Running 32__ContactNumbers__OrgContacts.sql (15/21)
+2025-05-01 11:37:52,716 - INFO - run.py - execute_scripts - 44 - PASS: 32__ContactNumbers__OrgContacts.sql
+2025-05-01 11:37:52,716 - DEBUG - run.py - execute_scripts - 35 - Running 40__EmailWebsite__IndvContacts.sql (16/21)
+2025-05-01 11:37:53,711 - INFO - run.py - execute_scripts - 44 - PASS: 40__EmailWebsite__IndvContacts.sql
+2025-05-01 11:37:53,711 - DEBUG - run.py - execute_scripts - 35 - Running 40__EmailWebsite__OrgContacts.sql (17/21)
+2025-05-01 11:37:53,947 - INFO - run.py - execute_scripts - 44 - PASS: 40__EmailWebsite__OrgContacts.sql
+2025-05-01 11:37:53,947 - DEBUG - run.py - execute_scripts - 35 - Running 70__Notes__contacts.sql (18/21)
+2025-05-01 11:37:55,872 - ERROR - sql_runner.py - sql_runner - 81 - FAIL: 70__Notes__contacts.sql in 1.92s
+Changed database context to 'VanceLawFirm_SA'.
+
+(23550 rows affected)
+
+(23550 rows affected)
+Msg 208, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 83
+Invalid object name 'IndvOrgContacts_Indexed'.
+2025-05-01 11:37:55,872 - ERROR - run.py - execute_scripts - 46 - ERROR: 70__Notes__contacts.sql
+2025-05-01 11:37:55,872 - DEBUG - run.py - execute_scripts - 35 - Running 90__Uniqueness.sql (19/21)
+2025-05-01 11:38:05,497 - INFO - run.py - execute_scripts - 44 - PASS: 90__Uniqueness.sql
+2025-05-01 11:38:05,500 - DEBUG - run.py - execute_scripts - 35 - Running 91__AllContactInfo.sql (20/21)
+2025-05-01 11:38:25,620 - INFO - run.py - execute_scripts - 44 - PASS: 91__AllContactInfo.sql
+2025-05-01 11:38:25,620 - DEBUG - run.py - execute_scripts - 35 - Running 92__IndvOrgContacts_Indexed.sql (21/21)
+2025-05-01 11:38:27,609 - INFO - run.py - execute_scripts - 44 - PASS: 92__IndvOrgContacts_Indexed.sql
+2025-05-01 11:38:27,609 - INFO - run.py - execute_scripts - 48 - Completed all scripts in D:\vance-law\needles\conversion\contact.
+2025-05-01 11:44:27,193 - DEBUG - run.py - run - 81 - Starting database backup.
+2025-05-01 11:47:57,120 - DEBUG - run.py - run - 58 - Run started with options: {'server': 'DylanS\\MSSQLSERVER2022', 'database': 'VanceLawFirm_SA', 'username': None, 'password': None, 'dev': False, 'debug': False, 'input': 'D:\\vance-law\\needles\\conversion\\case', 'use_metadata': False}
+2025-05-01 11:47:57,120 - DEBUG - run.py - collect_scripts - 16 - Not using metadata to process scripts.
+2025-05-01 11:47:57,120 - DEBUG - run.py - run - 66 - Collected scripts: ['00__Offices.sql', '01__CaseTypes.sql', '02__SubRole.sql', '03__Cases.sql', '04__CaseStaff.sql', '05__CaseStatus.sql', '06__CaseValue.sql', '10__Plaintiff.sql', '11__Defendants.sql', '13__PlaintiffDeath.sql', '20__Attorneys.sql', '20__CalendarAppointments.sql', '20__Courts.sql', '20__CriticalComments.sql', '20__CriticalDeadlines.sql', '20__CriticalDeadlines__SOL.sql', '20__Incidents.sql', '20__InsuranceCoverage.sql', '20__Investigations__PoliceReports.sql', '20__Negotiations.sql', '20__Notes__case_notes.sql', '20__Notes__value.sql', '20__Referral__OtherReferral.sql', '20__Referral__ReferredOut.sql', '20__SOLChecklist.sql', '50__Disbursements__value.sql', '50__LienTracking__value.sql', '50__MedicalProviders__value.sql', '50__Settlements__value.sql', '50__SpDamages__value.sql']
+2025-05-01 11:47:57,120 - INFO - run.py - run - 72 - Order of scripts to execute: 
+- 00__Offices.sql
+- 01__CaseTypes.sql
+- 02__SubRole.sql
+- 03__Cases.sql
+- 04__CaseStaff.sql
+- 05__CaseStatus.sql
+- 06__CaseValue.sql
+- 10__Plaintiff.sql
+- 11__Defendants.sql
+- 13__PlaintiffDeath.sql
+- 20__Attorneys.sql
+- 20__CalendarAppointments.sql
+- 20__Courts.sql
+- 20__CriticalComments.sql
+- 20__CriticalDeadlines.sql
+- 20__CriticalDeadlines__SOL.sql
+- 20__Incidents.sql
+- 20__InsuranceCoverage.sql
+- 20__Investigations__PoliceReports.sql
+- 20__Negotiations.sql
+- 20__Notes__case_notes.sql
+- 20__Notes__value.sql
+- 20__Referral__OtherReferral.sql
+- 20__Referral__ReferredOut.sql
+- 20__SOLChecklist.sql
+- 50__Disbursements__value.sql
+- 50__LienTracking__value.sql
+- 50__MedicalProviders__value.sql
+- 50__Settlements__value.sql
+- 50__SpDamages__value.sql
+2025-05-01 11:47:59,644 - DEBUG - run.py - execute_scripts - 27 - Starting execution of 30 scripts in D:\vance-law\needles\conversion\case
+2025-05-01 11:47:59,644 - DEBUG - run.py - execute_scripts - 35 - Running 00__Offices.sql (1/30)
+2025-05-01 11:48:00,243 - INFO - run.py - execute_scripts - 44 - PASS: 00__Offices.sql
+2025-05-01 11:48:00,243 - DEBUG - run.py - execute_scripts - 35 - Running 01__CaseTypes.sql (2/30)
+2025-05-01 11:48:00,425 - INFO - run.py - execute_scripts - 44 - PASS: 01__CaseTypes.sql
+2025-05-01 11:48:00,425 - DEBUG - run.py - execute_scripts - 35 - Running 02__SubRole.sql (3/30)
+2025-05-01 11:48:00,629 - INFO - run.py - execute_scripts - 44 - PASS: 02__SubRole.sql
+2025-05-01 11:48:00,629 - DEBUG - run.py - execute_scripts - 35 - Running 03__Cases.sql (4/30)
+2025-05-01 11:48:01,886 - INFO - run.py - execute_scripts - 44 - PASS: 03__Cases.sql
+2025-05-01 11:48:01,886 - DEBUG - run.py - execute_scripts - 35 - Running 04__CaseStaff.sql (5/30)
+2025-05-01 11:48:05,798 - INFO - run.py - execute_scripts - 44 - PASS: 04__CaseStaff.sql
+2025-05-01 11:48:05,798 - DEBUG - run.py - execute_scripts - 35 - Running 05__CaseStatus.sql (6/30)
+2025-05-01 11:48:07,535 - INFO - run.py - execute_scripts - 44 - PASS: 05__CaseStatus.sql
+2025-05-01 11:48:07,535 - DEBUG - run.py - execute_scripts - 35 - Running 06__CaseValue.sql (7/30)
+2025-05-01 11:48:07,688 - INFO - run.py - execute_scripts - 44 - PASS: 06__CaseValue.sql
+2025-05-01 11:48:07,688 - DEBUG - run.py - execute_scripts - 35 - Running 10__Plaintiff.sql (8/30)
+2025-05-01 11:48:09,771 - INFO - run.py - execute_scripts - 44 - PASS: 10__Plaintiff.sql
+2025-05-01 11:48:09,771 - DEBUG - run.py - execute_scripts - 35 - Running 11__Defendants.sql (9/30)
+2025-05-01 11:48:11,162 - INFO - run.py - execute_scripts - 44 - PASS: 11__Defendants.sql
+2025-05-01 11:48:11,162 - DEBUG - run.py - execute_scripts - 35 - Running 13__PlaintiffDeath.sql (10/30)
+2025-05-01 11:48:11,303 - INFO - run.py - execute_scripts - 44 - PASS: 13__PlaintiffDeath.sql
+2025-05-01 11:48:11,303 - DEBUG - run.py - execute_scripts - 35 - Running 20__Attorneys.sql (11/30)
+2025-05-01 11:48:13,225 - INFO - run.py - execute_scripts - 44 - PASS: 20__Attorneys.sql
+2025-05-01 11:48:13,225 - DEBUG - run.py - execute_scripts - 35 - Running 20__CalendarAppointments.sql (12/30)
+2025-05-01 11:48:13,809 - INFO - run.py - execute_scripts - 44 - PASS: 20__CalendarAppointments.sql
+2025-05-01 11:48:13,809 - DEBUG - run.py - execute_scripts - 35 - Running 20__Courts.sql (13/30)
+2025-05-01 11:48:14,191 - INFO - run.py - execute_scripts - 44 - PASS: 20__Courts.sql
+2025-05-01 11:48:14,191 - DEBUG - run.py - execute_scripts - 35 - Running 20__CriticalComments.sql (14/30)
+2025-05-01 11:48:14,426 - INFO - run.py - execute_scripts - 44 - PASS: 20__CriticalComments.sql
+2025-05-01 11:48:14,426 - DEBUG - run.py - execute_scripts - 35 - Running 20__CriticalDeadlines.sql (15/30)
+2025-05-01 11:48:15,654 - INFO - run.py - execute_scripts - 44 - PASS: 20__CriticalDeadlines.sql
+2025-05-01 11:48:15,654 - DEBUG - run.py - execute_scripts - 35 - Running 20__CriticalDeadlines__SOL.sql (16/30)
+2025-05-01 11:48:15,913 - INFO - run.py - execute_scripts - 44 - PASS: 20__CriticalDeadlines__SOL.sql
+2025-05-01 11:48:15,913 - DEBUG - run.py - execute_scripts - 35 - Running 20__Incidents.sql (17/30)
+2025-05-01 11:48:17,177 - INFO - run.py - execute_scripts - 44 - PASS: 20__Incidents.sql
+2025-05-01 11:48:17,177 - DEBUG - run.py - execute_scripts - 35 - Running 20__InsuranceCoverage.sql (18/30)
+2025-05-01 11:48:22,343 - INFO - run.py - execute_scripts - 44 - PASS: 20__InsuranceCoverage.sql
+2025-05-01 11:48:22,343 - DEBUG - run.py - execute_scripts - 35 - Running 20__Investigations__PoliceReports.sql (19/30)
+2025-05-01 11:48:22,522 - INFO - run.py - execute_scripts - 44 - PASS: 20__Investigations__PoliceReports.sql
+2025-05-01 11:48:22,522 - DEBUG - run.py - execute_scripts - 35 - Running 20__Negotiations.sql (20/30)
+2025-05-01 11:48:23,113 - INFO - run.py - execute_scripts - 44 - PASS: 20__Negotiations.sql
+2025-05-01 11:48:23,113 - DEBUG - run.py - execute_scripts - 35 - Running 20__Notes__case_notes.sql (21/30)
+2025-05-01 11:49:13,242 - INFO - run.py - execute_scripts - 44 - PASS: 20__Notes__case_notes.sql
+2025-05-01 11:49:13,242 - DEBUG - run.py - execute_scripts - 35 - Running 20__Notes__value.sql (22/30)
+2025-05-01 11:49:20,632 - INFO - run.py - execute_scripts - 44 - PASS: 20__Notes__value.sql
+2025-05-01 11:49:20,632 - DEBUG - run.py - execute_scripts - 35 - Running 20__Referral__OtherReferral.sql (23/30)
+2025-05-01 11:49:21,338 - INFO - run.py - execute_scripts - 44 - PASS: 20__Referral__OtherReferral.sql
+2025-05-01 11:49:21,338 - DEBUG - run.py - execute_scripts - 35 - Running 20__Referral__ReferredOut.sql (24/30)
+2025-05-01 11:49:22,027 - INFO - run.py - execute_scripts - 44 - PASS: 20__Referral__ReferredOut.sql
+2025-05-01 11:49:22,027 - DEBUG - run.py - execute_scripts - 35 - Running 20__SOLChecklist.sql (25/30)
+2025-05-01 11:49:23,773 - INFO - run.py - execute_scripts - 44 - PASS: 20__SOLChecklist.sql
+2025-05-01 11:49:23,773 - DEBUG - run.py - execute_scripts - 35 - Running 50__Disbursements__value.sql (26/30)
+2025-05-01 11:49:27,100 - INFO - run.py - execute_scripts - 44 - PASS: 50__Disbursements__value.sql
+2025-05-01 11:49:27,100 - DEBUG - run.py - execute_scripts - 35 - Running 50__LienTracking__value.sql (27/30)
+2025-05-01 11:49:29,165 - INFO - run.py - execute_scripts - 44 - PASS: 50__LienTracking__value.sql
+2025-05-01 11:49:29,165 - DEBUG - run.py - execute_scripts - 35 - Running 50__MedicalProviders__value.sql (28/30)
+2025-05-01 11:49:32,366 - INFO - run.py - execute_scripts - 44 - PASS: 50__MedicalProviders__value.sql
+2025-05-01 11:49:32,366 - DEBUG - run.py - execute_scripts - 35 - Running 50__Settlements__value.sql (29/30)
+2025-05-01 11:49:32,943 - INFO - run.py - execute_scripts - 44 - PASS: 50__Settlements__value.sql
+2025-05-01 11:49:32,943 - DEBUG - run.py - execute_scripts - 35 - Running 50__SpDamages__value.sql (30/30)
+2025-05-01 11:49:33,723 - INFO - run.py - execute_scripts - 44 - PASS: 50__SpDamages__value.sql
+2025-05-01 11:49:33,723 - INFO - run.py - execute_scripts - 48 - Completed all scripts in D:\vance-law\needles\conversion\case.
+2025-05-01 11:50:00,665 - DEBUG - run.py - run - 81 - Starting database backup.
+2025-05-01 11:50:31,348 - DEBUG - run.py - run - 58 - Run started with options: {'server': 'DylanS\\MSSQLSERVER2022', 'database': 'VanceLawFirm_SA', 'username': None, 'password': None, 'dev': False, 'debug': False, 'input': 'D:\\vance-law\\needles\\conversion\\udf', 'use_metadata': False}
+2025-05-01 11:50:31,348 - DEBUG - run.py - collect_scripts - 16 - Not using metadata to process scripts.
+2025-05-01 11:50:31,349 - DEBUG - run.py - run - 66 - Collected scripts: ['3.01_Other1_tab1.sql', '3.02_Other2_tab2.sql', '3.03_Other3_tab3.sql', '3.04_Other4_tab4.sql', '3.05_Other5_tab5.sql', '3.06_Other6_tab6.sql', '3.07_Other7_tab7.sql', '3.08_Other8_tab8.sql', '3.09_Other9_tab9.sql', '3.10_Other10_tab10.sql', 'dev_3.20_plaintiff_udf.sql', 'dev_3.21_incident_udf.sql', 'dev_Step_13.00.3_user_case_IncidentUDF.SQL', 'dev_Step_13.11.0_user_party_Plaintiff_UDF.SQL']
+2025-05-01 11:50:31,349 - INFO - run.py - run - 72 - Order of scripts to execute: 
+- 3.01_Other1_tab1.sql
+- 3.02_Other2_tab2.sql
+- 3.03_Other3_tab3.sql
+- 3.04_Other4_tab4.sql
+- 3.05_Other5_tab5.sql
+- 3.06_Other6_tab6.sql
+- 3.07_Other7_tab7.sql
+- 3.08_Other8_tab8.sql
+- 3.09_Other9_tab9.sql
+- 3.10_Other10_tab10.sql
+- dev_3.20_plaintiff_udf.sql
+- dev_3.21_incident_udf.sql
+- dev_Step_13.00.3_user_case_IncidentUDF.SQL
+- dev_Step_13.11.0_user_party_Plaintiff_UDF.SQL
+2025-05-01 11:50:37,725 - DEBUG - run.py - execute_scripts - 27 - Starting execution of 14 scripts in D:\vance-law\needles\conversion\udf
+2025-05-01 11:50:37,725 - DEBUG - run.py - execute_scripts - 35 - Running 3.01_Other1_tab1.sql (1/14)
+2025-05-01 11:50:38,232 - INFO - run.py - execute_scripts - 44 - PASS: 3.01_Other1_tab1.sql
+2025-05-01 11:50:38,232 - DEBUG - run.py - execute_scripts - 35 - Running 3.02_Other2_tab2.sql (2/14)
+2025-05-01 11:50:43,631 - INFO - run.py - execute_scripts - 44 - PASS: 3.02_Other2_tab2.sql
+2025-05-01 11:50:43,631 - DEBUG - run.py - execute_scripts - 35 - Running 3.03_Other3_tab3.sql (3/14)
+2025-05-01 11:50:44,305 - INFO - run.py - execute_scripts - 44 - PASS: 3.03_Other3_tab3.sql
+2025-05-01 11:50:44,305 - DEBUG - run.py - execute_scripts - 35 - Running 3.04_Other4_tab4.sql (4/14)
+2025-05-01 11:50:44,722 - INFO - run.py - execute_scripts - 44 - PASS: 3.04_Other4_tab4.sql
+2025-05-01 11:50:44,722 - DEBUG - run.py - execute_scripts - 35 - Running 3.05_Other5_tab5.sql (5/14)
+2025-05-01 11:50:45,566 - INFO - run.py - execute_scripts - 44 - PASS: 3.05_Other5_tab5.sql
+2025-05-01 11:50:45,566 - DEBUG - run.py - execute_scripts - 35 - Running 3.06_Other6_tab6.sql (6/14)
+2025-05-01 11:50:48,426 - INFO - run.py - execute_scripts - 44 - PASS: 3.06_Other6_tab6.sql
+2025-05-01 11:50:48,426 - DEBUG - run.py - execute_scripts - 35 - Running 3.07_Other7_tab7.sql (7/14)
+2025-05-01 11:50:49,083 - INFO - run.py - execute_scripts - 44 - PASS: 3.07_Other7_tab7.sql
+2025-05-01 11:50:49,083 - DEBUG - run.py - execute_scripts - 35 - Running 3.08_Other8_tab8.sql (8/14)
+2025-05-01 11:50:51,822 - INFO - run.py - execute_scripts - 44 - PASS: 3.08_Other8_tab8.sql
+2025-05-01 11:50:51,822 - DEBUG - run.py - execute_scripts - 35 - Running 3.09_Other9_tab9.sql (9/14)
+2025-05-01 11:50:52,023 - INFO - run.py - execute_scripts - 44 - PASS: 3.09_Other9_tab9.sql
+2025-05-01 11:50:52,023 - DEBUG - run.py - execute_scripts - 35 - Running 3.10_Other10_tab10.sql (10/14)
+2025-05-01 11:50:52,190 - INFO - run.py - execute_scripts - 44 - PASS: 3.10_Other10_tab10.sql
+2025-05-01 11:50:52,190 - DEBUG - run.py - execute_scripts - 35 - Running dev_3.20_plaintiff_udf.sql (11/14)
+2025-05-01 11:50:52,319 - ERROR - sql_runner.py - sql_runner - 81 - FAIL: dev_3.20_plaintiff_udf.sql in 0.13s
+Changed database context to 'VanceLawFirm_SA'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 12
+Invalid column name 'Acc_Details'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 13
+Invalid column name 'Activity'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 14
+Invalid column name 'Alcohol_Comments'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 15
+Invalid column name 'Alcohol_Involved'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 16
+Invalid column name 'Any_Dosage_Change'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 17
+Invalid column name 'Availability'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 18
+Invalid column name 'Bias'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 19
+Invalid column name 'Callers_Name'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 20
+Invalid column name 'Cancer'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 21
+Invalid column name 'Case_No'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 22
+Invalid column name 'Charges'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 23
+Invalid column name 'Citation_Issued'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 24
+Invalid column name 'Citations'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 25
+Invalid column name 'CityStateZip'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 26
+Invalid column name 'County'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 27
+Invalid column name 'Credibility'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 28
+Invalid column name 'Crosswalk'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 29
+Invalid column name 'Date_of_1st_prescription'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 30
+Invalid column name 'Date_of_Death'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 31
+Invalid column name 'Date_of_Heart_Attack'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 32
+Invalid column name 'Date_of_Implant'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 33
+Invalid column name 'Date_of_removal'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 34
+Invalid column name 'Date_of_Stroke'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 35
+Invalid column name 'Death_Cause'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 36
+Invalid column name 'Death_Date'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 37
+Invalid column name 'Defenses'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 38
+Invalid column name 'Deployment_location'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 39
+Invalid column name 'Die'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 40
+Invalid column name 'Do_We_Rep_Pd'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 41
+Invalid column name 'Do_You_Smoke'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 42
+Invalid column name 'Doctors_Address'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 43
+Invalid column name 'Doctors_City'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 44
+Invalid column name 'Doctors_Name'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 45
+Invalid column name 'Doctors_Phone_#'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 46
+Invalid column name 'Doctors_State'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 47
+Invalid column name 'Doctors_Zipcode'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 48
+Invalid column name 'Dosage_Amount'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 49
+Invalid column name 'Dr_Referred'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 50
+Invalid column name 'Dr_performing_implant'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 51
+Invalid column name 'Drink_Alcohol'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 52
+Invalid column name 'Driving_Rec'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 53
+Invalid column name 'Drug_Name'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 54
+Invalid column name 'Employed'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 55
+Invalid column name 'Employed'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 57
+Invalid column name 'Employer_Address'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 58
+Invalid column name 'Employer_City'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 59
+Invalid column name 'Employer_Phone'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 60
+Invalid column name 'Employer_State'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 61
+Invalid column name 'Employers_Address'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 62
+Invalid column name 'Ended_Vioxx'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 63
+Invalid column name 'Full_hearing_loss'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 64
+Invalid column name 'Guardian'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 68
+Invalid column name 'How_Often'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 69
+Invalid column name 'Ime'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 70
+Invalid column name 'In_the_last_5_yrs'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 71
+Invalid column name 'Injured'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 72
+Invalid column name 'Injuries_related_to_drug'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 74
+Invalid column name 'Kinship'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 75
+Invalid column name 'License'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 76
+Invalid column name 'License_No'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 77
+Invalid column name 'Light_Duty'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 78
+Invalid column name 'Location'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 79
+Invalid column name 'Location_of_removal'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 80
+Invalid column name 'Marital_Stat'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 81
+Invalid column name 'Married'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 82
+Invalid column name 'Married'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 83
+Invalid column name 'Name_of_Cholesterol_Meds'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 84
+Invalid column name 'Name_of_Prescribing_Dr'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 85
+Invalid column name 'No_In_Veh'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 86
+Invalid column name 'Notes'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 87
+Invalid column name 'Num_In_Veh'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 88
+Invalid column name 'Other_Claims'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 89
+Invalid column name 'Other_Meds_Taken_w'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 90
+Invalid column name 'Other_Meds_taken_wVioxx'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 91
+Invalid column name 'Other_pharmacies_used'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 92
+Invalid column name 'Other_Side_Effects'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 93
+Invalid column name 'Partial_hearing_loss'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 94
+Invalid column name 'Past_Defects'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 95
+Invalid column name 'Permission'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 96
+Invalid column name 'Personal_Bio'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 97
+Invalid column name 'Pharmacy_Address'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 98
+Invalid column name 'Pharmacy_City'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 99
+Invalid column name 'Pharmacy_Name'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 100
+Invalid column name 'Pharmacy_State'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 101
+Invalid column name 'Pharmacy_to_fill_prescrip'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 102
+Invalid column name 'Photo_Description'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 103
+Invalid column name 'Prescribing_Dr_Name'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 104
+Invalid column name 'Prescribing_dr_practice'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 105
+Invalid column name 'Prev_Claims'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 106
+Invalid column name 'Prior_Attorney'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 107
+Invalid column name 'Prior_Atty'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 108
+Invalid column name 'Prior_Claim'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 109
+Invalid column name 'Prior_Claims'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 110
+Invalid column name 'Prior_Health_Issues'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 111
+Invalid column name 'Prior_Rating'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 112
+Invalid column name 'Prod_Avail'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 113
+Invalid column name 'Prop_Dmg_$'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 114
+Invalid column name 'Providers'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 115
+Invalid column name 'PTSD'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 116
+Invalid column name 'Reason_for_ESSURE'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 117
+Invalid column name 'Reason_for_Rx'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 118
+Invalid column name 'Reason_for_SS_Disability'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 119
+Invalid column name 'Reasons_for_Truvada'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 120
+Invalid column name 'Related_to_Anyone'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 121
+Invalid column name 'Relation'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 123
+Invalid column name 'Reported'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 124
+Invalid column name 'Spouse'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 126
+Invalid column name 'SS_Disability'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 127
+Invalid column name 'SS_Disability_Date'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 128
+Invalid column name 'SS_Disability_End_Date'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 129
+Invalid column name 'Started_Vioxx'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 130
+Invalid column name 'State_of_prescription'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 131
+Invalid column name 'Statement'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 132
+Invalid column name 'Stmt_At_Scn'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 134
+Invalid column name 'Supervisor'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 135
+Invalid column name 'Symptoms_from_drug'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 136
+Invalid column name 'Symptoms_from_implant'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 137
+Invalid column name 'Tag'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 138
+Invalid column name 'TBI'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 139
+Invalid column name 'Third_Party'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 140
+Invalid column name 'Tinnitus'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 141
+Invalid column name 'Title'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 142
+Invalid column name 'To_Whom'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 143
+Invalid column name 'Type_Defect'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 144
+Invalid column name 'Type_of_Cancer'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 145
+Invalid column name 'Type_Of_Case'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 146
+Invalid column name 'Type_Of_Veh'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 147
+Invalid column name 'Vantage_Point'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 148
+Invalid column name 'Veh_Owner'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 149
+Invalid column name 'Veh_Owner'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 150
+Invalid column name 'Vehic_Owner'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 151
+Invalid column name 'Vehicl_Owner'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 152
+Invalid column name 'Viewpoint'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 153
+Invalid column name 'What_warning_were_given'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 154
+Invalid column name 'When'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 155
+Invalid column name 'When_Apptd'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 156
+Invalid column name 'Where_Seated'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 157
+Invalid column name 'Zip'.
+2025-05-01 11:50:52,319 - ERROR - run.py - execute_scripts - 46 - ERROR: dev_3.20_plaintiff_udf.sql
+2025-05-01 11:50:52,319 - DEBUG - run.py - execute_scripts - 35 - Running dev_3.21_incident_udf.sql (12/14)
+2025-05-01 11:50:52,437 - ERROR - sql_runner.py - sql_runner - 81 - FAIL: dev_3.21_incident_udf.sql in 0.12s
+Changed database context to 'VanceLawFirm_SA'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 38
+Invalid column name 'Time'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 39
+Invalid column name 'FR_10'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 40
+Invalid column name 'TYPE_OF_COL'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 41
+Invalid column name 'Witnesses'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 42
+Invalid column name 'PHOTOS_TKN'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 43
+Invalid column name 'NO_OF_VEH'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 44
+Invalid column name 'Punitives'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 45
+Invalid column name 'PROP_DMG_$'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 46
+Invalid column name 'CLIENT_NEG'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 47
+Invalid column name 'BODY_PART'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 48
+Invalid column name 'Scarring'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 49
+Invalid column name 'Rating'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 50
+Invalid column name 'TTTP_PAID'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 51
+Invalid column name 'Coverage'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 52
+Invalid column name 'COMP_RATE'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 53
+Invalid column name 'Accepted'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 54
+Invalid column name 'Reported'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 55
+Invalid column name 'Initials'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 56
+Invalid column name 'POLICE_RPT'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 57
+Invalid column name 'Photos'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 58
+Invalid column name 'PROP_DAMG_$'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 59
+Invalid column name 'Alcohol'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 60
+Invalid column name 'Commercial'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 61
+Invalid column name 'PRIOR_NOTICE'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 62
+Invalid column name 'POLICE_REP'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 63
+Invalid column name 'Etoh'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 64
+Invalid column name 'TYPE_OF_COLL'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 65
+Invalid column name 'NUM_OF_VEH'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 66
+Invalid column name 'Illuminatn'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 67
+Invalid column name 'PR_ATTACKS'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 68
+Invalid column name 'Destroyed'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 69
+Invalid column name 'Type'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 70
+Invalid column name 'Experts'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 71
+Invalid column name 'STYLE_OF_CASE'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 72
+Invalid column name 'TYPE_OF_SERVICE'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 74
+Invalid column name 'Type_of_Weather'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 75
+Invalid column name 'Citation_Issue'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 76
+Invalid column name 'Jurisdiction'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 78
+Invalid column name 'Citation_Issued'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 79
+Invalid column name 'Citations'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 80
+Invalid column name 'Photo_Description'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 81
+Invalid column name 'Alcohol_Involved'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 82
+Invalid column name 'Alcohol_Comments'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 83
+Invalid column name 'Relationship'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 84
+Invalid column name 'Prior_Claims'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 85
+Invalid column name 'Type_of_Dog'.
+Msg 207, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 86
+Invalid column name 'Rcvd_Form_20'.
+2025-05-01 11:50:52,442 - ERROR - run.py - execute_scripts - 46 - ERROR: dev_3.21_incident_udf.sql
+2025-05-01 11:50:52,442 - DEBUG - run.py - execute_scripts - 35 - Running dev_Step_13.00.3_user_case_IncidentUDF.SQL (13/14)
+2025-05-01 11:50:52,586 - ERROR - sql_runner.py - sql_runner - 81 - FAIL: dev_Step_13.00.3_user_case_IncidentUDF.SQL in 0.14s
+Changed database context to 'SA'.
+Msg 208, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 21
+Invalid object name 'NeedlesGMA..user_Case_Data'.
+2025-05-01 11:50:52,586 - ERROR - run.py - execute_scripts - 46 - ERROR: dev_Step_13.00.3_user_case_IncidentUDF.SQL
+2025-05-01 11:50:52,586 - DEBUG - run.py - execute_scripts - 35 - Running dev_Step_13.11.0_user_party_Plaintiff_UDF.SQL (14/14)
+2025-05-01 11:50:52,717 - ERROR - sql_runner.py - sql_runner - 81 - FAIL: dev_Step_13.11.0_user_party_Plaintiff_UDF.SQL in 0.13s
+Changed database context to 'SA'.
+Msg 208, Level 16, State 1, Server DylanS\MSSQLSERVER2022, Line 4
+Invalid object name 'NeedlesGMA.dbo.user_party_matter'.
+2025-05-01 11:50:52,717 - ERROR - run.py - execute_scripts - 46 - ERROR: dev_Step_13.11.0_user_party_Plaintiff_UDF.SQL
+2025-05-01 11:50:52,717 - INFO - run.py - execute_scripts - 48 - Completed all scripts in D:\vance-law\needles\conversion\udf.
+2025-05-01 11:52:28,847 - DEBUG - run.py - run - 58 - Run started with options: {'server': 'DylanS\\MSSQLSERVER2022', 'database': 'VanceLawFirm_SA', 'username': None, 'password': None, 'dev': False, 'debug': False, 'input': 'D:\\vance-law\\needles\\conversion\\misc', 'use_metadata': False}
+2025-05-01 11:52:28,847 - DEBUG - run.py - collect_scripts - 16 - Not using metadata to process scripts.
+2025-05-01 11:52:28,847 - DEBUG - run.py - run - 66 - Collected scripts: ['4.00_std_default_defendant.sql', '4.00_std_office_calendar.sql', '4.04_std_update_contact_types.sql', '4.05_std_Miscellany.sql']
+2025-05-01 11:52:28,847 - INFO - run.py - run - 72 - Order of scripts to execute: 
+- 4.00_std_default_defendant.sql
+- 4.00_std_office_calendar.sql
+- 4.04_std_update_contact_types.sql
+- 4.05_std_Miscellany.sql
+2025-05-01 11:52:39,560 - DEBUG - run.py - execute_scripts - 27 - Starting execution of 4 scripts in D:\vance-law\needles\conversion\misc
+2025-05-01 11:52:39,561 - DEBUG - run.py - execute_scripts - 35 - Running 4.00_std_default_defendant.sql (1/4)
+2025-05-01 11:52:40,520 - INFO - run.py - execute_scripts - 44 - PASS: 4.00_std_default_defendant.sql
+2025-05-01 11:52:40,520 - DEBUG - run.py - execute_scripts - 35 - Running 4.00_std_office_calendar.sql (2/4)
+2025-05-01 11:52:41,020 - INFO - run.py - execute_scripts - 44 - PASS: 4.00_std_office_calendar.sql
+2025-05-01 11:52:41,020 - DEBUG - run.py - execute_scripts - 35 - Running 4.04_std_update_contact_types.sql (3/4)
+2025-05-01 11:52:41,581 - INFO - run.py - execute_scripts - 44 - PASS: 4.04_std_update_contact_types.sql
+2025-05-01 11:52:41,581 - DEBUG - run.py - execute_scripts - 35 - Running 4.05_std_Miscellany.sql (4/4)
+2025-05-01 11:52:41,882 - INFO - run.py - execute_scripts - 44 - PASS: 4.05_std_Miscellany.sql
+2025-05-01 11:52:41,882 - INFO - run.py - execute_scripts - 48 - Completed all scripts in D:\vance-law\needles\conversion\misc.
+2025-05-01 11:52:56,064 - DEBUG - run.py - run - 58 - Run started with options: {'server': 'DylanS\\MSSQLSERVER2022', 'database': 'VanceLawFirm_SA', 'username': None, 'password': None, 'dev': False, 'debug': False, 'input': 'D:\\vance-law\\needles\\conversion\\intake', 'use_metadata': False}
+2025-05-01 11:52:56,065 - DEBUG - run.py - collect_scripts - 16 - Not using metadata to process scripts.
+2025-05-01 11:52:56,065 - DEBUG - run.py - run - 66 - Collected scripts: ['5.00_intake_cases.sql', '5.02_intake_CaseStaff.sql', '5.02_intake_Incident.sql', '5.07_intake_ReferredBy.sql', '5.08_intake_updateContactAddress.sql', '5.09_intake_Plaintiffs.sql']
+2025-05-01 11:52:56,065 - INFO - run.py - run - 72 - Order of scripts to execute: 
+- 5.00_intake_cases.sql
+- 5.02_intake_CaseStaff.sql
+- 5.02_intake_Incident.sql
+- 5.07_intake_ReferredBy.sql
+- 5.08_intake_updateContactAddress.sql
+- 5.09_intake_Plaintiffs.sql
+2025-05-01 11:53:27,741 - DEBUG - run.py - execute_scripts - 27 - Starting execution of 6 scripts in D:\vance-law\needles\conversion\intake
+2025-05-01 11:53:27,744 - DEBUG - run.py - execute_scripts - 35 - Running 5.00_intake_cases.sql (1/6)
+2025-05-01 11:53:28,940 - INFO - run.py - execute_scripts - 44 - PASS: 5.00_intake_cases.sql
+2025-05-01 11:53:28,940 - DEBUG - run.py - execute_scripts - 35 - Running 5.02_intake_CaseStaff.sql (2/6)
+2025-05-01 11:53:29,130 - INFO - run.py - execute_scripts - 44 - PASS: 5.02_intake_CaseStaff.sql
+2025-05-01 11:53:29,130 - DEBUG - run.py - execute_scripts - 35 - Running 5.02_intake_Incident.sql (3/6)
+2025-05-01 11:53:29,399 - INFO - run.py - execute_scripts - 44 - PASS: 5.02_intake_Incident.sql
+2025-05-01 11:53:29,399 - DEBUG - run.py - execute_scripts - 35 - Running 5.07_intake_ReferredBy.sql (4/6)
+2025-05-01 11:53:29,522 - INFO - run.py - execute_scripts - 44 - PASS: 5.07_intake_ReferredBy.sql
+2025-05-01 11:53:29,522 - DEBUG - run.py - execute_scripts - 35 - Running 5.08_intake_updateContactAddress.sql (5/6)
+2025-05-01 11:53:30,583 - INFO - run.py - execute_scripts - 44 - PASS: 5.08_intake_updateContactAddress.sql
+2025-05-01 11:53:30,583 - DEBUG - run.py - execute_scripts - 35 - Running 5.09_intake_Plaintiffs.sql (6/6)
+2025-05-01 11:53:30,836 - INFO - run.py - execute_scripts - 44 - PASS: 5.09_intake_Plaintiffs.sql
+2025-05-01 11:53:30,836 - INFO - run.py - execute_scripts - 48 - Completed all scripts in D:\vance-law\needles\conversion\intake.
