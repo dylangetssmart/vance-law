@@ -1,7 +1,7 @@
 import yaml
 import re
 import argparse
-from sa_conversion_utils.utilities.setup_logger import setup_logger
+from setup_logger import setup_logger
 from detect_encoding import detect_encoding
 
 logger = setup_logger(__name__, log_file="run.log")
