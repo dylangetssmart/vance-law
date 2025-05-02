@@ -24,6 +24,7 @@ Function to strip white spaces surrounding case_dates
 */
 if OBJECT_ID(N'dbo.GMACaseDate', N'FN') is not null
 	drop function GMACaseDate;
+
 go
 
 create function dbo.GMACaseDate (@str VARCHAR(MAX))
@@ -61,7 +62,7 @@ insert into [sma_MST_CriticalDeadlineTypes]
 	select distinct
 		dbo.GMACaseDate(M.case_date_1),
 		1
-	from [VanceLawFirm_Needles].[dbo].[Matter] M
+	from [VanceLawFirm_Needles].[dbo].[matter] M
 	where ISNULL(dbo.GMACaseDate(M.case_date_1), '') <> ''
 
 	union
@@ -151,9 +152,9 @@ insert into [sma_MST_CriticalDeadlineTypes]
 		cdtbActive = 1
 
 
-/*
-Create a helper table
-*/
+/* ------------------------------------------------------------------------------
+Helper table
+*/ ------------------------------------------------------------------------------
 if exists (
 		select
 			*
@@ -164,8 +165,10 @@ if exists (
 begin
 	drop table criticalDeadline_Helper
 end
+
 go
 
+---
 create table criticalDeadline_Helper (
 	TableIndex		INT identity (1, 1) not null,
 	casnCaseID		INT,
@@ -174,6 +177,7 @@ create table criticalDeadline_Helper (
 ) on [PRIMARY]
 go
 
+---
 insert into criticalDeadline_Helper
 	(
 		casnCaseID,
@@ -197,10 +201,10 @@ go
 alter table [sma_TRN_CriticalDeadlines] disable trigger all
 go
 
-/*
-Create Critical Deadline records
-Loop through case_date_1 to case_date_10
-*/
+/* ------------------------------------------------------------------------------
+Insert Critical Deadlines
+- Loop through case_date_1 to case_date_10
+*/ ------------------------------------------------------------------------------
 
 declare @i INT = 1
 declare @sql NVARCHAR(MAX)
@@ -255,84 +259,7 @@ set @i = @i + 1
 end
 
 
---/* ####################################
---Create from User Field: user_case_data.Date_Application_Filed
---*/
---insert into [sma_TRN_CriticalDeadlines]
---	(
---		[crdnCaseID],
---		[crdnCriticalDeadlineTypeID],
---		[crddDueDate],
---		[crdsRequestFrom],
---		[ResponderUID]
---	)
---	select
---		CAS.casnCaseID as [crdnCaseID],
---		(
---			select
---				cdtnCriticalTypeID
---			from [sma_MST_CriticalDeadlineTypes]
---			where cdtbActive = 1
---				and cdtsDscrptn = 'Date Application Filed'
---		)			   as [crdnCriticalDeadlineTypeID],
---		case
---			when ud.Date_Application_Filed between '1900-01-01' and '2079-06-01'
---				then ud.Date_Application_Filed
---			else null
---		end			   as [crddDueDate],
---		null		   as [crdsRequestFrom],
---		null		   as [ResponderUID]
---	from [VanceLawFirm_Needles]..user_case_data ud
---	join [sma_TRN_cases] CAS
---		on CAS.NeedlesCasenum = CONVERT(VARCHAR, ud.casenum)
---	-- on CAS.cassCaseNumber = convert(varchar,ud.casenum)
---	where
---		ISNULL(ud.Date_Application_Filed, '') <> ''
-
---/* ####################################
---ds 7-11-2024 // Create from User Field: user_case_data.Date_Application_Denied
---*/
---insert into [sma_TRN_CriticalDeadlines]
---	(
---		[crdnCaseID],
---		[crdnCriticalDeadlineTypeID],
---		[crddDueDate],
---		[crdsRequestFrom],
---		[ResponderUID]
---	)
---	select
---		CAS.casnCaseID as [crdnCaseID],
---		(
---			select
---				cdtnCriticalTypeID
---			from [sma_MST_CriticalDeadlineTypes]
---			where cdtbActive = 1
---				and cdtsDscrptn = 'Date Application Denied'
---		)			   as [crdnCriticalDeadlineTypeID],
---		case
---			when ud.Date_Application_Denied between '1900-01-01' and '2079-06-01'
---				then ud.Date_Application_Denied
---			else null
---		end			   as [crddDueDate],
---		null		   as [crdsRequestFrom],
---		null		   as [ResponderUID]
---	from [VanceLawFirm_Needles]..user_case_data ud
---	join [sma_TRN_cases] CAS
---		on CAS.NeedlesCasenum = CONVERT(VARCHAR, ud.casenum)
---	-- on CAS.cassCaseNumber = convert(varchar,ud.casenum)
---	where
---		ISNULL(ud.Date_Application_Denied, '') <> ''
-
------
-alter table [sma_TRN_CriticalDeadlines] enable trigger all
-go
-
------
-
 ---(Appendix)---
-alter table sma_TRN_CriticalDeadlines disable trigger all
-go
-
 update [sma_TRN_CriticalDeadlines]
 set crddCompliedDate = GETDATE()
 where crddDueDate < GETDATE()
@@ -340,3 +267,58 @@ go
 
 alter table sma_TRN_CriticalDeadlines enable trigger all
 go
+
+
+/* ------------------------------------------------------------------------------
+Insert SOL
+*/ ------------------------------------------------------------------------------
+
+alter table [sma_TRN_SOLs] disable trigger all
+go
+
+insert into [sma_TRN_SOLs]
+	(
+		[solnCaseID],
+		[solnSOLTypeID],
+		[soldSOLDate],
+		[soldDateComplied],
+		[soldSnCFilingDate],
+		[soldServiceDate],
+		[solnDefendentID],
+		[soldToProcessServerDt],
+		[soldRcvdDate],
+		[solsType]
+	)
+	select distinct
+		d.defnCaseID	  as [solncaseid],
+		null			  as [solnsoltypeid],
+		case
+			when (c.[lim_date] not between '1900-01-01' and '2079-12-31')
+				then null
+			else c.[lim_date]
+		end				  as [soldsoldate],
+		null			  as [solddatecomplied],
+		null			  as [soldsncfilingdate],
+		null			  as [soldservicedate],
+		d.defnDefendentID as [solndefendentid],
+		null			  as [soldtoprocessserverdt],
+		null			  as [soldrcvddate],
+		'D'				  as [solstype]
+	from [VanceLawFirm_Needles].[dbo].[cases_Indexed] c
+	join [sma_TRN_Cases] cas
+		on cas.cassCaseNumber = CONVERT(VARCHAR, c.casenum)
+	join [sma_TRN_Defendants] d
+		on d.defnCaseID = cas.casnCaseID
+	where
+		c.lim_date is not null
+go
+
+-----
+alter table [sma_TRN_SOLs] enable trigger all
+go
+
+----(Appendix)----
+update sma_MST_SOLDetails
+set sldnFromIncident = 0
+where sldnFromIncident is null
+and sldnRecUserID = 368
