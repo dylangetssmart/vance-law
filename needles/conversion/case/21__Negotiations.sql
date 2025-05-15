@@ -1,11 +1,18 @@
 /*---
 group: misc
 order: 
-description: Update contact types for attorneys
+description: Insert negotiatons
+dependencies: InsuranceCoverage
 ---*/
 
 use [VanceLawFirm_SA]
 go
+
+/*
+
+negotiation.kind
+
+*/
 
 /*
 
@@ -21,7 +28,7 @@ DBCC CHECKIDENT ('[sma_TRN_Settlements]', RESEED, 1);
 
 
 ---------------------------------------------------
--- [sma_TRN_Lienors]
+-- [sma_TRN_Negotiations]
 ---------------------------------------------------
 -- saga
 if not exists (
@@ -165,12 +172,12 @@ insert into [sma_TRN_Negotiations]
 		null		   as [negdOralDtSent],
 		null		   as [negdOralDtRcvd],
 		case
-			when NEG.kind = 'Demand'
+			when NEG.kind in ('Counter Demand', 'Supplemental Demand')
 				then NEG.amount
 			else null
 		end			   as [negnDemand],
 		case
-			when NEG.kind in ('Offer', 'Conditional Ofr')
+			when NEG.kind in ('Offer', 'VLF Offer', 'Counter Offer', 'Insurance Offer')
 				then NEG.amount
 			else null
 		end			   as [negnOffer],
@@ -183,7 +190,7 @@ insert into [sma_TRN_Negotiations]
 		ISNULL(NEG.kind + ' : ' + NULLIF(CONVERT(VARCHAR, NEG.amount), '') + CHAR(13) + CHAR(10), '') +
 		NEG.notes	   as [negsComments],
 		case
-			when NEG.kind = 'Settled'
+			when NEG.kind = 'Settlement'
 				then NEG.amount
 			else null
 		end			   as [SettlementAmount],
@@ -200,8 +207,12 @@ insert into [sma_TRN_Negotiations]
 		on INS.insurance_id = MAP.insurance_id
 go
 
------------------
-/*
+
+/* ------------------------------------------------------------------------------
+Insert settlements
+
+Use this if there is a [negotiation].[kind] that represents a settlement
+*/ ------------------------------------------------------------------------------
 
 INSERT INTO [sma_TRN_Settlements]
 (
@@ -222,6 +233,5 @@ SELECT
 FROM [sma_TRN_Negotiations]
 WHERE isnull(SettlementAmount ,0) > 0
 
-*/
 
 alter table [sma_TRN_Settlements] enable trigger all
