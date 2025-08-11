@@ -1,16 +1,4 @@
-/* ######################################################################################
-description:
-steps:
-	-
-usage_instructions:
-dependencies:
-notes:
-requires_mapping:
-	- 
-#########################################################################################
-*/
-
-use VanceLawFirm_SA
+use [VanceLawFirm_SA]
 go
 
 
@@ -37,11 +25,10 @@ insert into sma_MST_CaseTypeDefualtDefs
 			and A.addnContactCtgID = I.cinnContactCtg
 			and A.addbPrimary = 1
 	where
-		--CST.VenderCaseType = 'VanceLawCaseType'
 		CST.VenderCaseType = (
 			select
-				o.VenderCaseType
-			from conversion.office o
+				VenderCaseType
+			from conversion.office
 		)
 		and I.cinsFirstName = 'Individual'
 		and I.cinsLastName = 'Unidentified'

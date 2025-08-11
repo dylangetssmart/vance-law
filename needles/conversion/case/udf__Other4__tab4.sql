@@ -2,7 +2,7 @@
 This script populates UDF Other4 with all columns from user_tab4_data
 */
 
-use VanceLawFirm_SA
+use [VanceLawFirm_SA]
 go
 
 if exists (
@@ -53,13 +53,13 @@ VALUES (
 );
 go
 
--- Dynamically get all columns from VanceLawFirm_Needles..user_tab4_data for unpivoting
+-- Dynamically get all columns from [VanceLawFirm_Needles]..user_tab4_data for unpivoting
 declare @sql NVARCHAR(MAX) = N'';
 select
 	@sql = STRING_AGG(CONVERT(VARCHAR(MAX),
 	N'CONVERT(VARCHAR(MAX), ' + QUOTENAME(column_name) + N') AS ' + QUOTENAME(column_name)
 	), ', ')
-from VanceLawFirm_Needles.INFORMATION_SCHEMA.COLUMNS
+from [VanceLawFirm_Needles].INFORMATION_SCHEMA.COLUMNS
 where table_name = 'user_tab4_data'
 	and column_name not in (
 		select
@@ -72,7 +72,7 @@ where table_name = 'user_tab4_data'
 declare @unpivot_list NVARCHAR(MAX) = N'';
 select
 	@unpivot_list = STRING_AGG(QUOTENAME(column_name), ', ')
-from VanceLawFirm_Needles.INFORMATION_SCHEMA.COLUMNS
+from [VanceLawFirm_Needles].INFORMATION_SCHEMA.COLUMNS
 where table_name = 'user_tab4_data'
 	and column_name not in (
 		select
@@ -89,8 +89,8 @@ FROM (
     SELECT 
         cas.casnCaseID, 
         cas.casnOrgCaseTypeID, ' + @sql + N'
-    FROM VanceLawFirm_Needles..user_tab4_data ud
-    JOIN VanceLawFirm_Needles..cases_Indexed c ON c.casenum = ud.case_id
+    FROM [VanceLawFirm_Needles]..user_tab4_data ud
+    JOIN [VanceLawFirm_Needles]..cases_Indexed c ON c.casenum = ud.case_id
     JOIN sma_TRN_Cases cas ON cas.cassCaseNumber = CONVERT(VARCHAR, ud.case_id)
 ) pv
 UNPIVOT (FieldVal FOR FieldTitle IN (' + @unpivot_list + N')) AS unpvt;';

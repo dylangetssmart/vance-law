@@ -1,3 +1,9 @@
+/*---
+group: load
+order: 5
+description: Update contact types for attorneys
+---*/
+
 /* ###################################################################################
 description: Handles common operations related to [sma_MST_IndvContacts]
 steps:
@@ -11,14 +17,12 @@ notes:
 	-
 */
 
-
-
 use [VanceLawFirm_SA]
 go
 
-
-----(0) staff roles ----
--- Add the following roles into sma_MST_SubRoleCode if they do not exist
+/* ------------------------------------------------------------------------------
+Create staff roles if they do not exist
+*/
 insert into [sma_MST_SubRoleCode]
 	(
 		srcsDscrptn,
@@ -52,13 +56,11 @@ insert into [sma_MST_SubRoleCode]
 	from [sma_MST_SubRoleCode]
 
 
-
 alter table [sma_TRN_caseStaff] disable trigger all
 go
 
-
-/*
-Hardcode staff_1 through staff_10 with "Staff"
+/* ------------------------------------------------------------------------------
+Use this block to hardcode staff_1 through staff_10 with "Staff"
 */
 
 ---- Declare variables
@@ -104,9 +106,9 @@ Hardcode staff_1 through staff_10 with "Staff"
 --        null                        as [cssnModifyUserID],
 --        null                        as [cssdDtModified],
 --        0                           as cssnLevelNo
---    FROM VanceLawFirm_Needles.[dbo].[cases_Indexed] C
---    JOIN [sma_TRN_cases] CAS on CAS.cassCaseNumber = C.casenum
---    JOIN [sma_MST_Users] U on ( U.saga = C.' + @staffColumn + ' )
+--    FROM [VanceLawFirm_Needles].[dbo].[cases_Indexed] C
+--    JOIN [sma_TRN_cases] CAS on CAS.cassCaseNumber = convert(varchar,C.casenum)
+--    JOIN [sma_MST_Users] U on ( U.source_id = C.' + @staffColumn + ' )
 --    ';
 
 --    -- Execute the dynamic SQL query
@@ -116,11 +118,6 @@ Hardcode staff_1 through staff_10 with "Staff"
 --    SET @i = @i + 1;
 --END
 --GO
-
-
--- ds 2024-11-07 only staff_1 through staff_4 are used
-
-
 
 /* ------------------------------------------------------------------------------
 staff_1 = Assigned Attorney
@@ -275,7 +272,7 @@ insert into sma_TRN_caseStaff
 			from sma_MST_SubRole
 			where sbrsDscrptn = 'Litigation Staff'
 				and sbrnRoleID = 10
-		)				as [cssnRoleID],
+		)				as [cssnRoleID], 
 		null			as [csssComments],
 		null			as cssdFromDate,
 		null			as cssdToDate,
@@ -320,7 +317,7 @@ staff_5 =
 --	null					  as [cssnModifyUserID],
 --	null					  as [cssdDtModified],
 --	0					  as cssnLevelNo
---FROM VanceLawFirm_Needles.[dbo].[cases_Indexed] C
+--FROM [VanceLawFirm_Needles].[dbo].[cases_Indexed] C
 --inner join [VanceLawFirm_SA].[dbo].[sma_TRN_cases] CAS on CAS.cassCaseNumber = C.casenum
 --inner join [VanceLawFirm_SA].[dbo].[sma_MST_Users] U on ( U.saga = C.staff_5 )
 --*/
@@ -360,7 +357,7 @@ insert into sma_TRN_caseStaff
 		null			as [cssnModifyUserID],
 		null			as [cssdDtModified],
 		0				as cssnLevelNo
-	from VanceLawFirm_Needles.[dbo].[cases_Indexed] C
+	from [VanceLawFirm_Needles].[dbo].[cases_Indexed] C
 	join [sma_TRN_cases] CAS
 		on CAS.cassCaseNumber = C.casenum
 	join [sma_MST_Users] U
@@ -397,7 +394,7 @@ staff_7 =
 --	null					  as [cssnModifyUserID],
 --	null					  as [cssdDtModified],
 --	0					  as cssnLevelNo
---FROM VanceLawFirm_Needles.[dbo].[cases_Indexed] C
+--FROM [VanceLawFirm_Needles].[dbo].[cases_Indexed] C
 --inner join [VanceLawFirm_SA].[dbo].[sma_TRN_cases] CAS on CAS.cassCaseNumber = C.casenum
 --inner join [VanceLawFirm_SA].[dbo].[sma_MST_Users] U on ( U.saga = C.staff_7 )
 
@@ -431,7 +428,7 @@ staff_8 =
 --	null					  as [cssnModifyUserID],
 --	null					  as [cssdDtModified],
 --	0					  as cssnLevelNo
---FROM VanceLawFirm_Needles.[dbo].[cases_Indexed] C
+--FROM [VanceLawFirm_Needles].[dbo].[cases_Indexed] C
 --inner join [VanceLawFirm_SA].[dbo].[sma_TRN_cases] CAS on CAS.cassCaseNumber = C.casenum
 --inner join [VanceLawFirm_SA].[dbo].[sma_MST_Users] U on ( U.saga = C.staff_8 )
 --*/
@@ -465,7 +462,7 @@ staff_9 =
 --	null					  as [cssnModifyUserID],
 --	null					  as [cssdDtModified],
 --	0					  as cssnLevelNo
---FROM VanceLawFirm_Needles.[dbo].[cases_Indexed] C
+--FROM [VanceLawFirm_Needles].[dbo].[cases_Indexed] C
 --JOIN sma_TRN_cases CAS on CAS.cassCaseNumber = C.casenum
 --JOIN sma_MST_Users U on ( U.saga = C.staff_9 )
 
@@ -498,7 +495,7 @@ staff_10 =
 --	null					  as [cssnModifyUserID],
 --	null					  as [cssdDtModified],
 --	0					  as cssnLevelNo
---FROM VanceLawFirm_Needles.[dbo].[cases_Indexed] C
+--FROM [VanceLawFirm_Needles].[dbo].[cases_Indexed] C
 --inner join [VanceLawFirm_SA].[dbo].[sma_TRN_cases] CAS on CAS.cassCaseNumber = C.casenum
 --inner join [VanceLawFirm_SA].[dbo].[sma_MST_Users] U on ( U.saga = C.staff_10 )
 

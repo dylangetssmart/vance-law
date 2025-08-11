@@ -1,19 +1,19 @@
 /* ########################################################
-This script populates UDF Other2 with all columns from user_tab2_data
+This script populates UDF Other1 with all columns from user_tab_data
 */
 
-USE VanceLawFirm_SA
+USE [VanceLawFirm_SA]
 GO
 
 IF EXISTS (
 		SELECT
 			*
 		FROM sys.tables
-		WHERE name = 'Other2UDF'
+		WHERE name = 'Other1UDF'
 			AND type = 'U'
 	)
 BEGIN
-	DROP TABLE Other2UDF
+	DROP TABLE Other1UDF
 END
 
 -- Create temporary table for columns to exclude
@@ -53,14 +53,14 @@ VALUES (
 );
 GO
 
--- Dynamically get all columns from VanceLawFirm_Needles..user_tab2_data for unpivoting
+-- Dynamically get all columns from [VanceLawFirm_Needles]..user_tab_data for unpivoting
 DECLARE @sql NVARCHAR(MAX) = N'';
 SELECT
 	@sql = STRING_AGG(CONVERT(VARCHAR(MAX),
 	N'CONVERT(VARCHAR(MAX), ' + QUOTENAME(column_name) + N') AS ' + QUOTENAME(column_name)
 	), ', ')
-FROM VanceLawFirm_Needles.INFORMATION_SCHEMA.COLUMNS
-WHERE table_name = 'user_tab2_data'
+FROM [VanceLawFirm_Needles].INFORMATION_SCHEMA.COLUMNS
+WHERE table_name = 'user_tab_data'
 	AND column_name NOT IN (
 		SELECT
 			column_name
@@ -72,8 +72,8 @@ WHERE table_name = 'user_tab2_data'
 DECLARE @unpivot_list NVARCHAR(MAX) = N'';
 SELECT
 	@unpivot_list = STRING_AGG(QUOTENAME(column_name), ', ')
-FROM VanceLawFirm_Needles.INFORMATION_SCHEMA.COLUMNS
-WHERE table_name = 'user_tab2_data'
+FROM [VanceLawFirm_Needles].INFORMATION_SCHEMA.COLUMNS
+WHERE table_name = 'user_tab_data'
 	AND column_name NOT IN (
 		SELECT
 			column_name
@@ -84,13 +84,13 @@ WHERE table_name = 'user_tab2_data'
 -- Generate the dynamic SQL for creating the pivot table
 SET @sql = N'
 SELECT casnCaseID, casnOrgCaseTypeID, FieldTitle, FieldVal
-INTO Other2UDF
+INTO Other1UDF
 FROM ( 
     SELECT 
         cas.casnCaseID, 
         cas.casnOrgCaseTypeID, ' + @sql + N'
-    FROM VanceLawFirm_Needles..user_tab2_data ud
-    JOIN VanceLawFirm_Needles..cases_Indexed c ON c.casenum = ud.case_id
+    FROM [VanceLawFirm_Needles]..user_tab_data ud
+    JOIN [VanceLawFirm_Needles]..cases_Indexed c ON c.casenum = ud.case_id
     JOIN sma_TRN_Cases cas ON cas.cassCaseNumber = CONVERT(VARCHAR, ud.case_id)
 ) pv
 UNPIVOT (FieldVal FOR FieldTitle IN (' + @unpivot_list + N')) AS unpvt;';
@@ -103,12 +103,12 @@ GO
 ----------------------------
 ALTER TABLE [sma_MST_UDFDefinition] DISABLE TRIGGER ALL
 GO
-
+SELECT * FROM other1udf
 IF EXISTS (
 		SELECT
 			*
 		FROM sys.tables
-		WHERE name = 'Other2UDF'
+		WHERE name = 'Other1UDF'
 			AND type = 'U'
 	)
 BEGIN
@@ -129,23 +129,23 @@ BEGIN
 			'C'										   AS [udfsUDFCtg]
 		   ,CST.cstnCaseTypeID						   AS [udfnRelatedPK]
 		   ,M.field_title							   AS [udfsUDFName]
-		   ,'Other2'								   AS [udfsScreenName]
+		   ,'Other1'								   AS [udfsScreenName]
 		   ,ucf.UDFType								   AS [udfsType]
 		   ,ucf.field_len							   AS [udfsLength]
 		   ,1										   AS [udfbIsActive]
-		   ,'user_tab2_data' + ucf.column_name		   AS [udfshortName]
+		   ,'user_tab_data' + ucf.column_name		   AS [udfshortName]
 		   ,ucf.dropdownValues						   AS [udfsNewValues]
 		   ,DENSE_RANK() OVER (ORDER BY M.field_title) AS udfnSortOrder
 		FROM [sma_MST_CaseType] CST
 		JOIN CaseTypeMixture mix
 			ON mix.[SmartAdvocate Case Type] = CST.cstsType
-		JOIN [VanceLawFirm_Needles].[dbo].[user_tab2_matter] M
+		JOIN [VanceLawFirm_Needles].[dbo].[user_tab_matter] M
 			ON M.mattercode = mix.matcode
 				AND M.field_type <> 'label'
 		JOIN (
 			SELECT DISTINCT
 				fieldTitle
-			FROM Other2UDF
+			FROM Other1UDF
 		) vd
 			ON vd.FieldTitle = M.field_title
 		JOIN [dbo].[NeedlesUserFields] ucf
@@ -155,13 +155,13 @@ BEGIN
 				table_Name
 			   ,column_name
 			FROM [VanceLawFirm_Needles].[dbo].[document_merge_params]
-			WHERE table_Name = 'user_tab2_data'
+			WHERE table_Name = 'user_tab_data'
 		) dmp
 			ON dmp.column_name = ucf.field_Title
 		LEFT JOIN [sma_MST_UDFDefinition] def
 			ON def.[udfnRelatedPK] = CST.cstnCaseTypeID
 				AND def.[udfsUDFName] = M.field_title
-				AND def.[udfsScreenName] = 'Other2'
+				AND def.[udfsScreenName] = 'Other1'
 				AND def.[udfsType] = ucf.UDFType
 				AND def.udfnUDFID IS NULL
 		ORDER BY M.field_title
@@ -176,7 +176,7 @@ IF EXISTS (
 		SELECT
 			*
 		FROM sys.tables
-		WHERE name = 'Other2UDF'
+		WHERE name = 'Other1UDF'
 			AND type = 'U'
 	)
 BEGIN
@@ -196,7 +196,7 @@ BEGIN
 		)
 		SELECT
 			def.udfnUDFID AS [udvnUDFID]
-		   ,'Other2'	  AS [udvsScreenName]
+		   ,'Other1'	  AS [udvsScreenName]
 		   ,'C'			  AS [udvsUDFCtg]
 		   ,casnCaseID	  AS [udvnRelatedID]
 		   ,0			  AS [udvnSubRelatedID]
@@ -206,11 +206,11 @@ BEGIN
 		   ,NULL		  AS [udvnModifyUserID]
 		   ,NULL		  AS [udvdDtModified]
 		   ,NULL		  AS [udvnLevelNo]
-		FROM Other2UDF udf
+		FROM Other1UDF udf
 		LEFT JOIN sma_MST_UDFDefinition def
 			ON def.udfnRelatedPK = udf.casnOrgCaseTypeID
 				AND def.udfsUDFName = FieldTitle
-				AND def.udfsScreenName = 'Other2'
+				AND def.udfsScreenName = 'Other1'
 END
 
 ALTER TABLE sma_trn_udfvalues ENABLE TRIGGER ALL

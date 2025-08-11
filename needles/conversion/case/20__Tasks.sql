@@ -136,8 +136,8 @@ insert into [dbo].[sma_TRN_TaskNew]
 	from [VanceLawFirm_Needles]..case_checklist cc
 	join sma_trn_Cases cas
 		on cas.cassCaseNumber = CONVERT(VARCHAR, cc.case_id)
-	where
-		cc.case_id = 213710
+	--where
+	--	cc.case_id = 213710
 --join [VanceLawFirm_Needles]..cases c
 --	on c.casenum = cc.case_id
 

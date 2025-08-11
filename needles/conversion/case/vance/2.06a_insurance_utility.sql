@@ -3,7 +3,7 @@ description: Insert defendants
 steps:
 	- Update schema > [sma_TRN_InsuranceCoverage]
 	- Construct [conversion].[insurance_contacts_helper]
-	- Create insurance types from [needles].[insurance].[policy_type] > [sma_MST_InsuranceType]
+	- Create insurance types from [VanceLawFirm_Needles].[insurance].[policy_type] > [sma_MST_InsuranceType]
 usage_instructions:
 	- 
 dependencies:
