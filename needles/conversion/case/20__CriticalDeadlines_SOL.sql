@@ -8,6 +8,19 @@ data-source:
 use [VanceLawFirm_SA]
 go
 
+
+---
+alter table [sma_TRN_CriticalDeadlines] disable trigger all
+go
+
+alter table [sma_TRN_SOLs] disable trigger all
+go
+
+---
+
+
+
+
 /*
 alter table [sma_TRN_CriticalDeadlines] disable trigger all
 delete [sma_TRN_CriticalDeadlines]
@@ -57,8 +70,7 @@ insert into [sma_MST_CriticalDeadlineTypes]
 	(
 		cdtsDscrptn,
 		cdtbActive
-	)
-	(
+	) (
 	select distinct
 		dbo.GMACaseDate(M.case_date_1),
 		1
@@ -156,11 +168,11 @@ insert into [sma_MST_CriticalDeadlineTypes]
 Helper table
 */ ------------------------------------------------------------------------------
 if exists (
-		select
-			*
-		from sys.objects
-		where name = 'criticalDeadline_Helper'
-			and type = 'U'
+	 select
+		 *
+	 from sys.objects
+	 where name = 'criticalDeadline_Helper'
+		 and type = 'U'
 	)
 begin
 	drop table criticalDeadline_Helper
@@ -182,8 +194,7 @@ insert into criticalDeadline_Helper
 	(
 		casnCaseID,
 		UniqueContactId
-	)
-	select
+	) select
 		plnnCaseID,
 		UniqueContactId
 	from sma_TRN_Plaintiff
@@ -198,8 +209,7 @@ dbcc dbreindex ('criticalDeadline_Helper', ' ', 90) with no_infomsgs
 go
 
 
-alter table [sma_TRN_CriticalDeadlines] disable trigger all
-go
+
 
 /* ------------------------------------------------------------------------------
 Insert Critical Deadlines
@@ -258,24 +268,106 @@ exec sp_executesql @sql
 set @i = @i + 1
 end
 
-
----(Appendix)---
-update [sma_TRN_CriticalDeadlines]
-set crddCompliedDate = GETDATE()
-where crddDueDate < GETDATE()
-go
-
-alter table sma_TRN_CriticalDeadlines enable trigger all
 go
 
 
 /* ------------------------------------------------------------------------------
-Insert SOL
+Critical Deadlines from [user_tab5_data]
 */ ------------------------------------------------------------------------------
 
-alter table [sma_TRN_SOLs] disable trigger all
+
+insert into [sma_MST_CriticalDeadlineTypes]
+	(
+		cdtsDscrptn,
+		cdtbActive
+	) select
+		*
+	from (
+	values
+	('Date Answered', 1),
+	('Sent Date', 1)
+	) as NewValues (cdtsDscrptn, cdtbActive)
+	where
+		not exists (
+		 select
+			 1
+		 from [sma_MST_CriticalDeadlineTypes] as T
+		 where T.cdtsDscrptn = NewValues.cdtsDscrptn
+			 and T.cdtbActive = NewValues.cdtbActive
+		);
 go
 
+
+--;
+--with
+--cte
+--as
+--	(
+
+--	 select
+--		 utd.case_id,
+--		 utd.Date_Answered,
+--		 null as Sent_Date
+--	 from VanceLawFirm_Needles..user_tab5_data utd
+--	 where ISNULL(utd.Date_Answered, '') <> ''
+
+--	 union all
+
+--	 select
+--		 utd.case_id,
+--		 null as Date_Answered,
+--		 utd.Sent_Date
+--	 from VanceLawFirm_Needles..user_tab5_data utd
+--	 where ISNULL(utd.Sent_Date, '') <> ''
+
+--	)
+with
+cte
+as
+	(
+	 select
+		 utd.case_id,
+		 v.DateType,
+		 v.DateValue
+	 from VanceLawFirm_Needles..user_tab5_data utd
+	 cross apply (values
+	 ('Date_Answered', utd.Date_Answered),
+	 ('Sent_Date', utd.Sent_Date)
+	 ) v (DateType, DateValue)
+	 where v.DateValue is not null
+	)
+insert into [sma_TRN_CriticalDeadlines]
+	(
+		[crdnCaseID],
+		[crdnCriticalDeadlineTypeID],
+		[crddDueDate],
+		[crdsRequestFrom],
+		[ResponderUID]
+	) select
+		CAS.casnCaseID as [crdnCaseID],
+		(
+		 select
+			 cdtnCriticalTypeID
+		 from [sma_MST_CriticalDeadlineTypes]
+		 where cdtbActive = 1
+			 and cdtsDscrptn = cte.DateType
+		)			   as [crdnCriticalDeadlineTypeID],
+		case
+			when (cte.DateValue not between '1900-01-01' and '2079-12-31')
+				then null
+			else cte.DateValue
+		end			   [crddDueDate],
+		null		   as [crdsRequestFrom],
+		null		   as [ResponderUID]
+	from cte
+	join [sma_TRN_cases] CAS
+		on CAS.cassCaseNumber = CONVERT(VARCHAR, cte.case_id)
+go
+
+
+/* ------------------------------------------------------------------------------
+Insert SOL from [cases_Indexed]
+*/ ------------------------------------------------------------------------------
 insert into [sma_TRN_SOLs]
 	(
 		[solnCaseID],
@@ -288,8 +380,7 @@ insert into [sma_TRN_SOLs]
 		[soldToProcessServerDt],
 		[soldRcvdDate],
 		[solsType]
-	)
-	select distinct
+	) select distinct
 		d.defnCaseID	  as [solncaseid],
 		null			  as [solnsoltypeid],
 		case
@@ -313,12 +404,85 @@ insert into [sma_TRN_SOLs]
 		c.lim_date is not null
 go
 
------
-alter table [sma_TRN_SOLs] enable trigger all
+
+
+
+/* ------------------------------------------------------------------------------
+Insert SOL from [user_tab5_data]
+*/ ------------------------------------------------------------------------------
+;
+with
+cte
+as
+	(
+	 select
+		 utd.case_id,
+		 v.DateType,
+		 v.DateValue
+	 from VanceLawFirm_Needles..user_tab5_data utd
+	 cross apply (values
+	 ('Due_Date', utd.Due_Date),
+	 ('Answered_Date', utd.Answered_Date),
+	 ('Received_Date', utd.Received_Date),
+	 ('Service_Date', utd.Service_Date)
+	 ) v (DateType, DateValue)
+	 where v.DateValue is not null
+	)
+
+insert into [sma_TRN_SOLs]
+	(
+		[solnCaseID],
+		[solnSOLTypeID],
+		[soldSOLDate],
+		[soldDateComplied],
+		[soldSnCFilingDate],
+		[soldServiceDate],
+		[solnDefendentID],
+		[soldToProcessServerDt],
+		[soldRcvdDate],
+		[solsType]
+	) select distinct
+		d.defnCaseID	  as [solncaseid],
+		null			  as [solnsoltypeid],
+		case
+			when (cte.DateValue not between '1900-01-01' and '2079-12-31')
+				then null
+			else cte.DateValue
+		end				  as [soldsoldate],
+		null			  as [solddatecomplied],
+		null			  as [soldsncfilingdate],
+		null			  as [soldservicedate],
+		d.defnDefendentID as [solndefendentid],
+		null			  as [soldtoprocessserverdt],
+		null			  as [soldrcvddate],
+		'D'				  as [solstype]
+	from cte
+	join [sma_TRN_Cases] cas
+		on cas.cassCaseNumber = CONVERT(VARCHAR, cte.case_id)
+	join [sma_TRN_Defendants] d
+		on d.defnCaseID = cas.casnCaseID
+
 go
+
+
 
 ----(Appendix)----
 update sma_MST_SOLDetails
 set sldnFromIncident = 0
 where sldnFromIncident is null
 and sldnRecUserID = 368
+
+
+
+---(Appendix)---
+update [sma_TRN_CriticalDeadlines]
+set crddCompliedDate = GETDATE()
+where crddDueDate < GETDATE()
+go
+
+
+alter table sma_TRN_CriticalDeadlines enable trigger all
+go
+
+alter table [sma_TRN_SOLs] enable trigger all
+go
