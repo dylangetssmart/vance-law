@@ -8,3 +8,5 @@
 2025-05-15 15:07:28,134 - ERROR - generate_readmes.py - <module> - 60 - Directory does not exist: /home/runner/work/vance-law/vance-law/D:\vance-law\needles\conversion
 2025-08-11 15:36:25,360 - DEBUG - generate_readmes.py - <module> - 56 - Processing directory: /home/runner/work/vance-law/vance-law/D:\vance-law\needles\conversion
 2025-08-11 15:36:25,360 - ERROR - generate_readmes.py - <module> - 60 - Directory does not exist: /home/runner/work/vance-law/vance-law/D:\vance-law\needles\conversion
+2025-08-18 20:06:59,325 - DEBUG - generate_readmes.py - <module> - 56 - Processing directory: /home/runner/work/vance-law/vance-law/D:\vance-law\needles\conversion
+2025-08-18 20:06:59,325 - ERROR - generate_readmes.py - <module> - 60 - Directory does not exist: /home/runner/work/vance-law/vance-law/D:\vance-law\needles\conversion
