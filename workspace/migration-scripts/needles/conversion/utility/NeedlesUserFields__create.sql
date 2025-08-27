@@ -40,7 +40,8 @@ SELECT field_num, field_title, column_name,  field_type,
 	end,
 	Mini_Dir_Title,
 	case
-		when field_Type in ('name', 'alpha', 'state','valuecode','staff') then 'Text'
+		when field_Type in ('alpha', 'state','valuecode','staff') then 'Text'
+		when field_Type in ('name') then 'Contact'
 		when field_Type in ('number', 'money') then 'Number'
 		when field_Type in ('boolean', 'checkbox') then 'CheckBox'
 		when field_Type = 'minidir' then 'Dropdown'

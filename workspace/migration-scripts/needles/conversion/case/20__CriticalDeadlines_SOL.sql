@@ -298,6 +298,8 @@ insert into [sma_MST_CriticalDeadlineTypes]
 go
 
 
+
+
 --;
 --with
 --cte

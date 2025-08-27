@@ -282,6 +282,10 @@ insert into [sma_TRN_InsuranceCoverage]
 		ins.policy				 as [incspolicyno],
 		ins.claim				 as [incsclaimno],
 		null					 as [incnstackedtimes],
+		isnull('Insurance Information:' + nullif(ud.Insurance_Information,'') + CHAR(13),'') + 
+		isnull('Other Household Vehicles:' + nullif(ud.Other_Household_Vehicles,'') + CHAR(13),'') + 
+		isnull('Resident Relative:' + nullif(ud.Resident_Relative,'') + CHAR(13),'') + 
+		isnull('Stacked Policies:' + nullif(ud.Stacked_Policies,'') + CHAR(13),'') + 
 		''						 as [incscomments],
 		map.incninsured			 as [incninsured],
 		ins.actual				 as [incncovgamt],
@@ -389,6 +393,10 @@ insert into [sma_TRN_InsuranceCoverage]
 		ins.policy				 as [incspolicyno],
 		ins.claim				 as [incsclaimno],
 		null					 as [incnstackedtimes],
+		isnull('Insurance Information:' + nullif(ud.Insurance_Information,'') + CHAR(13),'') + 
+		isnull('Other Household Vehicles:' + nullif(ud.Other_Household_Vehicles,'') + CHAR(13),'') + 
+		isnull('Resident Relative:' + nullif(ud.Resident_Relative,'') + CHAR(13),'') + 
+		isnull('Stacked Policies:' + nullif(ud.Stacked_Policies,'') + CHAR(13),'') + 
 		''						 as [incscomments],
 		map.incninsured			 as [incninsured],
 		ins.actual				 as [incncovgamt],

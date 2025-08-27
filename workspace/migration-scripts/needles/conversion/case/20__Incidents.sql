@@ -43,11 +43,7 @@ insert into [sma_TRN_Incidents]
 			select
 				sttnStateID
 			from sma_MST_States
-			where sttsDescription = (
-					select
-						StateName
-					from conversion.office
-				)
+			where sttsDescription = 'Alabama'
 		)			   as [stateid],
 		0			   as liabilitycodeid,
 		c.synopsis + CHAR(13) +

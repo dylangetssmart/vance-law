@@ -12,8 +12,6 @@ inner join [[VanceLawFirm_Needles]].[dbo].[user_case_fields] F on F.field_title=
 where m.field_Type <> 'label'
 */
 
--- Mediator_Name Mediator_Value_Code
-
 
 if exists (select * from sys.tables where name = 'CourtUDF' and type = 'U')
 begin
@@ -34,14 +32,23 @@ from (
  select
 	 cas.casnCaseID,
 	 cas.CasnOrgCaseTypeID,
-	 CONVERT(VARCHAR(MAX), [Mediator_Name])		  as [Mediator Name],
+	 CONVERT(VARCHAR(MAX), ioci.UNQCID)			  as [Mediator Name],		-- UDFValue needs UniqueID for 'name' type fields
 	 CONVERT(VARCHAR(MAX), [Mediator_Value_Code]) as [Mediator Value Code]
  from [VanceLawFirm_Needles]..user_counsel_data ud
  join [VanceLawFirm_Needles]..cases_Indexed c
 	 on c.casenum = ud.casenum
  join sma_TRN_Cases cas
 	 on cas.cassCaseNumber = CONVERT(VARCHAR, ud.casenum)
---WHERE c.matcode in ('MVA', 'PRE')
+ join VanceLawFirm_Needles..user_case_counsel_matter uccm
+	 on uccm.mattercode = c.matcode
+	 and uccm.field_title = 'Mediator Name'
+ left join VanceLawFirm_Needles..user_counsel_name ucn
+	 on ucn.ref_num = uccm.ref_num
+	 and ucn.casenum = ud.casenum
+	 and ucn.party_id = ud.party_id
+	 and ucn.user_name <> 0
+ join IndvOrgContacts_Indexed ioci
+	 on ioci.SAGA = ucn.[user_name]
 ) pv
 unpivot (FieldVal for FieldTitle in ([Mediator Name], [Mediator Value Code])
 ) as unpvt
@@ -66,7 +73,7 @@ insert into CourtUDF
 		 CONVERT(VARCHAR(MAX), Type_of_Witness)	   as [Type of Witness],
 		 CONVERT(VARCHAR(MAX), Depo_Date)		   as [Depo Date],
 		 CONVERT(VARCHAR(MAX), Depo_Time)		   as [Depo Time],
-		 CONVERT(VARCHAR(MAX), Court_Reporter)	   as [Court Reporter],
+		 CONVERT(VARCHAR(MAX), ioci.UNQCID)		   as [Court Reporter],
 		 CONVERT(VARCHAR(MAX), Type_of_Expert)	   as [Type of Expert],
 		 CONVERT(VARCHAR(MAX), Statement_Context)  as [Statement Context],
 		 CONVERT(VARCHAR(MAX), Expert_Value_Code)  as [Expert Value Code],
@@ -74,9 +81,17 @@ insert into CourtUDF
 	 from [VanceLawFirm_Needles]..user_tab_data ud
 	 join [VanceLawFirm_Needles]..cases_Indexed c
 		 on c.casenum = ud.case_id
+	 join VanceLawFirm_Needles..user_tab_name utn
+		 on utn.tab_id = ud.tab_id
+		 and utn.[user_name] <> 0
+	 join VanceLawFirm_Needles..user_tab_matter utm
+		 on utm.ref_num = utn.ref_num
+		 and utm.mattercode = c.matcode
+		 and utm.field_title = 'Court Reporter'
 	 join sma_TRN_Cases cas
 		 on cas.cassCaseNumber = CONVERT(VARCHAR, ud.case_id)
-	--WHERE c.matcode in ('MVA', 'PRE')
+	 join IndvOrgContacts_Indexed ioci
+		 on ioci.SAGA = utn.[user_name]
 	) pv
 	unpivot (FieldVal for FieldTitle in ([Type of Witness], [Depo Date], [Depo Time], [Court Reporter], [Type of Expert],
 	[Statement Context], [Expert Value Code], [Current Medication])
@@ -139,8 +154,8 @@ insert into [sma_MST_UDFDefinition]
 			and def.[udfsScreenName] = 'Court'
 			and udfstype = ucf.UDFType
 	where
-		m.Field_Title not in ('Location', 'Mediator Name', 'Court Reporter')
-		and
+		--m.Field_Title not in ('Location', 'Mediator Name', 'Court Reporter')
+		--and
 		def.udfnUDFID is null
 	order by m.field_title
 
@@ -193,63 +208,63 @@ insert into [sma_MST_UDFDefinition]
 			and def.[udfsScreenName] = 'Court'
 			and udfstype = ucf.UDFType
 	where
-		m.Field_Title not in ('Location', 'Mediator Name', 'Court Reporter')
-		and
+		--m.Field_Title not in ('Location')
+		--and
 		def.udfnUDFID is null
 	order by m.field_title
 
 -- Contact UDF for Court Reporter
-insert into [sma_MST_UDFDefinition]
-	(
-		[udfsUDFCtg],
-		[udfnRelatedPK],
-		[udfsUDFName],
-		[udfsScreenName],
-		[udfsType],
-		[udfsLength],
-		[udfbIsActive],
-		[udfshortName],
-		[udfsNewValues],
-		[udfnSortOrder]
-	) select distinct
-		'R'										   as [udfsUDFCtg],
-		CST.cstnCaseTypeID						   as [udfnRelatedPK], -- contact id
-		M.field_title							   as [udfsUDFName],
-		'Court'									   as [udfsScreenName],
-		ucf.UDFType								   as [udfsType],
-		ucf.field_len							   as [udfsLength],
-		1										   as [udfbIsActive],
-		'user_tab_data' + ucf.column_name		   as [udfshortName],
-		ucf.dropdownValues						   as [udfsNewValues],
-		DENSE_RANK() over (order by M.field_title) as udfnSortOrder
-	from [sma_MST_CaseType] CST
-	join CaseTypeMixture mix
-		on mix.[SmartAdvocate Case Type] = cst.cstsType
-	join [VanceLawFirm_Needles].[dbo].user_tab_matter M
-		on M.mattercode = mix.matcode
-			and M.field_type <> 'label'
-	join (select distinct fieldTitle from CourtUDF) vd
-		on vd.FieldTitle = m.field_title
-	join NeedlesUserFields ucf
-		on ucf.field_num = m.ref_num
-	--left join (
-	-- select distinct
-	--	 table_Name,
-	--	 column_name
-	-- from [VanceLawFirm_Needles].[dbo].[document_merge_params]
-	-- where table_Name = 'user_case_counsel_matter'
-	--) dmp
-	--on dmp.column_name = ucf.field_Title
-	left join [sma_MST_UDFDefinition] def
-		on def.[udfnRelatedPK] = cst.cstnCaseTypeID
-			and def.[udfsUDFName] = m.field_title
-			and def.[udfsScreenName] = 'Court'
-			and udfstype = ucf.UDFType
-	where
-		m.Field_Title in ('Court Reporter')
-		and
-		def.udfnUDFID is null
-	order by m.field_title
+--insert into [sma_MST_UDFDefinition]
+--	(
+--		[udfsUDFCtg],
+--		[udfnRelatedPK],
+--		[udfsUDFName],
+--		[udfsScreenName],
+--		[udfsType],
+--		[udfsLength],
+--		[udfbIsActive],
+--		[udfshortName],
+--		[udfsNewValues],
+--		[udfnSortOrder]
+--	) select distinct
+--		'R'										   as [udfsUDFCtg],
+--		CST.cstnCaseTypeID						   as [udfnRelatedPK], -- contact id
+--		M.field_title							   as [udfsUDFName],
+--		'Court'									   as [udfsScreenName],
+--		ucf.UDFType								   as [udfsType],
+--		ucf.field_len							   as [udfsLength],
+--		1										   as [udfbIsActive],
+--		'user_tab_data' + ucf.column_name		   as [udfshortName],
+--		ucf.dropdownValues						   as [udfsNewValues],
+--		DENSE_RANK() over (order by M.field_title) as udfnSortOrder
+--	from [sma_MST_CaseType] CST
+--	join CaseTypeMixture mix
+--		on mix.[SmartAdvocate Case Type] = cst.cstsType
+--	join [VanceLawFirm_Needles].[dbo].user_tab_matter M
+--		on M.mattercode = mix.matcode
+--			and M.field_type <> 'label'
+--	join (select distinct fieldTitle from CourtUDF) vd
+--		on vd.FieldTitle = m.field_title
+--	join NeedlesUserFields ucf
+--		on ucf.field_num = m.ref_num
+--	--left join (
+--	-- select distinct
+--	--	 table_Name,
+--	--	 column_name
+--	-- from [VanceLawFirm_Needles].[dbo].[document_merge_params]
+--	-- where table_Name = 'user_case_counsel_matter'
+--	--) dmp
+--	--on dmp.column_name = ucf.field_Title
+--	left join [sma_MST_UDFDefinition] def
+--		on def.[udfnRelatedPK] = cst.cstnCaseTypeID
+--			and def.[udfsUDFName] = m.field_title
+--			and def.[udfsScreenName] = 'Court'
+--			and udfstype = ucf.UDFType
+--	where
+--		--m.Field_Title in ('Court Reporter')
+--		--and
+--		def.udfnUDFID is null
+--	order by m.field_title
 
 
 --------------------------------------
