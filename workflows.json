@@ -1,0 +1,76 @@
+{
+  "workflows": {
+    "discovered": {
+      "timestamp": "2025-09-26T13:48:13.927477",
+      "path": "D:\\vance-law"
+    },
+    "structure": {
+      "workspace": {
+        "migration-scripts": {
+          "needles": {
+            "conversion": {
+              "contact": {
+                "scripts": 21,
+                "vance": {
+                  "scripts": 31
+                }
+              },
+              "case": {
+                "scripts": 49,
+                "dev": {
+                  "scripts": 7
+                },
+                "vance": {
+                  "scripts": 48
+                }
+              },
+              "utility": {
+                "scripts": 31
+              },
+              "misc": {
+                "dev": {
+                  "scripts": 6
+                },
+                "scripts": 6
+              },
+              "intake": {
+                "scripts": 6
+              }
+            },
+            "mapping": {
+              "scripts": 21
+            },
+            "initialize": {
+              "scripts": 10
+            }
+          },
+          "_generic": {
+            "post": {
+              "dev": {
+                "scripts": 1
+              },
+              "scripts": 6
+            },
+            "wipe-data": {
+              "scripts": 1
+            },
+            "contact": {
+              "scripts": 3
+            },
+            "utility": {
+              "scripts": 2
+            }
+          }
+        }
+      },
+      "lib": {
+        "post-scripts": {
+          "scripts": 6
+        },
+        "wipe-data": {
+          "scripts": 2
+        }
+      }
+    }
+  }
+}

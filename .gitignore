@@ -1,17 +1,11 @@
-# Ignore backups due to the size of the files
-workspace/backups/
-!workspace/backups/.gitkeep
+.venv/
 
-workspace/data/
+# Ignore default directories
+/backups/*
+/data/*
+/logs/*
 
-# Ignore Python virtual environment
-_venv/
-
-# Ignore transfer directory
-_trans/*
-!_trans/.gitkeep
-
-# Ignore Python cache files
+# Python cache files
 **__pycache__/
 lib/__pycache__/
 *.pyc
@@ -23,3 +17,6 @@ slnx.sqlite
 /.vs
 /.vs/*
 /.vs/VSWorkspaceState.json
+
+# Ignore data directories
+*.egg-info/
