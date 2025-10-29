@@ -1,208 +1,223 @@
-/*
-Populates CaseUDF with all columns from [user_case_data]
-*/
+/*---
+description: Base script to pivot and enrich EAV data from [user_case_data]
+steps:
+	1. Pivot the EAV table
+	2. Enrich the pivoted data with context and UDF definitions
+usage_instructions:
+	1. Adjust variables and excluded columns
+	2. Review field selections for the final output table
+dependencies:
+    - [NeedlesUserFields]
+notes: >
+	- EAV (Entity - Attribute - Value) is pivoted using CROSS APPLY and STRING_AGG.
+	- https://en.wikipedia.org/wiki/Entity%E2%80%93attribute%E2%80%93value_model
+---*/
+
 
 use [VanceLawFirm_SA]
 go
 
-if exists (
-		select
-			*
-		from sys.tables
-		where name = 'CaseUDF'
-			and type = 'U'
-	)
-begin
-	drop table CaseUDF
-end
 
-SELECT * FROM VanceLawFirm_Needles..user_case_data ucd
+-------------------------------------------------------------------------------
+-- Setup variables
+-------------------------------------------------------------------------------
+declare @DatabaseName SYSNAME = 'VanceLawFirm_Needles';
+declare @SchemaName SYSNAME = 'dbo';
+declare @TableName SYSNAME = 'user_case_data'; -- source EAV table
+declare @UnpivotValueList NVARCHAR(MAX);
+declare @SQL NVARCHAR(MAX);
 
+-- Define excluded columns for the pivot (columns NOT to be treated as EAV attributes)
 if OBJECT_ID('tempdb..#ExcludedColumns') is not null
 	drop table #ExcludedColumns;
 
 create table #ExcludedColumns (
-	column_name VARCHAR(128)
+	column_name SYSNAME
 );
-go
 
-/* ------------------------------------------------------------------------------
-Use this block if you need to exclude specific columns from being pushed to CaseUDF
-*/ ------------------------------------------------------------------------------
----- Insert columns to exclude
 insert into #ExcludedColumns
 	(
 		column_name
 	)
 	values
-	('casenum'),
-	('modified_timestamp')
-go
+		('casenum'), -- Excluded from EAV attributes but explicitly selected later
+		('modified_timestamp');
 
--- Fetch all columns from [user_case_data] for unpivoting
-declare @sql NVARCHAR(MAX) = N'';
+-------------------------------------------------------------------------------
+-- 2. Build the Dynamic SQL for Pivoting the EAV Table
+-------------------------------------------------------------------------------
+
+-- 2a. Build the list of columns to unpivot into (Attribute, Value) pairs
 select
-	@sql = STRING_AGG(CONVERT(VARCHAR(MAX),
-	N'CONVERT(VARCHAR(MAX), ' + QUOTENAME(column_name) + N') AS ' + QUOTENAME(column_name)
-	), ', ')
+	@UnpivotValueList = STRING_AGG(
+	CAST('(''' + column_name + ''', CONVERT(VARCHAR(MAX), ' + QUOTENAME(column_name) + '))' as NVARCHAR(MAX)),
+	', '
+	)
 from [VanceLawFirm_Needles].INFORMATION_SCHEMA.COLUMNS
 where
-	table_name = 'user_case_data'
-	and TABLE_SCHEMA = 'dbo'
-	and column_name not in (
-		select
-			column_name
-		from #ExcludedColumns
-	);
-print @sql
+	table_schema = @SchemaName
+	and
+	table_name = @TableName
+	and
+	column_name not in (select column_name from #ExcludedColumns);
 
--- Dynamically create the UNPIVOT list
-declare @unpivot_list NVARCHAR(MAX) = N'';
+-- 2b. Build the final SQL statement to pivot the data into a temporary table
+set @SQL = '
+SELECT 
+    t.casenum, 
+    v.Attribute, 
+    v.Value
+INTO ##Pivoted_Data
+FROM ' + QUOTENAME(@DatabaseName) + '.' + QUOTENAME(@SchemaName) + '.' + QUOTENAME(@TableName) + ' AS t
+CROSS APPLY (VALUES ' + @UnpivotValueList + ') AS v(Attribute, Value)
+WHERE isnull(v.Value, '''') <> '''';
+';
+
+print @SQL; -- uncomment to debug
+exec sp_executesql @SQL;
+
+
+-------------------------------------------------------------------------------
+-- 3. Enrich the Pivoted Data and Create Final Output
+-------------------------------------------------------------------------------
+if OBJECT_ID('user_case_data_pivoted') is not null
+	drop table user_case_data_pivoted;
+
 select
-	@unpivot_list = STRING_AGG(QUOTENAME(column_name), ', ')
-from [VanceLawFirm_Needles].INFORMATION_SCHEMA.COLUMNS
-where
-	table_name = 'user_case_data'
-	and TABLE_SCHEMA = 'dbo'
-	and column_name not in (
-		select
-			column_name
-		from #ExcludedColumns
-	);
-print @unpivot_list
-
--- Generate the dynamic SQL for creating the pivot table
-set @sql = N'
-SELECT casnCaseID, casnOrgCaseTypeID, FieldTitle, FieldVal
-INTO CaseUDF
-FROM ( 
-    SELECT 
-        cas.casnCaseID, 
-        cas.casnOrgCaseTypeID, ' + @sql + N'
-    FROM [VanceLawFirm_Needles]..user_case_data ud
-    JOIN sma_TRN_Cases cas ON cas.cassCaseNumber = CONVERT(VARCHAR, ud.casenum)
-) pv
-UNPIVOT (FieldVal FOR FieldTitle IN (' + @unpivot_list + N')) AS unpvt;';
-
-exec sp_executesql @sql;
+	pv.casenum,
+	pv.Attribute,
+	pv.Value,
+	utn.user_name,
+	nuf.field_title,
+	nuf.field_num,
+	nuf.UDFType,
+	nuf.field_type,
+	nuf.field_len,
+	nuf.table_name,
+	nuf.column_name,
+	nuf.DropDownValues
+into user_case_data_pivoted
+from ##Pivoted_Data pv
+join [VanceLawFirm_Needles].[dbo].NeedlesUserFields nuf
+	on nuf.column_name = pv.Attribute
+		and nuf.table_name = 'user_case_data'
+left join [VanceLawFirm_Needles].[dbo].user_case_name utn
+	on utn.casenum = pv.casenum
+		and utn.ref_num = nuf.field_num
+		and utn.user_name <> 0;
 go
 
-select * from CaseUDF
+-------------------------------------------------------------------------------
+-- 4. Clean Up
+-------------------------------------------------------------------------------
 
-----------------------------
---UDF DEFINITION
-----------------------------
+-- Drop temp tables
+if OBJECT_ID('tempdb..##Pivoted_Data') is not null
+	drop table ##Pivoted_Data;
+
+if OBJECT_ID('tempdb..#ExcludedColumns') is not null
+	drop table #ExcludedColumns;
+
+-- Final output
+select * from dbo.user_case_data_pivoted; -- verify results
+
+
+
+/* ------------------------------------------------------------------------------
+2. Insert [sma_MST_UDFDefinition]
+------------------------------------------------------------------------------- */
 alter table [sma_MST_UDFDefinition] disable trigger all
 go
 
-if exists (
-		select
-			*
-		from sys.tables
-		where name = 'CaseUDF'
-			and type = 'U'
+insert into [sma_MST_UDFDefinition]
+	(
+		[udfsUDFCtg],
+		[udfnRelatedPK],
+		[udfsUDFName],
+		[udfsScreenName],
+		[udfsType],
+		[udfsLength],
+		[udfbIsActive],
+		[udfshortName],
+		[udfsNewValues],
+		[udfnSortOrder]
 	)
-begin
-	insert into [sma_MST_UDFDefinition]
-		(
-			[udfsUDFCtg],
-			[udfnRelatedPK],
-			[udfsUDFName],
-			[udfsScreenName],
-			[udfsType],
-			[udfsLength],
-			[udfbIsActive],
-			[udfshortName],
-			[udfsNewValues],
-			[udfnSortOrder]
-		)
-		select distinct
-			'C'										   as [udfsUDFCtg],
-			CST.cstnCaseTypeID						   as [udfnRelatedPK],
-			M.field_title							   as [udfsUDFName],
-			'Case'									   as [udfsScreenName],
-			ucf.UDFType								   as [udfsType],
-			ucf.field_len							   as [udfsLength],
-			1										   as [udfbIsActive],
-			'user_case_data' + ucf.column_name		   as [udfshortName],
-			ucf.dropdownValues						   as [udfsNewValues],
-			DENSE_RANK() over (order by M.field_title) as udfnSortOrder
-		from [sma_MST_CaseType] CST
-		join CaseTypeMixture mix
-			on mix.[SmartAdvocate Case Type] = CST.cstsType
-		join [VanceLawFirm_Needles].[dbo].[user_case_matter] M			-- user_case_matter defines the user fields per mattercode (case type)
-			on M.mattercode = mix.matcode
-				and M.field_type <> 'label'
-		join (
-			select distinct
-				fieldTitle
-			from CaseUDF
-		) vd
-			on vd.FieldTitle = M.field_title
-		join [dbo].[NeedlesUserFields] ucf
-			on ucf.field_num = M.ref_num
-		left join (
-			select distinct
-				table_Name,
-				column_name
-			from [VanceLawFirm_Needles].[dbo].[document_merge_params]
-			where table_Name = 'user_case_data'
-		) dmp
-			on dmp.column_name = ucf.field_Title
-		left join [sma_MST_UDFDefinition] def
-			on def.[udfnRelatedPK] = CST.cstnCaseTypeID
-				and def.[udfsUDFName] = M.field_title
-				and def.[udfsScreenName] = 'Case'
-				and def.[udfsType] = ucf.UDFType
-				and def.udfnUDFID is null
-		order by M.field_title
-end
+	select distinct
+		'C'											as [udfsUDFCtg],
+		cas.casnOrgCaseTypeID						as [udfnRelatedPK],
+		pe.field_title								as [udfsUDFName],
+		'Case'										as [udfsScreenName],
+		pe.UDFType									as [udfsType],
+		pe.field_len								as [udfsLength],
+		1											as [udfbIsActive],
+		pe.table_name + '.' + pe.column_name		as [udfshortName],
+		pe.DropDownValues							as [udfsNewValues],
+		DENSE_RANK() over (order by pe.field_title) as udfnSortOrder
+	--select *
+	from user_case_data_pivoted pe
+	join sma_TRN_Cases cas
+		on cas.saga = pe.casenum
+	left join [sma_MST_UDFDefinition] def
+		on def.[udfnRelatedPK] = cas.casnOrgCaseTypeID
+			and def.[udfsUDFName] = pe.field_title
+			and def.[udfsScreenName] = 'Case'
+			and def.[udfsType] = pe.field_type
+			and def.udfnUDFID is null
+	order by pe.field_title
+go
 
+alter table [sma_MST_UDFDefinition] enable trigger all
+go
 
+/* ------------------------------------------------------------------------------
+3. Insert [sma_TRN_UDFValues]
+------------------------------------------------------------------------------- */
 alter table sma_trn_udfvalues disable trigger all
 go
 
--- Table will not exist if it's empty or only contains ExlucedColumns
-if exists (
-		select
-			*
-		from sys.tables
-		where name = 'CaseUDF'
-			and type = 'U'
+insert into [sma_TRN_UDFValues]
+	(
+		[udvnUDFID],
+		[udvsScreenName],
+		[udvsUDFCtg],
+		[udvnRelatedID],
+		[udvnSubRelatedID],
+		[udvsUDFValue],
+		[udvnRecUserID],
+		[udvdDtCreated],
+		[udvnModifyUserID],
+		[udvdDtModified],
+		[udvnLevelNo]
 	)
-begin
-	insert into [sma_TRN_UDFValues]
-		(
-			[udvnUDFID],
-			[udvsScreenName],
-			[udvsUDFCtg],
-			[udvnRelatedID],
-			[udvnSubRelatedID],
-			[udvsUDFValue],
-			[udvnRecUserID],
-			[udvdDtCreated],
-			[udvnModifyUserID],
-			[udvdDtModified],
-			[udvnLevelNo]
-		)
-		select
-			def.udfnUDFID as [udvnUDFID],
-			'Case'		  as [udvsScreenName],
-			'C'			  as [udvsUDFCtg],
-			casnCaseID	  as [udvnRelatedID],
-			0			  as [udvnSubRelatedID],
-			udf.FieldVal  as [udvsUDFValue],
-			368			  as [udvnRecUserID],
-			GETDATE()	  as [udvdDtCreated],
-			null		  as [udvnModifyUserID],
-			null		  as [udvdDtModified],
-			null		  as [udvnLevelNo]
-		from CaseUDF udf
-		left join sma_MST_UDFDefinition def
-			on def.udfnRelatedPK = udf.casnOrgCaseTypeID
-				and def.udfsUDFName = FieldTitle
-				and def.udfsScreenName = 'Case'
-end
+	select
+		def.udfnUDFID		as [udvnUDFID],
+		'Case'				as [udvsScreenName],
+		'C'					as [udvsUDFCtg],
+		cas.casnCaseID		as [udvnRelatedID],
+		pln.plnnPlaintiffID as [udvnSubRelatedID],
+		case
+			when pe.field_type = 'name' then CONVERT(VARCHAR(MAX), ioci.UNQCID)
+			else pe.Value
+		end					as [udvsUDFValue],
+		368					as [udvnRecUserID],
+		GETDATE()			as [udvdDtCreated],
+		null				as [udvnModifyUserID],
+		null				as [udvdDtModified],
+		null				as [udvnLevelNo]
+	--select *
+	from user_case_data_pivoted pe
+	join sma_TRN_Cases cas
+		on cas.saga = pe.casenum
+	join sma_TRN_Plaintiff pln
+		on pln.plnnCaseID = cas.casnCaseID
+			and pln.plnbIsPrimary = 1
+	left join IndvOrgContacts_Indexed ioci
+		on ioci.SAGA = pe.user_name
+	left join sma_MST_UDFDefinition def
+		on def.udfnRelatedPK = cas.casnOrgCaseTypeID
+			and def.udfsUDFName = pe.field_title
+			and def.udfsScreenName = 'Case'
+go
 
 alter table sma_trn_udfvalues enable trigger all
 go

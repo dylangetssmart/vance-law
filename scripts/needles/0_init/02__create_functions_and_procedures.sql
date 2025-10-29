@@ -14,6 +14,7 @@
  *	dbo.LastName_FromText
  *	dbo.Dworkin_FirstName_FromText
  *	dbo.Dworkin_LastName_FromText
+ *  dbo.ValidDate
  **************************************************/
 
 use VanceLawFirm_SA
@@ -26,6 +27,26 @@ go
 --GO
 
 -----
+
+if OBJECT_ID(N'dbo.FormatPhone', N'FN') is not null
+	drop function FormatPhone;
+
+go
+
+create function dbo.FormatPhone (@phone VARCHAR(MAX))
+returns VARCHAR(MAX)
+as
+begin
+
+	if LEN(@phone) = 10
+		and ISNUMERIC(@phone) = 1
+	begin
+		return '(' + SUBSTRING(@phone, 1, 3) + ') ' + SUBSTRING(@phone, 4, 3) + '-' + SUBSTRING(@phone, 7, 4) ---> this is good for perecman
+	end
+
+	return @phone;
+end;
+go
 
 if OBJECT_ID(N'dbo.myvarchar', N'FN') is not null
 	drop function myvarchar;
@@ -58,10 +79,10 @@ begin
 	declare @ret VARCHAR(100);
 	select
 		@ret = (
-		 select top 1
-			 data
-		 from dbo.split(RTRIM(LTRIM(CONVERT(VARCHAR, @WordParameter))), ' ')
-		 order by ID asc
+			select top 1
+				data
+			from dbo.split(RTRIM(LTRIM(CONVERT(VARCHAR, @WordParameter))), ' ')
+			order by ID asc
 		);
 	return @ret;
 end;
@@ -80,10 +101,10 @@ begin
 	declare @ret VARCHAR(100);
 	select
 		@ret = (
-		 select top 1
-			 Data
-		 from dbo.split(RTRIM(LTRIM(CONVERT(VARCHAR, @WordParameter))), ' ')
-		 order by ID desc
+			select top 1
+				Data
+			from dbo.split(RTRIM(LTRIM(CONVERT(VARCHAR, @WordParameter))), ' ')
+			order by ID desc
 		);
 	return @ret;
 end;
@@ -126,13 +147,11 @@ begin
 	begin
 
 		if exists (
-			 select
-				 *
-			 from dbo.split(@name, ' ')
-			 where
-				 ID = 2
-				 and
-				 Data like '_.'
+				select
+					*
+				from dbo.split(@name, ' ')
+				where ID = 2
+					and Data like '_.'
 			)
 		begin
 			set @ret = 1;
@@ -263,6 +282,12 @@ begin
 end
 go
 
+if OBJECT_ID(N'dbo.Integer2Date', N'FN') is not null
+	drop function Integer2Date;
+
+go
+
+
 create function dbo.Integer2Date (@intDate INT)
 returns DATE
 as
@@ -295,8 +320,8 @@ begin
 	set @LocalTimeOffset = DATEDIFF(second, GETDATE(), GETUTCDATE())
 	set @AdjustedLocalDatetime = @Datetime - @LocalTimeOffset
 	return (
-	 select
-		 DATEADD(second, @AdjustedLocalDatetime, CAST('1970-01-01 00:00:00' as DATETIME))
+		select
+			DATEADD(second, @AdjustedLocalDatetime, CAST('1970-01-01 00:00:00' as DATETIME))
 	)
 end;
 
@@ -691,24 +716,190 @@ end
 
 go
 
-
 if OBJECT_ID('dbo.ValidDate', 'FN') is not null
 	drop function dbo.ValidDate;
 
 go
 
-create function dbo.ValidDate (@dtStr VARCHAR(50))
-returns DATETIME
+create function dbo.ValidDate (@dt DATETIME2)
+returns DATETIME2
 as
 begin
-    declare @result DATETIME;
-
-    set @result = try_convert(DATETIME, @dtStr);
-
-    return case
-        when @result between '1900-01-01' and '2079-06-06'
-            then @result
-        else null
-    end;
+	return case
+		when @dt between '1900-01-01' and '2079-06-06'
+			then @dt
+		else null
+	end;
 end;
 go
+
+/* ------------------------------------------------------------------------------
+Stored Procedure: AddBreadcrumbsToTable
+*/ ------------------------------------------------------------------------------
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'AddBreadcrumbsToTable')
+BEGIN
+    DROP PROCEDURE AddBreadcrumbsToTable;
+END
+GO
+
+CREATE PROCEDURE AddBreadcrumbsToTable
+    @tableName NVARCHAR(128)
+AS
+BEGIN
+    DECLARE @sql NVARCHAR(MAX);
+
+    -- Add the 'saga' column
+    IF NOT EXISTS (
+        SELECT * FROM sys.columns
+        WHERE Name = N'saga' AND object_id = OBJECT_ID(@tableName)
+    )
+    BEGIN
+        SET @sql = 'ALTER TABLE ' + QUOTENAME(@tableName) + ' ADD [saga] INT NULL;';
+        EXEC sp_executesql @sql;
+    END
+
+    -- Add the 'source_id' column
+    IF NOT EXISTS (
+        SELECT * FROM sys.columns
+        WHERE Name = N'source_id' AND object_id = OBJECT_ID(@tableName)
+    )
+    BEGIN
+        SET @sql = 'ALTER TABLE ' + QUOTENAME(@tableName) + ' ADD [source_id] VARCHAR(50) NULL;';
+        EXEC sp_executesql @sql;
+    END
+
+    -- Add the 'source_db' column
+    IF NOT EXISTS (
+        SELECT * FROM sys.columns
+        WHERE Name = N'source_db' AND object_id = OBJECT_ID(@tableName)
+    )
+    BEGIN
+        SET @sql = 'ALTER TABLE ' + QUOTENAME(@tableName) + ' ADD [source_db] VARCHAR(50) NULL;';
+        EXEC sp_executesql @sql;
+    END
+
+    -- Add the 'source_ref' column
+    IF NOT EXISTS (
+        SELECT * FROM sys.columns
+        WHERE Name = N'source_ref' AND object_id = OBJECT_ID(@tableName)
+    )
+    BEGIN
+        SET @sql = 'ALTER TABLE ' + QUOTENAME(@tableName) + ' ADD [source_ref] VARCHAR(50) NULL;';
+        EXEC sp_executesql @sql;
+    END
+END
+GO
+
+/* ------------------------------------------------------------------------------
+Stored Procedure: BuildNeedlesUserTabStagingTable
+*/ ------------------------------------------------------------------------------
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'BuildNeedlesUserTabStagingTable')
+BEGIN
+    DROP PROCEDURE BuildNeedlesUserTabStagingTable;
+END
+go
+
+CREATE OR ALTER PROCEDURE dbo.BuildNeedlesUserTabStagingTable
+    @SourceDatabase SYSNAME,
+    @TargetDatabase SYSNAME,
+    @DataTableName SYSNAME,
+    @StagingTable SYSNAME,
+    @ColumnList NVARCHAR(MAX) -- comma-separated column names
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @MatterTable SYSNAME = REPLACE(@DataTableName, '_data', '_matter');
+    DECLARE @NameTable SYSNAME   = REPLACE(@DataTableName, '_data', '_name');
+    --DECLARE @StagingTable SYSNAME = 'stg_' + REPLACE(@DataTableName, 'user_tab_', '');
+	
+	-- Drop staging table if exists
+	DECLARE @dropSQL NVARCHAR(MAX);
+    SET @DropSql = '
+    IF OBJECT_ID(''' + @TargetDatabase + '.dbo.' + @StagingTable + ''', ''U'') IS NOT NULL
+        DROP TABLE ' + @TargetDatabase + '.dbo.' + @StagingTable + ';';
+    EXEC(@DropSql);
+
+	-- Clean and split column list into a table
+	CREATE TABLE #Cols (colname NVARCHAR(255));
+    INSERT INTO #Cols (colname)
+    SELECT LTRIM(RTRIM(REPLACE(REPLACE(value, CHAR(10), ''), CHAR(13), '')))
+    FROM STRING_SPLIT(@ColumnList, ',')
+    WHERE LTRIM(RTRIM(REPLACE(REPLACE(value, CHAR(10), ''), CHAR(13), ''))) <> '';
+	--Select * from #Cols c
+
+    -- IN clause for mapping query
+    DECLARE @InClause NVARCHAR(MAX);
+    SELECT @InClause = STRING_AGG('''' + colname + '''', ',') FROM #Cols;
+
+    -- Mapping table
+    CREATE TABLE #Mapping (
+        table_name  VARCHAR(100),
+        column_name VARCHAR(100),
+        field_type  VARCHAR(25),
+        caseid_col  VARCHAR(10)
+    );
+
+    DECLARE @MappingSQL NVARCHAR(MAX) = '
+        INSERT INTO #Mapping (table_name, column_name, field_type, caseid_col)
+        SELECT DISTINCT nuf.table_name, nuf.column_name, utm.field_type, nuf.caseid_col
+        FROM ' + QUOTENAME(@SourceDatabase) + '..NeedlesUserFields nuf
+        JOIN ' + QUOTENAME(@SourceDatabase) + '..' + QUOTENAME(@MatterTable) + ' utm
+            ON nuf.field_num = utm.ref_num
+        WHERE nuf.table_name = @tbl
+          AND nuf.column_name IN (' + @InClause + ')';
+	--print @MappingSQL
+    EXEC sp_executesql @MappingSQL, N'@tbl SYSNAME', @tbl=@DataTableName;
+	--Select * from #Mapping m
+
+	 -- Get caseid column
+    DECLARE @CaseIdCol SYSNAME = (SELECT TOP 1 caseid_col FROM #Mapping);
+
+    -- Build select columns
+    DECLARE @SelectCols NVARCHAR(MAX);
+    SELECT @SelectCols = STRING_AGG(
+        CASE 
+            WHEN field_type = 'name' THEN 'ioci.CID AS [' + column_name + '_CID]'
+            ELSE 'utd.[' + column_name + '] AS [' + column_name + ']'
+        END, ', '
+    )
+    FROM #Mapping;
+
+    -- Build WHERE clause
+    DECLARE @Where NVARCHAR(MAX);
+    SELECT @Where = STRING_AGG(
+        '(' + CASE 
+            WHEN field_type = 'name' THEN 'ioci.CID'
+            ELSE 'utd.[' + column_name + ']'
+        END + ' IS NOT NULL)', ' OR '
+    )
+    FROM #Mapping;
+
+    -- Assemble final SQL
+    DECLARE @FinalSQL NVARCHAR(MAX) = '
+        SELECT DISTINCT
+            utd.' + @CaseIdCol + ' AS caseid,
+            utd.tab_id AS tabid,
+            ' + @SelectCols + '
+        INTO ' + QUOTENAME(@TargetDatabase) + '.dbo.' + QUOTENAME(@StagingTable) + '
+        FROM ' + QUOTENAME(@SourceDatabase) + '..' + QUOTENAME(@DataTableName) + ' utd
+        LEFT JOIN ' + QUOTENAME(@SourceDatabase) + '..' + QUOTENAME(@NameTable) + ' utn
+            ON utd.' + @CaseIdCol + ' = utn.case_id AND utd.tab_id = utn.tab_id
+        LEFT JOIN ' + QUOTENAME(@SourceDatabase) + '..' + QUOTENAME(@MatterTable) + ' utm
+            ON utn.ref_num = utm.ref_num
+        LEFT JOIN ' + QUOTENAME(@SourceDatabase) + '..names n
+            ON utn.user_name = n.names_id
+        LEFT JOIN IndvOrgContacts_Indexed ioci
+            ON ioci.SAGA = n.names_id
+        WHERE ' + @Where + '
+        ORDER BY utd.' + @CaseIdCol + ';';
+
+    -- Execute dynamic SQL
+    EXEC(@FinalSQL);
+
+    -- Return staging table
+    DECLARE @ReturnSQL NVARCHAR(MAX) = 'SELECT * FROM ' + QUOTENAME(@TargetDatabase) + '.dbo.' + QUOTENAME(@StagingTable) + ' ORDER BY caseid;';
+    EXEC(@ReturnSQL);
+END;
+GO
+

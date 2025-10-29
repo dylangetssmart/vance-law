@@ -1,4 +1,4 @@
-﻿use [BrachEichler_Needles]
+﻿use VanceLawFirm_Needles
 go
 
 -- Drop table if exists
@@ -119,7 +119,7 @@ fetch next from FieldUsage_Cursor into @table, @field, @datatype
 while @@FETCH_STATUS = 0
 begin
 
-if COL_LENGTH('[BrachEichler_Needles].dbo.case_intake', @field) is not null
+if COL_LENGTH('[VanceLawFirm_Needles].dbo.case_intake', @field) is not null
 begin
 
 	if @datatype in ('varchar', 'nvarchar', 'date', 'datetime2', 'bit', 'ntext', 'datetime', 'time', 'Name', 'alpha', 'boolean', 'checkbox', 'minidir', 'staff', 'state', 'time', 'valuecode')
@@ -176,8 +176,8 @@ select
 	IDENTITY(int, 1, 1) as Number,
 	gd.code
 into #values
-from [BrachEichler_Needles].dbo.mini_general_dir gd
-join [BrachEichler_Needles].dbo.mini_dir_list dl
+from [VanceLawFirm_Needles].dbo.mini_general_dir gd
+join [VanceLawFirm_Needles].dbo.mini_dir_list dl
 	on gd.num_assigned = dl.dir_key
 where
 	dl.dir_key = @miniDir;
@@ -231,21 +231,21 @@ go
 
 --WHILE @@FETCH_STATUS = 0
 --BEGIN
---    IF OBJECT_ID('[BrachEichler_Needles].dbo.' + @table, 'U') IS NOT NULL
+--    IF OBJECT_ID('[VanceLawFirm_Needles].dbo.' + @table, 'U') IS NOT NULL
 --    BEGIN
 --        IF @datatype IN ('varchar','nvarchar','date','datetime2','bit','ntext','datetime','time','name','alpha','boolean','checkbox','minidir','staff','state','valuecode')
 --        BEGIN
 --            SET @sql = 'UPDATE dbo.NeedlesUserFields SET ValueCount = (' +
---                       'SELECT COUNT(*) FROM [BrachEichler_Needles].dbo.' + @table + ' t ' +
---                       'JOIN [BrachEichler_Needles].dbo.cases_Indexed ci ON ci.CaseNum = t.[' + @caseid + '] ' +
+--                       'SELECT COUNT(*) FROM [VanceLawFirm_Needles].dbo.' + @table + ' t ' +
+--                       'JOIN [VanceLawFirm_Needles].dbo.cases_Indexed ci ON ci.CaseNum = t.[' + @caseid + '] ' +
 --                       'WHERE ISNULL([' + @field + '], '''') <> '''') ' +
 --                       'WHERE table_name = ''' + @table + ''' AND column_name = ''' + @field + '''';
 --        END
 --        ELSE
 --        BEGIN
 --            SET @sql = 'UPDATE dbo.NeedlesUserFields SET ValueCount = (' +
---                       'SELECT COUNT(*) FROM [BrachEichler_Needles].dbo.' + @table + ' t ' +
---                       'JOIN [BrachEichler_Needles].dbo.cases_Indexed ci ON ci.CaseNum = t.[' + @caseid + '] ' +
+--                       'SELECT COUNT(*) FROM [VanceLawFirm_Needles].dbo.' + @table + ' t ' +
+--                       'JOIN [VanceLawFirm_Needles].dbo.cases_Indexed ci ON ci.CaseNum = t.[' + @caseid + '] ' +
 --                       'WHERE ISNULL([' + @field + '], 0) <> 0 ) ' +
 --                       'WHERE table_name = ''' + @table + ''' AND column_name = ''' + @field + '''';
 --        END
@@ -278,13 +278,13 @@ go
 --WHILE @@FETCH_STATUS = 0
 --BEGIN
 --    -- Only proceed if the table exists
---    IF OBJECT_ID('[BrachEichler_Needles].dbo.' + @table, 'U') IS NOT NULL
+--    IF OBJECT_ID('[VanceLawFirm_Needles].dbo.' + @table, 'U') IS NOT NULL
 --    BEGIN
 --        SET @sql = '
 --        UPDATE dbo.NeedlesUserFields
 --        SET SampleData = (
 --            SELECT TOP 1 TRY_CAST([' + @field + '] AS NVARCHAR(MAX))
---            FROM [BrachEichler_Needles].dbo.' + @table + '
+--            FROM [VanceLawFirm_Needles].dbo.' + @table + '
 --            WHERE TRY_CAST([' + @field + '] AS NVARCHAR(MAX)) IS NOT NULL
 --        )
 --        WHERE table_name = ''' + @table + ''' AND column_name = ''' + @field + '''';

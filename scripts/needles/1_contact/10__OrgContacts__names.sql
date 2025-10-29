@@ -1,10 +1,10 @@
-/*---
-group: load
-order: 1
-description: Update contact types for attorneys
----*/
-
 use VanceLawFirm_SA
+go
+
+exec AddBreadcrumbsToTable 'sma_MST_OrgContacts'
+go
+
+alter table [sma_MST_OrgContacts] alter column saga INT
 go
 
 /* --------------------------------------------------------------------------------------------------------------

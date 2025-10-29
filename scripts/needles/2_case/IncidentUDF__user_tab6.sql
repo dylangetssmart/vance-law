@@ -116,7 +116,7 @@ from ##Pivoted_Data pv
 join [VanceLawFirm_Needles].[dbo].NeedlesUserFields nuf
 	on nuf.column_name = pv.Attribute
 		and nuf.table_name = 'user_tab6_data'
-left join [VanceLawFirm_Needles].[dbo].user_tab_name utn
+left join [VanceLawFirm_Needles].[dbo].user_tab6_name utn
 	on utn.case_id = pv.case_id
 		and utn.ref_num = nuf.field_num
 		and utn.user_name <> 0;
@@ -175,7 +175,7 @@ insert into [sma_MST_UDFDefinition]
 	join sma_MST_CaseGroup cg
 		on cg.cgpnCaseGroupID = ct.cstnGroupID
 	left join [sma_MST_UDFDefinition] def
-		on def.[udfnRelatedPK] = cg.IncidentTypeID   -- for Incidents, the [sma_mst_UDFDefinition].[udfnRelatedPK] references the [sma_mst_casegroup].[IncidentTypeID]
+		on def.[udfnRelatedPK] = cg.IncidentTypeID   -- for Incidents, the [sma_mst_UDFDefinition].[udfnRelatedPK] references the [sma_mst_casegroup].[IncidentTypeID]
 			and def.[udfsUDFName] = pe.field_title
 			and def.[udfsScreenName] = 'Incident Wizard'
 			and def.[udfsType] = pe.field_type

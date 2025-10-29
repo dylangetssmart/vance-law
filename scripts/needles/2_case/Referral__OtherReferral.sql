@@ -21,9 +21,12 @@ insert into [sma_TRN_OtherReferral]
 		null		   as [otrscomments],
 		368			   as [otrnuserid],
 		GETDATE()	   as [otrddtcreated]
+	--select *
 	from [VanceLawFirm_Needles].[dbo].[cases_indexed] c
 	join [sma_TRN_cases] cas
 		on cas.cassCaseNumber = CONVERT(VARCHAR, c.casenum)
 	join [IndvOrgContacts_Indexed] ioc
-		on ioc.SAGA = c.referred_link
+		on ioc.SAGA = CONVERT(VARCHAR, c.referred_link)
 			and c.referred_link > 0
+			--where ioc.saga = 50137
+			--where c.casenum=214848 

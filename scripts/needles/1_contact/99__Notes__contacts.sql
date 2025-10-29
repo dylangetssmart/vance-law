@@ -1,37 +1,48 @@
-/*---
-group: load
-order: 70
-description: Update contact types for attorneys
----*/
-
 use VanceLawFirm_SA
 go
 
+---
 alter table [sma_TRN_Notes] disable trigger all
+exec AddBreadcrumbsToTable 'sma_TRN_Notes'
 go
+
+---
 
 insert into sma_TRN_Notes
 	(
-	notnCaseID, notnNoteTypeID, notmDescription, notmPlainText, notnContactCtgID, notnContactId, notsPriority, notnFormID, notnRecUserID, notdDtCreated, notnModifyUserID, notdDtModified, saga, [source_id], [source_db], [source_ref]
+		notnCaseID,
+		notnNoteTypeID,
+		notmDescription,
+		notmPlainText,
+		notnContactCtgID,
+		notnContactId,
+		notsPriority,
+		notnFormID,
+		notnRecUserID,
+		notdDtCreated,
+		notnModifyUserID,
+		notdDtModified,
+		saga,
+		[source_id],
+		[source_db],
+		[source_ref]
 
 	)
 	select
 		0				 as notnCaseID,
 		(
-			select
-				nttnNoteTypeID
-			from sma_MST_NoteTypes
-			where nttsCode = 'CONTACT'
+		 select
+			 nttnNoteTypeID
+		 from sma_MST_NoteTypes
+		 where nttsCode = 'CONTACT'
 		)				 as notnNoteTypeID,
 		case
-			when ISNULL(date_of_majority, '') = ''
-				then 'Date of Majority : N/A'
+			when ISNULL(date_of_majority, '') = '' then 'Date of Majority : N/A'
 			else 'Date of Majority : ' + CONVERT(VARCHAR, date_of_majority)
 		end				 as notmDescription,
 
 		case
-			when ISNULL(date_of_majority, '') = ''
-				then 'Date of Majority : N/A'
+			when ISNULL(date_of_majority, '') = '' then 'Date of Majority : N/A'
 			else 'Date of Majority : ' + CONVERT(VARCHAR, date_of_majority)
 		end				 as notmPlainText,
 		I.cinnContactCtg as notnContactCtgID,
@@ -53,24 +64,37 @@ insert into sma_TRN_Notes
 ----(2)----
 insert into sma_TRN_Notes
 	(
-	notnCaseID, notnNoteTypeID, notmDescription, notmPlainText, notnContactCtgID, notnContactId, notsPriority, notnFormID, notnRecUserID, notdDtCreated, notnModifyUserID, notdDtModified, saga, [source_id], [source_db], [source_ref]
+		notnCaseID,
+		notnNoteTypeID,
+		notmDescription,
+		notmPlainText,
+		notnContactCtgID,
+		notnContactId,
+		notsPriority,
+		notnFormID,
+		notnRecUserID,
+		notdDtCreated,
+		notnModifyUserID,
+		notdDtModified,
+		saga,
+		[source_id],
+		[source_db],
+		[source_ref]
 	)
 	select
 		0				 as notnCaseID,
 		(
-			select
-				nttnNoteTypeID
-			from sma_MST_NoteTypes
-			where nttsCode = 'CONTACT'
+		 select
+			 nttnNoteTypeID
+		 from sma_MST_NoteTypes
+		 where nttsCode = 'CONTACT'
 		)				 as notnNoteTypeID,
 		case
-			when ISNULL(minor, '') = ''
-				then 'Minor : N'
+			when ISNULL(minor, '') = '' then 'Minor : N'
 			else 'Minor : ' + CONVERT(VARCHAR, minor)
 		end				 as notmDescription,
 		case
-			when ISNULL(minor, '') = ''
-				then 'Minor : N'
+			when ISNULL(minor, '') = '' then 'Minor : N'
 			else 'Minor : ' + CONVERT(VARCHAR, minor)
 		end				 as notmPlainText,
 		I.cinnContactCtg as notnContactCtgID,
@@ -93,15 +117,30 @@ insert into sma_TRN_Notes
 ---(3)--- 
 insert into sma_TRN_Notes
 	(
-	notnCaseID, notnNoteTypeID, notmDescription, notmPlainText, notnContactCtgID, notnContactId, notsPriority, notnFormID, notnRecUserID, notdDtCreated, notnModifyUserID, notdDtModified, saga, [source_id], [source_db], [source_ref]
+		notnCaseID,
+		notnNoteTypeID,
+		notmDescription,
+		notmPlainText,
+		notnContactCtgID,
+		notnContactId,
+		notsPriority,
+		notnFormID,
+		notnRecUserID,
+		notdDtCreated,
+		notnModifyUserID,
+		notdDtModified,
+		saga,
+		[source_id],
+		[source_db],
+		[source_ref]
 	)
 	select
 		0				 as notnCaseID,
 		(
-			select
-				nttnNoteTypeID
-			from sma_MST_NoteTypes
-			where nttsCode = 'CONTACT'
+		 select
+			 nttnNoteTypeID
+		 from sma_MST_NoteTypes
+		 where nttsCode = 'CONTACT'
 		)				 as notnNoteTypeID,
 		PN.note			 as notmDescription,
 		PN.note			 as notmPlainText,
@@ -125,6 +164,3 @@ insert into sma_TRN_Notes
 alter table [sma_TRN_Notes] enable trigger all
 go
 ---
-
-
-

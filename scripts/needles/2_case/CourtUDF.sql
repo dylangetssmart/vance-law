@@ -61,7 +61,8 @@ insert into CourtUDF
 		casnorgcasetypeID,
 		fieldTitle,
 		FieldVal
-	) select
+	)
+	select
 		casncaseid,
 		casnorgcasetypeID,
 		fieldTitle,
@@ -97,9 +98,7 @@ insert into CourtUDF
 	[Statement Context], [Expert Value Code], [Current Medication])
 	) as unpvt
 
-select
-	*
-from CourtUDF cu
+select * from CourtUDF cu
 
 
 ----------------------------
@@ -119,7 +118,8 @@ insert into [sma_MST_UDFDefinition]
 		[udfshortName],
 		[udfsNewValues],
 		[udfnSortOrder]
-	) select distinct
+	)
+	select distinct
 		'C'										   as [udfsUDFCtg],
 		CST.cstnCaseTypeID						   as [udfnRelatedPK],
 		M.field_title							   as [udfsUDFName],
@@ -128,7 +128,7 @@ insert into [sma_MST_UDFDefinition]
 		ucf.field_len							   as [udfsLength],
 		1										   as [udfbIsActive],
 		'user_counsel_data' + ucf.column_name	   as [udfshortName],
-		ucf.dropdownValues						   as [udfsNewValues],
+		ucf.DropDownValues						   as [udfsNewValues],
 		DENSE_RANK() over (order by M.field_title) as udfnSortOrder
 	from [sma_MST_CaseType] CST
 	join CaseTypeMixture mix
@@ -138,7 +138,7 @@ insert into [sma_MST_UDFDefinition]
 			and M.field_type <> 'label'
 	join (select distinct fieldTitle from CourtUDF) vd
 		on vd.FieldTitle = m.field_title
-	join NeedlesUserFields ucf
+	join VanceLawFirm_Needles..NeedlesUserFields ucf
 		on ucf.field_num = m.ref_num
 	left join (
 	 select distinct
@@ -173,7 +173,8 @@ insert into [sma_MST_UDFDefinition]
 		[udfshortName],
 		[udfsNewValues],
 		[udfnSortOrder]
-	) select distinct
+	)
+	select distinct
 		'C'										   as [udfsUDFCtg],
 		CST.cstnCaseTypeID						   as [udfnRelatedPK],
 		M.field_title							   as [udfsUDFName],
@@ -182,7 +183,7 @@ insert into [sma_MST_UDFDefinition]
 		ucf.field_len							   as [udfsLength],
 		1										   as [udfbIsActive],
 		'user_tab_data' + ucf.column_name		   as [udfshortName],
-		ucf.dropdownValues						   as [udfsNewValues],
+		ucf.DropDownValues						   as [udfsNewValues],
 		DENSE_RANK() over (order by M.field_title) as udfnSortOrder
 	from [sma_MST_CaseType] CST
 	join CaseTypeMixture mix
@@ -192,7 +193,7 @@ insert into [sma_MST_UDFDefinition]
 			and M.field_type <> 'label'
 	join (select distinct fieldTitle from CourtUDF) vd
 		on vd.FieldTitle = m.field_title
-	join NeedlesUserFields ucf
+	join [VanceLawFirm_Needles]..NeedlesUserFields ucf
 		on ucf.field_num = m.ref_num
 	--left join (
 	-- select distinct
@@ -286,7 +287,8 @@ insert into [sma_TRN_UDFValues]
 		[udvnModifyUserID],
 		[udvdDtModified],
 		[udvnLevelNo]
-	) select --fieldtitle, udf.casnOrgCaseTypeID,
+	)
+	select --fieldtitle, udf.casnOrgCaseTypeID,
 		def.udfnUDFID as [udvnUDFID],
 		'Court'		  as [udvsScreenName],
 		'C'			  as [udvsUDFCtg],

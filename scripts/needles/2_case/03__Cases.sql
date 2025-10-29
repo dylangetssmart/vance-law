@@ -1,9 +1,3 @@
-/*---
-group: load
-order: 4
-description: Update contact types for attorneys
----*/
-
 use [VanceLawFirm_SA]
 go
 

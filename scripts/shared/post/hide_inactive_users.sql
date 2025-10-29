@@ -1,4 +1,4 @@
-use [BrachEichler_SA]
+use VanceLawFirm_SA
 go
 
 update sma_mst_users 

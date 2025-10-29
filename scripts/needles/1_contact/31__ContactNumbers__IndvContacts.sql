@@ -1,14 +1,10 @@
-/*---
-group: load
-order: 31
-description:
----*/
-
 use VanceLawFirm_SA
 go
 
 ---
 alter table [sma_MST_ContactNumbers] disable trigger all
+exec AddBreadcrumbsToTable 'sma_MST_ContactNumbers'
+go
 ---
 
 -- Home Phone

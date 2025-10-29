@@ -19,6 +19,9 @@ alter table [sma_MST_Address] enable trigger all
 alter table [sma_MST_Address] disable trigger all
 go
 
+exec AddBreadcrumbsToTable 'sma_MST_Address'
+go
+
 -----------------------------------------------------------------------------
 ----(1)--- CONSTRUCT SMA_MST_ADDRESS FROM EXISTING SMA_MST_INDVCONTACTS
 -----------------------------------------------------------------------------

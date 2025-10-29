@@ -1,5 +1,5 @@
 /*
-Populates CaseUDF with all columns from [user_insurance_data]
+Populates CaseUDF with all columns from [user_case_data]
 */
 
 use [VanceLawFirm_SA]
@@ -16,7 +16,7 @@ begin
 	drop table CaseUDF
 end
 
---SELECT * FROM VanceLawFirm_Needles..user_case_data ucd
+SELECT * FROM VanceLawFirm_Needles..user_case_data ucd
 
 if OBJECT_ID('tempdb..#ExcludedColumns') is not null
 	drop table #ExcludedColumns;
@@ -36,8 +36,7 @@ insert into #ExcludedColumns
 	)
 	values
 	('casenum'),
-	('modified_timestamp'),
-	('insurance_loc')
+	('modified_timestamp')
 go
 
 -- Fetch all columns from [user_case_data] for unpivoting
@@ -48,7 +47,7 @@ select
 	), ', ')
 from [VanceLawFirm_Needles].INFORMATION_SCHEMA.COLUMNS
 where
-	table_name = 'user_insurance_data'
+	table_name = 'user_case_data'
 	and TABLE_SCHEMA = 'dbo'
 	and column_name not in (
 		select
@@ -63,7 +62,7 @@ select
 	@unpivot_list = STRING_AGG(QUOTENAME(column_name), ', ')
 from [VanceLawFirm_Needles].INFORMATION_SCHEMA.COLUMNS
 where
-	table_name = 'user_insurance_data'
+	table_name = 'user_case_data'
 	and TABLE_SCHEMA = 'dbo'
 	and column_name not in (
 		select
@@ -80,7 +79,7 @@ FROM (
     SELECT 
         cas.casnCaseID, 
         cas.casnOrgCaseTypeID, ' + @sql + N'
-    FROM [VanceLawFirm_Needles]..user_insurance_data ud
+    FROM [VanceLawFirm_Needles]..user_case_data ud
     JOIN sma_TRN_Cases cas ON cas.cassCaseNumber = CONVERT(VARCHAR, ud.casenum)
 ) pv
 UNPIVOT (FieldVal FOR FieldTitle IN (' + @unpivot_list + N')) AS unpvt;';
@@ -140,7 +139,7 @@ begin
 			from CaseUDF
 		) vd
 			on vd.FieldTitle = M.field_title
-		join [VanceLawFirm_Needles].[dbo].[NeedlesUserFields] ucf
+		join [dbo].[NeedlesUserFields] ucf
 			on ucf.field_num = M.ref_num
 		left join (
 			select distinct

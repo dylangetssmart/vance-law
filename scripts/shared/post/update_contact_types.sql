@@ -27,7 +27,7 @@ notes:
   - Triggers are disabled/enabled during update to prevent side effects
 */
 
-use [BrachEichler_SA]
+use VanceLawFirm_SA
 go
 
 ------
@@ -219,7 +219,7 @@ set cinnContactTypeID = (
 from (
 	select distinct
 		judge_link
-	from [BrachEichler_Needles].[dbo].[cases]
+	from [VanceLawFirm_Needles].[dbo].[cases]
 ) A
 where A.judge_link = saga
 and ISNULL(saga, 0) <> 0

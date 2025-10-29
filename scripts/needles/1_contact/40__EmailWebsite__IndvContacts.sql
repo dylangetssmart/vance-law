@@ -1,22 +1,3 @@
-/*---
-group: load
-order: 52
-description: Update contact types for attorneys
----*/
-
-/* ###################################################################################
-description: update contact email addresses
-steps:
-	-
-usage_instructions:
-	-
-dependencies:
-	- 
-notes:
-	-
-######################################################################################
-*/
-
 use VanceLawFirm_SA
 go
 
@@ -29,6 +10,9 @@ alter table [sma_MST_EmailWebsite] enable trigger all
 
 ---
 alter table [sma_MST_EmailWebsite] disable trigger all
+go
+
+exec AddBreadcrumbsToTable 'sma_MST_EmailWebsite'
 go
 
 ---------------------------------------------------------------------

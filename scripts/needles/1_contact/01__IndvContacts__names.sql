@@ -7,6 +7,15 @@ description: Update contact types for attorneys
 use VanceLawFirm_SA
 go
 
+
+---
+exec AddBreadcrumbsToTable 'sma_MST_IndvContacts'
+go
+
+alter table [sma_MST_IndvContacts] alter column saga INT
+go
+---
+
 /* --------------------------------------------------------------------------------------------------------------
 Insert [sma_Mst_ContactRace] from [race]
 */
