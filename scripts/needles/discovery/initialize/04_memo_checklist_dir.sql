@@ -21,6 +21,8 @@ BEGIN
 END
 GO
 
+USE VanceLawFirm_Needles
+go
 
 /****** Object:  Table [dbo].[checklist_dir]    Script Date: 2/17/2021 10:42:26 AM ******/
 SET ANSI_NULLS ON

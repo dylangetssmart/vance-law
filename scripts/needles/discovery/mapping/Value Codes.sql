@@ -1,6 +1,9 @@
-SELECT
+use VanceLawFirm_Needles
+go
+
+select
 	code,
 	description,
 	c_d,
 	dtf
-FROM value_code
+from value_code

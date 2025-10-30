@@ -15,6 +15,9 @@ notes:
 #########################################################################################
 */
 
+USE VanceLawFirm_Needles
+go
+
 IF EXISTS (select * from sys.objects where name='case_notes_Indexed' and type='U')
 BEGIN
 	DROP TABLE [dbo].[case_notes_Indexed]

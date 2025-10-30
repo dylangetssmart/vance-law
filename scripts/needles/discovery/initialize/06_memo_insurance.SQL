@@ -15,6 +15,9 @@ notes:
 #########################################################################################
 */
 
+USE VanceLawFirm_Needles
+go
+
 IF EXISTS (select * from sys.objects where name='insurance_Indexed' and type='U')
 BEGIN
 	DROP TABLE [dbo].[insurance_Indexed]
