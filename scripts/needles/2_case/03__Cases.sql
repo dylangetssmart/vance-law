@@ -211,6 +211,129 @@ insert into [sma_TRN_Cases]
 	order by c.casenum
 go
 
+
+
+select * from VanceLawFirm_Needles..cases where casenum = 214848
+select * from VanceLawFirm_Needles..cases where matcode = 'mv2'
+select *, Contract_Signed_Date from VanceLawFirm_Needles..user_tab6_data
+select * from VanceLawFirm_Needles..matter
+
+/* ------------------------------------------------------------------------------
+Retained Date
+
+for matcode 'MVA':		retained date = [user_tab6_data].[Contract_Signed_Date]
+for all other cases:	retained date = case open date
+*/ ------------------------------------------------------------------------------
+alter table sma_TRN_Retainer disable trigger all
+go
+
+insert into [dbo].[sma_TRN_Retainer]
+	(
+		[rtnnCaseID],
+		[rtnnPlaintiffID],
+		[rtndSentDt],
+		[rtndRcvdDt],
+		[rtndRetainerDt],
+		[rtnbCopyRefAttFee],
+		[rtnnFeeStru],
+		[rtnbMultiFeeStru],
+		[rtnnBeforeTrial],
+		[rtnnAfterTrial],
+		[rtnnAtAppeal],
+		[rtnnUDF1],
+		[rtnnUDF2],
+		[rtnnUDF3],
+		[rtnbComplexStru],
+		[rtnbWrittenAgree],
+		[rtnnStaffID],
+		[rtnsComments],
+		[rtnnUserID],
+		[rtndDtCreated],
+		[rtnnModifyUserID],
+		[rtndDtModified],
+		[rtnnLevelNo],
+		[rtnnPlntfAdv],
+		[rtnnFeeAmt],
+		[rtnsRetNo],
+		[rtndRetStmtSent],
+		[rtndRetStmtRcvd],
+		[rtndClosingStmtRcvd],
+		[rtndClosingStmtSent],
+		[rtnsClosingRetNo],
+		[rtndSignDt],
+		[rtnsDocuments],
+		[rtndExecDt],
+		[rtnsGrossNet],
+		[rtnnFeeStruAlter],
+		[rtnsGrossNetAlter],
+		[rtnnFeeAlterAmt],
+		[rtnbFeeConditionMet],
+		[rtnsFeeCondition]
+	)
+	select
+		cas.casnCaseID		as rtnnCaseID,
+		null			as rtnnPlaintiffID,
+		null			as rtndSentDt,
+		CASE
+			WHEN c.matcode = 'MVA' THEN
+				-- If Contract Date exists, validate it. Fall back to Opening Date if invalid.
+				COALESCE(
+					dbo.ValidDate(ut6.Contract_Signed_Date),	-- returns null if invalid
+					cas.casdOpeningDate							
+				)
+			ELSE
+				-- Use Opening Date for all other scenarios
+				cas.casdOpeningDate 
+		END AS rtndRcvdDt,
+		--casdOpeningDate as rtndRcvdDt,
+		null			as rtndRetainerDt,
+		0				as rtnbCopyRefAttFee,
+		null			as rtnnFeeStru,
+		0				as rtnbMultiFeeStru,
+		null			as rtnnBeforeTrial,
+		null			as rtnnAfterTrial,
+		null			as rtnnAtAppeal,
+		null			as rtnnUDF1,
+		null			as rtnnUDF2,
+		null			as rtnnUDF3,
+		0				as rtnbComplexStru,
+		0				as rtnbWrittenAgree,
+		null			as rtnnStaffID,
+		null			as rtnsComments,
+		368				as rtnnUserID,
+		GETDATE()		as rtndDtCreated,
+		null			as rtnnModifyUserID,
+		null			as rtndDtModified,
+		1				as rtnnLevelNo,
+		null			as rtnnPlntfAdv,
+		null			as rtnnFeeAmt,
+		null			as rtnsRetNo,
+		null			as rtndRetStmtSent,
+		null			as rtndRetStmtRcvd,
+		null			as rtndClosingStmtRcvd,
+		null			as rtndClosingStmtSent,
+		null			as rtnsClosingRetNo,
+		null			as rtndSignDt,
+		null			as rtnsDocuments,
+		null			as rtndExecDt,
+		null			as rtnsGrossNet,
+		null			as rtnnFeeStruAlter,
+		null			as rtnsGrossNetAlter,
+		null			as rtnnFeeAlterAmt,
+		null			as rtnbFeeConditionMet,
+		null			as rtnsFeeCondition
+	--from cte
+	from VanceLawFirm_Needles..cases_Indexed c
+	join sma_TRN_Cases cas on cas.saga = c.casenum
+	left join VanceLawFirm_Needles..user_tab6_data ut6 on ut6.case_id = c.casenum
+go
+
+
+
+---
+alter table sma_TRN_Retainer enable trigger all
+go
+
 ---
 alter table [sma_TRN_Cases] enable trigger all
 go
