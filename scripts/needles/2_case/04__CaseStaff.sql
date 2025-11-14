@@ -12,139 +12,304 @@
 use [VanceLawFirm_SA]
 go
 
-/* ---------- 1. PASTE ROLES HERE ---------- */
-declare @pastedRoles VARCHAR(MAX) = '
-Attorney
-Case Manager
-Case Manager
-Paralegal
-Prior Paralegal
-Managing Partne
-Prior Paralegal
-Prior Paralegal
-Prior Paralegal
-Prior Paralegal
-';
-/* ------------------------------------------ */
 
-/* 2. Ensure staging table exists, then clear it */
-if OBJECT_ID('conversion.CaseStaffRoleMap', 'U') is null
-begin
-	create table conversion.CaseStaffRoleMap (
-		StaffCol SYSNAME	  not null,
-		RoleDesc VARCHAR(100) not null,
-		RoleID	 INT		  not null
-	);
-end
-else
-	truncate table conversion.CaseStaffRoleMap;
 
-	/* 3. Load pasted roles into the staging table */
-	;
+--For Staff Roles we only use 4 at this time.
+--1. Paralegal
+--2. Attorney
+--3. Paralegal
+--4. Attorney
+--staff_1	Attorney
+--staff_2	Case Manager
+--staff_3	Case Manager
+--staff_4	Paralegal
+--staff_5	Prior Paralegal
+--staff_6	Managing Partner
+--staff_7	Prior Paralegal
+--staff_8	Prior Paralegal
+--staff_9	Prior Paralegal
+--staff_10	Prior Paralegal
 
-with Split
-as
-(
-	select
-		ROW_NUMBER() over (order by (
-			select
-				null
-		))					as RowNum,
-		LTRIM(RTRIM(value)) as RoleDesc
-	from STRING_SPLIT(@pastedRoles, CHAR(10))
-	where LTRIM(RTRIM(value)) <> ''
-)
-insert into conversion.CaseStaffRoleMap
-	(
-		StaffCol,
-		RoleDesc,
-		RoleID
-	)
-	select
-		'staff_' + CAST(RowNum as VARCHAR(2)) as StaffCol,
-		RoleDesc,
-		10									  as RoleID
-	from Split
-	where
-		RowNum <= 10;   -- staff_1 through staff_10 only
 
-/* 4. Insert any missing sub‑role codes */
-insert into sma_MST_SubRoleCode
+
+/* ------------------------------------------------------------------------------
+Create roles
+*/
+insert into [sma_MST_SubRoleCode]
 	(
 		srcsDscrptn,
 		srcnRoleID
 	)
-	select distinct
-		RoleDesc,
-		RoleID
-	from conversion.CaseStaffRoleMap
+	(
+	SELECT 'Attorney', 10 UNION all			
+	SELECT 'Prior Paralegal', 10 UNION all			
+	SELECT 'Managing Partner', 10 UNION all			
+	SELECT 'Case Manager', 10 UNION all			
+	SELECT 'Paralegal', 10 
+	)
 	except
 	select
 		srcsDscrptn,
 		srcnRoleID
-	from sma_MST_SubRoleCode;
+	from [sma_MST_SubRoleCode]
+
+
+
+
+/* ------------------------------------------------------------------------------
+Insert Case Staff
+*/ ------------------------------------------------------------------------------
+alter table [sma_TRN_caseStaff] disable trigger all
 go
 
 
-/* 5. Bulk insert case‑staff records */
-alter table sma_TRN_caseStaff disable trigger all;
-go
+--staff_3	Case Manager
+--staff_4	Paralegal
+--staff_5	Prior Paralegal
+--staff_6	Managing Partner
+--staff_7	Prior Paralegal
+--staff_8	Prior Paralegal
+--staff_9	Prior Paralegal
+--staff_10	Prior Paralegal
 
+--staff_1	Attorney
 insert into sma_TRN_caseStaff
-	(
-		cssnCaseID,
-		cssnStaffID,
-		cssnRoleID,
-		csssComments,
-		cssdFromDate,
-		cssdToDate,
-		cssnRecUserID,
-		cssdDtCreated,
-		cssnModifyUserID,
-		cssdDtModified,
-		cssnLevelNo
-	)
-	select
-		cas.casnCaseID,
-		u.usrnContactID,
-		sr.sbrnSubRoleId,
-		null,
-		null,
-		null,
-		368,               -- modify if needed
-		GETDATE(),
-		null,
-		null,
-		0
-	from [VanceLawFirm_Needles].dbo.cases_Indexed as c
-	join sma_TRN_cases as cas
-		on cas.cassCaseNumber = CONVERT(VARCHAR(50), c.casenum)
-	cross apply (
-	values
-	('staff_1', c.staff_1),
-	('staff_2', c.staff_2),
-	('staff_3', c.staff_3),
-	('staff_4', c.staff_4),
-	('staff_5', c.staff_5),
-	('staff_6', c.staff_6),
-	('staff_7', c.staff_7),
-	('staff_8', c.staff_8),
-	('staff_9', c.staff_9),
-	('staff_10', c.staff_10)
-	) as x (StaffCol, SourceID)
-	join conversion.CaseStaffRoleMap as map
-		on map.StaffCol = x.StaffCol
-	join sma_MST_Users as u
-		on u.source_id = x.SourceID
-	join sma_MST_SubRole as sr
-		on sr.sbrsDscrptn = map.RoleDesc
-			and sr.sbrnRoleID = map.RoleID
-	where
-		x.SourceID is not null;   -- ignore empty staff slots
+(
+    cssnCaseID,
+    cssnStaffID,
+    cssnRoleID,
+    csssComments, cssdFromDate, cssdToDate,
+    cssnRecUserID,
+    cssdDtCreated,
+    cssnModifyUserID, cssdDtModified, cssnLevelNo
+)
+select
+    CAS.casnCaseID,
+    U.usrnContactID,
+    SR.sbrnSubRoleID,
+    null, null, null,
+    368, GETDATE(),
+    null, null, 0
+from [VanceLawFirm_Needles].[dbo].[cases_Indexed] C
+cross apply (values (C.staff_1)) S(staff_val)
+inner join sma_TRN_cases CAS on CAS.cassCaseNumber = C.casenum
+inner join sma_MST_Users U on U.source_id = S.staff_val
+inner join sma_MST_SubRole SR on SR.sbrsDscrptn = 'Attorney' and SR.sbrnRoleID = 10;
 go
 
-alter table sma_TRN_caseStaff enable trigger all;
+
+-- Case Manager: staff_2, staff_3
+insert into sma_TRN_caseStaff
+(
+    cssnCaseID, cssnStaffID, cssnRoleID, csssComments, cssdFromDate, cssdToDate,
+    cssnRecUserID, cssdDtCreated, cssnModifyUserID, cssdDtModified, cssnLevelNo
+)
+select
+    CAS.casnCaseID,
+    U.usrnContactID,
+    SR.sbrnSubRoleID,
+    null, null, null,
+    368, GETDATE(), null, null, 0
+from [VanceLawFirm_Needles].[dbo].[cases_Indexed] C
+cross apply (values (C.staff_2), (C.staff_3)) S(staff_val)
+inner join sma_TRN_cases CAS on CAS.cassCaseNumber = C.casenum
+inner join sma_MST_Users U on U.source_id = S.staff_val
+inner join sma_MST_SubRole SR on SR.sbrsDscrptn = 'Case Manager' and SR.sbrnRoleID = 10;
 go
+
+-- Paralegal: staff_4
+insert into sma_TRN_caseStaff
+(
+    cssnCaseID, cssnStaffID, cssnRoleID, csssComments, cssdFromDate, cssdToDate,
+    cssnRecUserID, cssdDtCreated, cssnModifyUserID, cssdDtModified, cssnLevelNo
+)
+select
+    CAS.casnCaseID,
+    U.usrnContactID,
+    SR.sbrnSubRoleID,
+    null, null, null,
+    368, GETDATE(), null, null, 0
+from [VanceLawFirm_Needles].[dbo].[cases_Indexed] C
+cross apply (values (C.staff_4)) S(staff_val)
+inner join sma_TRN_cases CAS on CAS.cassCaseNumber = C.casenum
+inner join sma_MST_Users U on U.source_id = S.staff_val
+inner join sma_MST_SubRole SR on SR.sbrsDscrptn = 'Paralegal' and SR.sbrnRoleID = 10;
+go
+
+-- Prior Paralegal: staff_5, staff_7, staff_8, staff_9, staff_10
+insert into sma_TRN_caseStaff
+(
+    cssnCaseID, cssnStaffID, cssnRoleID, csssComments, cssdFromDate, cssdToDate,
+    cssnRecUserID, cssdDtCreated, cssnModifyUserID, cssdDtModified, cssnLevelNo
+)
+select
+    CAS.casnCaseID,
+    U.usrnContactID,
+    SR.sbrnSubRoleID,
+    null, null, null,
+    368, GETDATE(), null, null, 0
+from [VanceLawFirm_Needles].[dbo].[cases_Indexed] C
+cross apply (values (C.staff_5), (C.staff_7), (C.staff_8), (C.staff_9), (C.staff_10)) S(staff_val)
+inner join sma_TRN_cases CAS on CAS.cassCaseNumber = C.casenum
+inner join sma_MST_Users U on U.source_id = S.staff_val
+inner join sma_MST_SubRole SR on SR.sbrsDscrptn = 'Prior Paralegal' and SR.sbrnRoleID = 10;
+go
+
+-- Managing Partner: staff_6
+insert into sma_TRN_caseStaff
+(
+    cssnCaseID, cssnStaffID, cssnRoleID, csssComments, cssdFromDate, cssdToDate,
+    cssnRecUserID, cssdDtCreated, cssnModifyUserID, cssdDtModified, cssnLevelNo
+)
+select
+    CAS.casnCaseID,
+    U.usrnContactID,
+    SR.sbrnSubRoleID,
+    null, null, null,
+    368, GETDATE(), null, null, 0
+from [VanceLawFirm_Needles].[dbo].[cases_Indexed] C
+cross apply (values (C.staff_6)) S(staff_val)
+inner join sma_TRN_cases CAS on CAS.cassCaseNumber = C.casenum
+inner join sma_MST_Users U on U.source_id = S.staff_val
+inner join sma_MST_SubRole SR on SR.sbrsDscrptn = 'Managing Partner' and SR.sbrnRoleID = 10;
+go
+
+
+
+
+--/* ---------- 1. PASTE ROLES HERE ---------- */
+--declare @pastedRoles VARCHAR(MAX) = '
+--Attorney
+--Case Manager
+--Case Manager
+--Paralegal
+--Prior Paralegal
+--Managing Partne
+--Prior Paralegal
+--Prior Paralegal
+--Prior Paralegal
+--Prior Paralegal
+--';
+--/* ------------------------------------------ */
+
+--/* 2. Ensure staging table exists, then clear it */
+--if OBJECT_ID('conversion.CaseStaffRoleMap', 'U') is null
+--begin
+--	create table conversion.CaseStaffRoleMap (
+--		StaffCol SYSNAME	  not null,
+--		RoleDesc VARCHAR(100) not null,
+--		RoleID	 INT		  not null
+--	);
+--end
+--else
+--	truncate table conversion.CaseStaffRoleMap;
+
+--	/* 3. Load pasted roles into the staging table */
+--	;
+
+--with Split
+--as
+--(
+--	select
+--		ROW_NUMBER() over (order by (
+--			select
+--				null
+--		))					as RowNum,
+--		LTRIM(RTRIM(value)) as RoleDesc
+--	from STRING_SPLIT(@pastedRoles, CHAR(10))
+--	where LTRIM(RTRIM(value)) <> ''
+--)
+--insert into conversion.CaseStaffRoleMap
+--	(
+--		StaffCol,
+--		RoleDesc,
+--		RoleID
+--	)
+--	select
+--		'staff_' + CAST(RowNum as VARCHAR(2)) as StaffCol,
+--		RoleDesc,
+--		10									  as RoleID
+--	from Split
+--	where
+--		RowNum <= 10;   -- staff_1 through staff_10 only
+
+--/* 4. Insert any missing sub‑role codes */
+--insert into sma_MST_SubRoleCode
+--	(
+--		srcsDscrptn,
+--		srcnRoleID
+--	)
+--	select distinct
+--		RoleDesc,
+--		RoleID
+--	from conversion.CaseStaffRoleMap
+--	except
+--	select
+--		srcsDscrptn,
+--		srcnRoleID
+--	from sma_MST_SubRoleCode;
+--go
+
+
+--/* 5. Bulk insert case‑staff records */
+--alter table sma_TRN_caseStaff disable trigger all;
+--go
+
+--insert into sma_TRN_caseStaff
+--	(
+--		cssnCaseID,
+--		cssnStaffID,
+--		cssnRoleID,
+--		csssComments,
+--		cssdFromDate,
+--		cssdToDate,
+--		cssnRecUserID,
+--		cssdDtCreated,
+--		cssnModifyUserID,
+--		cssdDtModified,
+--		cssnLevelNo
+--	)
+--	select
+--		cas.casnCaseID,
+--		u.usrnContactID,
+--		sr.sbrnSubRoleId,
+--		null,
+--		null,
+--		null,
+--		368,               -- modify if needed
+--		GETDATE(),
+--		null,
+--		null,
+--		0
+--	from [VanceLawFirm_Needles].dbo.cases_Indexed as c
+--	join sma_TRN_cases as cas
+--		on cas.cassCaseNumber = CONVERT(VARCHAR(50), c.casenum)
+--	cross apply (
+--	values
+--	('staff_1', c.staff_1),
+--	('staff_2', c.staff_2),
+--	('staff_3', c.staff_3),
+--	('staff_4', c.staff_4),
+--	('staff_5', c.staff_5),
+--	('staff_6', c.staff_6),
+--	('staff_7', c.staff_7),
+--	('staff_8', c.staff_8),
+--	('staff_9', c.staff_9),
+--	('staff_10', c.staff_10)
+--	) as x (StaffCol, SourceID)
+--	join conversion.CaseStaffRoleMap as map
+--		on map.StaffCol = x.StaffCol
+--	join sma_MST_Users as u
+--		on u.source_id = x.SourceID
+--	join sma_MST_SubRole as sr
+--		on sr.sbrsDscrptn = map.RoleDesc
+--			and sr.sbrnRoleID = map.RoleID
+--	where
+--		x.SourceID is not null;   -- ignore empty staff slots
+--go
+
+--alter table sma_TRN_caseStaff enable trigger all;
+--go
 
 /* 6. (Optional) clear staging table for next run
 TRUNCATE TABLE conversion.CaseStaffRoleMap;
